@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Medicine Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  min-height: 100vh;
+  color: white;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px;
+}
+
+.glass {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 0 40px rgba(0,255,255,0.15);
+  animation: fadeIn 1s ease;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+}
+
+th {
+  background: rgba(0,255,255,0.15);
+}
+
+tr {
+  transition: 0.3s;
+}
+
+tr:hover {
+  background: rgba(0,255,255,0.08);
+  transform: scale(1.01);
+}
+
+input {
+  background: transparent;
+  border: 1px solid rgba(0,255,255,0.4);
+  color: white;
+  padding: 6px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 10px cyan;
+}
+
+.btn {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+.btn-update {
+  background: linear-gradient(45deg, #00f2fe, #4facfe);
+}
+
+.btn-delete {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+}
+
+.btn-add {
+  background: linear-gradient(45deg, #00ffcc, #00cc99);
+  margin-top: 20px;
+}
+
+.btn:hover {
+  box-shadow: 0 0 15px rgba(0,255,255,0.7);
+  transform: scale(1.05);
+}
+
+.add-form {
+  margin-top: 30px;
+  overflow: hidden;
+  max-height: 0;
+  transition: 0.6s ease;
+}
+
+.add-form.active {
+  max-height: 500px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.form-grid input {
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="glass">
+
+    <h2>💊 Medicines for <%= patient.name %></h2>
+
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Remaining</th>
+        <th>Frequency</th>
+        <th>Reason</th>
+        <th>Actions</th>
+      </tr>
+
+      <% medicines.forEach(med => { %>
+      <tr>
+        <form method="POST" action="/doctor/medicine/<%= med._id %>/update">
+          <td><input name="name" value="<%= med.name %>"></td>
+          <td><input name="dosesRemaining" type="number" value="<%= med.dosesRemaining %>"></td>
+          <td><input name="frequency" value="<%= med.frequency %>"></td>
+          <td><input name="reason" value="<%= med.reason %>"></td>
+          <td>
+            <button class="btn btn-update">💾</button>
+        </form>
+
+        <form method="POST" action="/doctor/medicine/<%= med._id %>/delete" style="display:inline;">
+            <button class="btn btn-delete">🗑</button>
+        </form>
+          </td>
+      </tr>
+      <% }) %>
+
+    </table>
+
+    <center>
+      <button class="btn btn-add" onclick="toggleForm()">➕ Add Medicine</button>
+    </center>
+
+    <div class="add-form" id="addForm">
+      <h3 style="text-align:center;">Add New Medicine</h3>
+
+      <form method="POST">
+        <div class="form-grid">
+          <input name="name" placeholder="Medicine Name" required>
+          <input name="dosesRemaining" type="number" placeholder="Remaining Doses" required>
+          <input name="frequency" placeholder="Frequency (e.g 2x a day)" required>
+          <input name="reason" placeholder="Reason" required>
+        </div>
+        <br>
+        <center>
+          <button class="btn btn-add">Save Medicine</button>
+        </center>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function toggleForm() {
+  document.getElementById("addForm").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

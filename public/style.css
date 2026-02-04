@@ -1,0 +1,39 @@
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+}
+
+.glass-nav {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+}
+
+.btn {
+  border-radius: 30px;
+  background: linear-gradient(45deg, #36d1dc, #5b86e5);
+}
+/* Login page spacing */
+.login-container {
+  margin-top: 120px;
+}
+
+/* Login card UI */
+.login-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+}
+
+/* Button styling */
+.login-btn {
+  width: 100%;
+  border-radius: 30px;
+  background: linear-gradient(45deg, #36d1dc, #5b86e5);
+}
+

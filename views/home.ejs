@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SmartMedicare — AI Healthcare Platform</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      background: #020617;
+    }
+
+    /* ===== Animated Gradient Orbs ===== */
+    .orb {
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      filter: blur(140px);
+      opacity: 0.45;
+      z-index: -1;
+      animation: float 14s infinite alternate ease-in-out;
+    }
+    .orb.green { background: #22c55e; top: -120px; left: -120px; }
+    .orb.blue { background: #38bdf8; bottom: -120px; right: -120px; animation-delay: 3s; }
+    .orb.purple { background: #8b5cf6; top: 40%; left: -160px; animation-delay: 6s; }
+
+    @keyframes float {
+      from { transform: translateY(0px); }
+      to { transform: translateY(120px); }
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      background: rgba(2,6,23,0.6);
+      backdrop-filter: blur(12px);
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 85%;
+      border-radius: 20px;
+      z-index: 100;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .brand-logo {
+      font-weight: 800;
+      background: linear-gradient(135deg, #22c55e, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav ul a {
+      color: #e5e7eb;
+      font-weight: 500;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+
+    nav ul a:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      max-width: 1000px;
+      margin: 160px auto 80px;
+      padding: 100px 70px;
+      text-align: center;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(20px);
+      border-radius: 32px;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.12), transparent);
+      animation: shine 6s infinite;
+    }
+
+    @keyframes shine {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(100%); }
+    }
+
+    .hero h1 {
+      font-size: 3.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #22c55e, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #cbd5f5;
+      margin-bottom: 40px;
+    }
+
+    .btn-modern {
+      padding: 16px 40px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #22c55e, #38bdf8);
+      color: #020617;
+      font-weight: 700;
+      transition: all 0.4s ease;
+      margin: 10px;
+      display: inline-block;
+    }
+
+    .btn-modern.secondary {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .btn-modern:hover {
+      transform: translateY(-8px) scale(1.06);
+      box-shadow: 0 30px 80px rgba(56,189,248,0.6);
+    }
+
+    /* ===== STATS ===== */
+    .stats {
+      margin: 80px auto;
+      max-width: 1000px;
+      text-align: center;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 30px;
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: 0.4s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-10px) scale(1.05);
+    }
+
+    .stat-number {
+      font-size: 2.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #22c55e, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ===== FEATURES ===== */
+    .feature-card {
+      background: rgba(255,255,255,0.06);
+      border-radius: 22px;
+      padding: 40px;
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: 0.4s;
+      height: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-12px) rotateX(6deg) rotateY(-6deg);
+    }
+
+    footer {
+      text-align: center;
+      padding: 60px 0 30px;
+      color: #cbd5f5;
+      opacity: 0.7;
+    }
+
+    @media(max-width:600px) {
+      .hero { padding: 60px 25px; }
+      .hero h1 { font-size: 2.6rem; }
+      nav { width: 92%; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ORBS -->
+  <div class="orb green"></div>
+  <div class="orb blue"></div>
+  <div class="orb purple"></div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="/" class="brand-logo">
+        <i class="material-icons">local_hospital</i> SmartMedicare
+      </a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/about">About</a></li>
+        <li><a href="/appointment">Appointment</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/healthTips">Health-Tips</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" data-aos="zoom-in">
+    <h1>AI-Powered Healthcare Platform</h1>
+    <p>
+      Intelligent patient management, smart medication tracking,
+      and predictive health analytics for modern hospitals.
+    </p>
+
+    <a href="/signup" class="btn-modern">Get Started</a>
+    <a href="/login" class="btn-modern secondary">Login</a>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats container">
+    <div class="row">
+      <div class="col s12 m4" data-aos="fade-up">
+        <div class="stat-card">
+          <div class="stat-number" data-count="1200">0</div>
+          <p>Patients Managed</p>
+        </div>
+      </div>
+      <div class="col s12 m4" data-aos="fade-up" data-aos-delay="100">
+        <div class="stat-card">
+          <div class="stat-number" data-count="98">0</div>
+          <p>% Medication Accuracy</p>
+        </div>
+      </div>
+      <div class="col s12 m4" data-aos="fade-up" data-aos-delay="200">
+        <div class="stat-card">
+          <div class="stat-number" data-count="24">0</div>
+          <p>AI Monitoring Hours</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="container">
+    <div class="row">
+      <div class="col s12 m4" data-aos="fade-up">
+        <div class="feature-card">
+          <i class="material-icons large blue-text">smart_toy</i>
+          <h5>AI Intelligence</h5>
+          <p>Predictive health analysis and smart alerts.</p>
+        </div>
+      </div>
+      <div class="col s12 m4" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-card">
+          <i class="material-icons large green-text">security</i>
+          <h5>Secure Data</h5>
+          <p>Military-grade encryption and access control.</p>
+        </div>
+      </div>
+      <div class="col s12 m4" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-card">
+          <i class="material-icons large orange-text">schedule</i>
+          <h5>Smart Reminders</h5>
+          <p>Never miss a dose or appointment again.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 SmartMedicare — AI Driven Digital Healthcare Platform
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    AOS.init({ duration: 1200, once: true });
+
+    // Animated counters
+    document.querySelectorAll(".stat-number").forEach(el => {
+      const target = +el.getAttribute("data-count");
+      let count = 0;
+      const step = target / 80;
+      const interval = setInterval(() => {
+        count += step;
+        if (count >= target) {
+          el.innerText = target;
+          clearInterval(interval);
+        } else {
+          el.innerText = Math.floor(count);
+        }
+      }, 20);
+    });
+  </script>
+
+</body>
+</html>
+ 

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Panel | SmartMedicare</title>
+
+  <!-- Materialize CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top right, #020617, #020617);
+      color: #e5e7eb;
+      overflow-x: hidden;
+    }
+
+    main {
+      flex: 1;
+      padding: 40px 0;
+    }
+
+    /* Animated background glow */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(140px);
+      opacity: 0.25;
+      z-index: -1;
+      animation: float 12s infinite alternate ease-in-out;
+    }
+
+    body::before {
+      background: #2563eb;
+      top: -100px;
+      left: -100px;
+    }
+
+    body::after {
+      background: #22c55e;
+      bottom: -100px;
+      right: -100px;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(0px);
+      }
+
+      to {
+        transform: translateY(80px);
+      }
+    }
+
+    /* Navbar */
+    nav {
+      background: rgba(2, 6, 23, 0.7) !important;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Glass card */
+    .dash-card {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(14px);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      transition: all 0.45s cubic-bezier(.4, 0, .2, 1);
+      animation: fadeUp 0.7s ease forwards;
+    }
+
+    .dash-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.6);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h4 {
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .label {
+      color: #94a3b8;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    .value {
+      font-size: 18px;
+      font-weight: 600;
+      color: #f8fafc;
+      margin-bottom: 14px;
+    }
+
+    /* AI Card */
+    .ai-card {
+      background: linear-gradient(135deg, #2563eb, #0ea5e9);
+      color: white;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ai-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      transform: translateX(-100%);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      to {
+        transform: translateX(100%);
+      }
+    }
+
+    /* Action cards */
+    .action-icon {
+      font-size: 52px;
+      margin-bottom: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .dash-card.center-align:hover .action-icon {
+      transform: scale(1.25) rotate(-5deg);
+    }
+
+    .btn {
+      border-radius: 10px;
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="blue darken-2">
+    <div class="nav-wrapper container">
+      <a href="/" class="brand-logo">🩺 SmartMedicare</a>
+
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/doctor/dashboard">Doctor Panel</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main>
+    <div class="container">
+
+      <!-- Header -->
+      <div class="row">
+        <div class="col s12">
+          <h4>Doctor Dashboard</h4>
+          <p class="grey-text">
+            Patient overview & clinical insights
+          </p>
+        </div>
+      </div>
+
+      <!-- Patient Info + AI Summary -->
+      <div class="row">
+
+        <!-- Patient Info -->
+        <div class="col s12 m6">
+          <div class="card dash-card">
+            <div class="card-content">
+              <span class="card-title">Patient Information</span>
+
+              <p class="label">Name</p>
+              <p class="value">
+                <%= patient.name %>
+              </p>
+
+              <p class="label">Blood Group</p>
+              <p class="value">
+                <%= patient.bloodGroup %>
+              </p>
+
+              <p class="label">Patient ID</p>
+              <p class="value">
+                <%= patient.patientCode || patient._id %>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Health Summary -->
+        <div class="col s12 m6">
+          <div class="card dash-card ai-card">
+            <div class="card-content">
+              <span class="card-title">AI Health Summary</span>
+
+              <p>
+                Based on available medical records and history,
+                the patient is currently in a
+                <b>moderate risk</b> category.
+              </p>
+
+              <p>
+                Recommended focus:
+                blood pressure monitoring and lifestyle guidance.
+              </p>
+              <p>
+                AI Risk Level:
+                <b class="yellow-text">Moderate</b>
+              </p>
+
+              <p>
+                Confidence Score:
+                <b class="green-text">82%</b>
+              </p>
+
+              <p>
+                Focus Areas:
+                Blood pressure, physical activity, stress management.
+              </p>
+
+              <p>
+                Suggested Action:
+                Adjust medication and schedule follow-up in 2 weeks.
+              </p>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="row">
+
+        <div class="col s12 m4">
+          <div class="card dash-card center-align">
+            <div class="card-content">
+              <i class="material-icons action-icon blue-text">assignment</i>
+              <h6>Medical Records</h6>
+              <a href="/doctor/patient/<%= patient.id %>/medicines" class="btn blue">View</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="card dash-card center-align">
+            <div class="card-content">
+              <i class="material-icons action-icon green-text">healing</i>
+              <h6>Prescriptions</h6>
+              <a href="/doctor/patient/<%= patient._id %>/prescriptions" class="btn green">Open</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="card dash-card center-align">
+            <div class="card-content">
+              <i class="material-icons action-icon orange-text">insights</i>
+              <h6>AI Insights</h6>
+              <a href="/doctor/patient/<%= patient._id %>/ai-insights" class="btn orange">Analyze</a>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container center-align">
+      <p class="grey-text text-lighten-2">
+        © <%= new Date().getFullYear() %> SmartMedicare
+      </p>
+      <p class="grey-text text-lighten-1">
+        Designed & Developed by <strong>Om Satish Taywade</strong>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Materialize JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".dash-card").forEach((card, i) => {
+        card.style.animationDelay = (i * 0.12) + "s";
+      });
+    });
+  </script>
+
+</body>
+
+</html>

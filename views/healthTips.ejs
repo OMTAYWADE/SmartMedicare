@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Health Tips | SmartMedicare AI</title>
+
+  <!-- Materialize CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+  <!-- Google Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- AOS Animations -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      color: white;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Animated background blobs */
+    .blob {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      filter: blur(100px);
+      opacity: 0.5;
+      animation: float 12s infinite ease-in-out;
+      z-index: 0;
+    }
+    .blob.blue { background: #3b82f6; top: 10%; left: 10%; }
+    .blob.purple { background: #8b5cf6; bottom: 10%; right: 10%; animation-delay: 4s; }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0,0); }
+      50% { transform: translate(40px,-40px); }
+    }
+
+    /* Navbar */
+    nav {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand-logo {
+      font-weight: bold;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 45vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h3 {
+      font-weight: 800;
+      font-size: 3rem;
+      background: linear-gradient(90deg, #34d399, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Glass Card */
+    .glass-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 0 40px rgba(0,0,0,0.4);
+      transition: all 0.4s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-10px) scale(1.01);
+      box-shadow: 0 0 80px rgba(52,211,153,0.4);
+    }
+
+    /* Tip Cards */
+    .tip-card {
+      transition: 0.4s ease;
+    }
+
+    .tip-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 0 50px rgba(96,165,250,0.4);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 120px;
+      padding: 40px 0;
+      background: rgba(15, 23, 42, 0.8);
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Animated Background -->
+  <div class="blob blue"></div>
+  <div class="blob purple"></div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="/" class="brand-logo">SmartMedicare AI</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/appointment">Appointment</a></li>
+        <li class="active"><a href="/healthtips">Health Tips</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero" data-aos="fade-up">
+    <h3>AI Health Assistant</h3>
+    <p>Daily smart tips for a healthier life 💚</p>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="container">
+    <div class="row">
+
+      <!-- Tip 1 -->
+      <div class="col s12 m4" data-aos="zoom-in">
+        <div class="glass-card card tip-card">
+          <div class="card-content center">
+            <i class="material-icons large green-text">water_drop</i>
+            <h5>Stay Hydrated</h5>
+            <p>Drink at least 3-4 liters of water daily to keep your body active and clean.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip 2 -->
+      <div class="col s12 m4" data-aos="zoom-in" data-aos-delay="150">
+        <div class="glass-card card tip-card">
+          <div class="card-content center">
+            <i class="material-icons large blue-text">fitness_center</i>
+            <h5>Exercise Daily</h5>
+            <p>At least 30 minutes of physical activity keeps your heart and mind healthy.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip 3 -->
+      <div class="col s12 m4" data-aos="zoom-in" data-aos-delay="300">
+        <div class="glass-card card tip-card">
+          <div class="card-content center">
+            <i class="material-icons large purple-text">bedtime</i>
+            <h5>Quality Sleep</h5>
+            <p>Sleep minimum 7-8 hours daily for proper recovery and brain function.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip 4 -->
+      <div class="col s12 m4" data-aos="zoom-in">
+        <div class="glass-card card tip-card">
+          <div class="card-content center">
+            <i class="material-icons large orange-text">restaurant</i>
+            <h5>Healthy Diet</h5>
+            <p>Eat fruits, vegetables and avoid junk food to keep your immunity strong.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip 5 -->
+      <div class="col s12 m4" data-aos="zoom-in" data-aos-delay="150">
+        <div class="glass-card card tip-card">
+          <div class="card-content center">
+            <i class="material-icons large cyan-text">self_improvement</i>
+            <h5>Stress Control</h5>
+            <p>Meditation and breathing exercises improve mental health and focus.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip 6 -->
+      <div class="col s12 m4" data-aos="zoom-in" data-aos-delay="300">
+        <div class="glass-card card tip-card">
+          <div class="card-content center">
+            <i class="material-icons large red-text">medical_services</i>
+            <h5>Regular Checkups</h5>
+            <p>Early detection prevents serious health problems. Visit doctor regularly.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 SmartMedicare AI. All Rights Reserved.</p>
+  </footer>
+
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    AOS.init({
+      duration: 1200,
+      once: true
+    });
+  </script>
+
+</body>
+</html>

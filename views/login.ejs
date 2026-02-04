@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | SmartMedicare</title>
+
+  <!-- Materialize CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Overlay for readability */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(
+        rgba(0, 0, 0, 0.45),
+        rgba(0, 0, 0, 0.65)
+      );
+      z-index: -1;
+    }
+
+    /* Login Card */
+    .login-card {
+      backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      box-shadow:
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        inset 0 0 0.5px rgba(255, 255, 255, 0.6);
+      transform-style: preserve-3d;
+      transition: all 0.4s ease;
+    }
+
+    .login-card:hover {
+      transform: translateY(-10px) rotateX(3deg);
+      box-shadow: 0 40px 70px rgba(0, 0, 0, 0.55);
+    }
+
+    .card-title {
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+
+    .input-field input {
+      color: #fff;
+    }
+
+    .input-field label {
+      color: #ddd;
+    }
+
+    .input-field input:focus + label {
+      color: #80d8ff !important;
+    }
+
+    .input-field input:focus {
+      border-bottom: 1px solid #80d8ff !important;
+      box-shadow: 0 1px 0 0 #80d8ff !important;
+    }
+
+    /* Button */
+    .login-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #42a5f5, #478ed1);
+      border-radius: 30px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px rgba(66, 165, 245, 0.5);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 35px rgba(66, 165, 245, 0.7);
+    }
+
+    .card-action {
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .card-action a {
+      color: #80d8ff;
+      font-weight: 500;
+    }
+
+    .red-text {
+      font-weight: 500;
+    }
+
+    @media (max-width: 600px) {
+      .login-card {
+        margin: 10px;
+      }
+    }
+
+    .return{
+    color: #fff;
+    display: flex;
+    }
+
+    .return:hover{
+    color: #f983fb;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col s12 m6 offset-m3">
+      <div class="card login-card">
+        <div class="card-content">
+          <a class="return" href="/"> < Home</a>
+          <span class="card-title center-align">Welcome Back</span>
+
+          <% if (message && message.length) { %>
+            <p class="red-text center-align"><%= message %></p>
+          <% } %>
+
+          <form action="/login" method="POST">
+
+            <div class="input-field">
+              <input id="email" type="email" name="email" required>
+              <label for="email">Email</label>
+            </div>
+
+            <div class="input-field">
+              <input id="password" type="password" name="password" required>
+              <label for="password">Password</label>
+            </div>
+
+            <button type="submit" class="btn btn-large login-btn">
+              Login
+            </button>
+
+          </form>
+        </div>
+
+        <div class="card-action center-align">
+          <p style="color:#eee">
+            Don’t have an account?
+            <a href="/signup">Sign Up</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Materialize JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    M.updateTextFields();
+
+    const images = [
+      "https://m.media-amazon.com/images/I/71mgpWBEXHL.jpg",
+      "https://wallpapercave.com/wp/wp1951584.jpg",
+      "https://wallpapercave.com/wp/wp14192218.jpg",
+      "https://wallpapercave.com/uwp/uwp4960630.jpeg",
+      "https://wallpapercave.com/uwp/uwp4960448.jpeg",
+      "https://wallpapercave.com/wp/wp11155181.jpg",
+      "https://wallpapercave.com/wp/wp6057120.jpg",
+      "https://wallpapercave.com/wp/wp5574437.jpg",
+      "https://wallpapercave.com/wp/wp16029940.jpg",
+      "https://wallpapercave.com/wp/wp13182994.jpg",
+      "https://wallpapercave.com/wp/wp14940921.webp",
+      "https://wallpapercave.com/wp/wp14981590.webp"
+    ];
+
+    const randomImage = images[Math.floor(Math.random() * images.length)];
+    document.body.style.backgroundImage = `url(${randomImage})`;
+  });
+</script>
+
+</body>
+</html>

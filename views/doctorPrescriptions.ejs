@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Prescriptions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: white;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px;
+}
+
+.glass {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 0 40px rgba(0,255,255,0.15);
+  animation: fadeIn 0.8s ease;
+}
+
+h2 {
+  text-align: center;
+}
+
+.btn {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-primary {
+  background: linear-gradient(45deg, #00f2fe, #4facfe);
+}
+
+.btn-save {
+  background: linear-gradient(45deg, #00ffcc, #00cc99);
+}
+
+.btn:hover {
+  box-shadow: 0 0 20px rgba(0,255,255,0.7);
+  transform: scale(1.05);
+}
+
+.formBox {
+  overflow: hidden;
+  max-height: 0;
+  transition: 0.6s ease;
+}
+
+.formBox.active {
+  max-height: 500px;
+}
+
+.medRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+input, textarea {
+  background: transparent;
+  border: 1px solid rgba(0,255,255,0.4);
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 10px cyan;
+}
+
+.card {
+  background: rgba(255,255,255,0.08);
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 0 20px rgba(0,255,255,0.15);
+  animation: slideUp 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="glass">
+
+    <h2>📄 Prescriptions for <%= patient.name %></h2>
+
+    <center>
+      <button onclick="toggleForm()" class="btn btn-primary">➕ New Prescription</button>
+    </center>
+
+    <br>
+
+    <!-- Add Prescription Form -->
+    <div class="formBox" id="formBox">
+      <form method="POST">
+
+        <div id="medList">
+          <div class="medRow">
+            <input type="text" name="medicines[0][name]" placeholder="Medicine Name" required>
+            <input type="text" name="medicines[0][dosage]" placeholder="Dosage" required>
+            <input type="text" name="medicines[0][days]" placeholder="Days" required>
+          </div>
+        </div>
+
+        <center>
+          <button type="button" onclick="addMedicine()" class="btn btn-primary">➕ Add Medicine</button>
+        </center>
+
+        <br>
+        <textarea name="notes" placeholder="Doctor notes..."></textarea>
+        <br><br>
+
+        <center>
+          <button class="btn btn-save">💾 Save Prescription</button>
+        </center>
+
+      </form>
+    </div>
+
+    <hr style="border-color: rgba(255,255,255,0.2)">
+
+    <!-- Previous Prescriptions -->
+    <% prescriptions.forEach(p => { %>
+      <div class="card">
+        <h4>🗓 <%= p.date.toDateString() %></h4>
+        <ul>
+          <% p.medicines.forEach(m => { %>
+            <li>💊 <%= m.name %> — <%= m.dosage %> for <%= m.days %> days</li>
+          <% }) %>
+        </ul>
+        <p><b>Notes:</b> <%= p.notes %></p>
+      </div>
+    <% }) %>
+
+  </div>
+</div>
+
+<script>
+let index = 1;
+
+function toggleForm(){
+  document.getElementById("formBox").classList.toggle("active");
+}
+
+function addMedicine(){
+  const div = document.createElement("div");
+  div.className = "medRow";
+  div.innerHTML = `
+    <input type="text" name="medicines[${index}][name]" placeholder="Medicine Name" required>
+    <input type="text" name="medicines[${index}][dosage]" placeholder="Dosage" required>
+    <input type="text" name="medicines[${index}][days]" placeholder="Days" required>
+  `;
+  document.getElementById("medList").appendChild(div);
+  index++;
+}
+</script>
+
+</body>
+</html>

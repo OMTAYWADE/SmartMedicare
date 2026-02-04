@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Patient Dashboard | SmartMedicare</title>
+
+  <!-- Materialize CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top left, #0f172a, #020617);
+      color: #e5e7eb;
+      overflow-x: hidden;
+    }
+
+    main {
+      flex: 1;
+      padding: 40px 0;
+    }
+
+    /* Animated background blobs */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.25;
+      z-index: -1;
+      animation: float 12s infinite alternate ease-in-out;
+    }
+
+    body::before {
+      background: #22c55e;
+      top: -100px;
+      left: -100px;
+    }
+
+    body::after {
+      background: #0ea5e9;
+      bottom: -100px;
+      right: -100px;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(0px);
+      }
+
+      to {
+        transform: translateY(60px);
+      }
+    }
+
+    /* Navbar */
+    nav {
+      background: linear-gradient(135deg, #020617, #020617);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Glass card */
+    .card {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(14px);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      transition: all 0.4s cubic-bezier(.4, 0, .2, 1);
+      animation: fadeUp 0.7s ease forwards;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .label {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .value {
+      font-size: 18px;
+      font-weight: 600;
+      color: #f8fafc;
+      margin-bottom: 14px;
+    }
+
+    /* AI Card */
+    .ai-card {
+      background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      color: white;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ai-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      transform: translateX(-100%);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      to {
+        transform: translateX(100%);
+      }
+    }
+
+    /* Collection */
+    .collection-item {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border-radius: 12px !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      margin-bottom: 10px;
+      color: #e5e7eb;
+      transition: all 0.3s ease;
+    }
+
+    .collection-item:hover {
+      background: rgba(34, 197, 94, 0.12) !important;
+      transform: translateX(6px);
+    }
+
+    /* Small feature cards */
+    .card.center-align {
+      cursor: pointer;
+    }
+
+    .card.center-align:hover i {
+      transform: scale(1.2);
+    }
+
+    .card.center-align i {
+      transition: transform 0.3s ease;
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="/" class="brand-logo">💊 SmartMedicare</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN ================= -->
+  <main>
+    <div class="container">
+
+      <!-- Header -->
+      <div class="row">
+        <div class="col s12">
+          <h4>Patient Dashboard</h4>
+          <p class="grey-text">
+            Your health summary & medication tracking
+          </p>
+        </div>
+      </div>
+
+      <!-- Patient Info + AI Health -->
+      <div class="row">
+
+        <!-- Patient Info -->
+        <div class="col s12 m6">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Profile Information</span>
+
+              <p class="label">Name</p>
+              <p class="value">
+                <%= patient.name %>
+              </p>
+
+              <p class="label">Patient ID</p>
+              <p class="value">
+                <%= patient.patientCode %>
+              </p>
+
+              <p class="label">Phone</p>
+              <p class="value">
+                <%= patient.phone || 'Not provided' %>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Health Insight -->
+        <div class="col s12 m6">
+          <div class="card ai-card">
+            <div class="card-content">
+              <span class="card-title">AI Health Insight</span>
+
+              <p>
+                Based on your medication adherence and recent data,
+                your health status is currently
+                <b>stable</b>.
+              </p>
+
+              <p>
+                Recommendation:
+                Continue medicines on time and maintain hydration.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Medicines -->
+      <div class="row">
+        <div class="col s12">
+          <h5>Your Medicines</h5>
+
+          <% if (patient.medicines.length===0) { %>
+            <p class="grey-text">No medicines assigned yet.</p>
+            <% } else { %>
+              <ul class="collection">
+                <% patient.medicines.forEach(med=> { %>
+                  <li class="collection-item">
+                    <b>
+                      <%= med.name %>
+                    </b><br>
+                    Remaining doses:
+                    <span class="green-text">
+                      <%= med.dosesRemaining %>
+                    </span>
+                  </li>
+                  <% }) %>
+              </ul>
+              <% } %>
+        </div>
+      </div>
+
+      <!-- Patient Actions -->
+      <div class="row">
+
+        <div class="col s12 m4">
+          <div class="card center-align">
+            <div class="card-content">
+              <i class="material-icons large green-text">notifications_active</i>
+              <h6>Reminders</h6>
+              <p class="grey-text">Medicine alerts & notifications</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="card center-align">
+            <div class="card-content">
+              <i class="material-icons large blue-text">insights</i>
+              <h6>Health Trends</h6>
+              <p class="grey-text">AI-based health patterns</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="card center-align">
+            <div class="card-content">
+              <i class="material-icons large orange-text">chat</i>
+              <h6>AI Assistant</h6>
+              <p>
+                AI Status:
+                <b class="green-text">Stable</b>
+              </p>
+
+              <p>
+                Risk Level:
+                <b class="blue-text">Low</b>
+              </p>
+
+              <p>
+                Recommendation:
+                Maintain hydration, follow schedule, and walk 15 minutes daily.
+              </p>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container center-align">
+      <p class="grey-text text-lighten-2">
+        © <%= new Date().getFullYear() %> SmartMedicare
+      </p>
+      <p class="grey-text text-lighten-1">
+        Designed & Developed by <strong>Om Satish Taywade</strong>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Materialize JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".card").forEach((card, i) => {
+      card.style.animationDelay = (i * 0.1) + "s";
+    });
+  });
+</script>
+
+</body>
+
+</html>

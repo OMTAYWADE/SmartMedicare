@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About | SmartMedicare</title>
+
+  <!-- Materialize CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top right, #020617, #020617);
+      color: #e5e7eb;
+      overflow-x: hidden;
+    }
+
+    /* Animated background glow */
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(140px);
+      opacity: 0.25;
+      z-index: -1;
+      animation: float 12s infinite alternate ease-in-out;
+    }
+
+    body::before {
+      background: #22c55e;
+      top: -100px;
+      left: -100px;
+    }
+
+    body::after {
+      background: #2563eb;
+      bottom: -100px;
+      right: -100px;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0px); }
+      to { transform: translateY(80px); }
+    }
+
+    /* Navbar */
+    nav {
+      background: rgba(2,6,23,0.7) !important;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    main {
+      padding: 80px 0;
+    }
+
+    /* Glass cards */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(14px);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      transition: all 0.45s cubic-bezier(.4,0,.2,1);
+      animation: fadeUp 0.7s ease forwards;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 35px 80px rgba(0,0,0,0.6);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h3, h5 {
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .hero p {
+      color: #cbd5f5;
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .feature-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    footer {
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 20px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav>
+  <div class="nav-wrapper container">
+    <a href="/" class="brand-logo">💊 SmartMedicare</a>
+    <ul class="right hide-on-med-and-down">
+      <li><a href="/">Home</a></li>
+      <li><a href="/login">Login</a></li>
+      <li><a href="/signup">Sign Up</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ================= MAIN ================= -->
+<main>
+  <div class="container">
+
+    <!-- Hero -->
+    <div class="hero">
+      <h3>About SmartMedicare</h3>
+      <p>
+        SmartMedicare is an AI-powered healthcare management platform designed to
+        securely manage patient records, automate medication tracking, and provide
+        intelligent health insights for doctors and patients.
+      </p>
+    </div>
+
+    <!-- Features -->
+    <div class="row">
+
+      <div class="col s12 m4">
+        <div class="card glass-card center-align">
+          <div class="card-content">
+            <i class="material-icons feature-icon blue-text">verified_user</i>
+            <h5>Secure Records</h5>
+            <p>
+              Military-grade data protection ensures patient data remains private
+              and tamper-proof.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m4">
+        <div class="card glass-card center-align">
+          <div class="card-content">
+            <i class="material-icons feature-icon green-text">smart_toy</i>
+            <h5>AI Insights</h5>
+            <p>
+              Intelligent analysis of health data helps doctors detect risks early
+              and optimize treatment plans.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m4">
+        <div class="card glass-card center-align">
+          <div class="card-content">
+            <i class="material-icons feature-icon orange-text">schedule</i>
+            <h5>Smart Reminders</h5>
+            <p>
+              Automated medicine schedules and notifications ensure better patient
+              compliance and recovery.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Vision -->
+    <div class="row">
+      <div class="col s12">
+        <div class="card glass-card">
+          <div class="card-content">
+            <span class="card-title">🌍 Our Vision</span>
+            <p>
+              To create a digitally connected healthcare ecosystem where patients,
+              doctors, and caregivers collaborate through intelligent systems,
+              reducing medical errors and improving quality of life.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container center-align">
+    <p class="grey-text text-lighten-2">
+      © <%= new Date().getFullYear() %> SmartMedicare
+    </p>
+    <p class="grey-text text-lighten-1">
+      Designed & Developed by <strong>Om Satish Taywade</strong>
+    </p>
+  </div>
+</footer>
+
+<!-- Materialize JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".glass-card").forEach((card, i) => {
+      card.style.animationDelay = (i * 0.12) + "s";
+    });
+  });
+</script>
+
+</body>
+</html>

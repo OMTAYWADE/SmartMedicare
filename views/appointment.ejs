@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Appointment | SmartMedicare AI</title>
+
+  <!-- Materialize CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+  <!-- Google Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- AOS Animation -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      color: white;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Animated Background Blobs */
+    .blob {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      filter: blur(100px);
+      opacity: 0.5;
+      animation: float 12s infinite ease-in-out;
+      z-index: 0;
+    }
+    .blob.blue { background: #3b82f6; top: 10%; left: 10%; }
+    .blob.purple { background: #8b5cf6; bottom: 10%; right: 10%; animation-delay: 4s; }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0,0); }
+      50% { transform: translate(40px,-40px); }
+    }
+
+    /* Navbar */
+    nav {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand-logo {
+      font-weight: bold;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 45vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h3 {
+      font-weight: 800;
+      font-size: 3rem;
+      background: linear-gradient(90deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Glass Card */
+    .glass-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 0 40px rgba(0,0,0,0.4);
+      transition: all 0.4s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 80px rgba(99,102,241,0.4);
+    }
+
+    /* Inputs */
+    .input-field input, .input-field select {
+      color: white;
+    }
+    .input-field label {
+      color: #aaa;
+    }
+
+    /* AI Button */
+    .ai-btn {
+      border-radius: 50px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      transition: 0.4s ease;
+    }
+    .ai-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(139,92,246,0.7);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 120px;
+      padding: 40px 0;
+      background: rgba(15, 23, 42, 0.8);
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Animated Background -->
+  <div class="blob blue"></div>
+  <div class="blob purple"></div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-wrapper container">
+      <a href="/" class="brand-logo">SmartMedicare AI</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li class="active"><a href="/appointment">Appointment</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero" data-aos="fade-up">
+    <h3>Book Smart Appointment</h3>
+    <p>AI will help you choose the best slot 🚀</p>
+  </div>
+
+  <!-- FORM -->
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m8 offset-m2">
+
+        <div class="glass-card card" data-aos="zoom-in">
+          <div class="card-content">
+
+            <h5 class="center">AI Appointment Scheduler</h5>
+            <p class="center grey-text">Smart. Fast. Optimized.</p>
+
+            <br>
+
+            <form method="POST" action="/appointment">
+
+              <!-- Doctor -->
+              <div class="input-field">
+                <select required>
+                  <option value="" disabled selected>Choose Doctor</option>
+                  <option>Dr. Sharma (Cardiology)</option>
+                  <option>Dr. Patil (General)</option>
+                  <option>Dr. Mehta (Neurology)</option>
+                </select>
+                <label>Select Doctor</label>
+              </div>
+
+              <!-- Date -->
+              <div class="input-field">
+                <input type="date" name="date" required>
+                <label class="active">Select Date</label>
+              </div>
+
+              <!-- Time -->
+              <div class="input-field">
+                <select required>
+                  <option value="" disabled selected>Select Time Slot</option>
+                  <option>10:00 AM</option>
+                  <option>11:00 AM</option>
+                  <option>12:00 PM</option>
+                  <option>4:00 PM</option>
+                  <option>5:00 PM</option>
+                </select>
+                <label>Time Slot</label>
+              </div>
+
+              <!-- AI Button -->
+              <div class="center">
+                <button class="btn ai-btn waves-effect waves-light">
+                  Book with AI
+                  <i class="material-icons right">smart_toy</i>
+                </button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 SmartMedicare AI. All Rights Reserved.</p>
+  </footer>
+
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    AOS.init({ duration: 1200, once: true });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('select');
+      M.FormSelect.init(elems);
+    });
+  </script>
+
+</body>
+</html>
