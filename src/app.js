@@ -20,7 +20,7 @@ const passport = require('passport');
 const flash = require('connect-flash');
 
 // Passport configuration (local strategy)
-require('../config/passport');
+require('./config/passport');
 
 // Mongoose models
 const User = require('./models/User');
