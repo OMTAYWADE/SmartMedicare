@@ -23,10 +23,10 @@ const flash = require('connect-flash');
 require('./config/passport');
 
 // Mongoose models
-const User = require('./models/User');
-const Patient = require('./models/Patient');
-const Medicine = require('./models/Medicine');
-const Prescription = require('./models/Prescription');
+const User = require('./src/models/User');
+const Patient = require('./src/models/Patient');
+const Medicine = require('./src/models/Medicine');
+const Prescription = require('./src/models/Prescription');
 
 // Initialize express app
 const app = express();
@@ -48,7 +48,7 @@ mongoose
 const path = require("path");
 
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "../views"));
+app.set("views", path.join(__dirname, "views"));
 
 // Serve static files (CSS, JS, Images)
 // IMPORTANT: All static assets must be inside "public" folder
