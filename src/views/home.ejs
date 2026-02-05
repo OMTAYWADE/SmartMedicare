@@ -1,237 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartMedicare AI Healthcare</title>
+  <title>SmartMedicare — AI Healthcare</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-<style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* GLOBAL */
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #020617;
+      color: white;
+      overflow-x: hidden;
+      cursor: none;
+    }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+    /* Neon Cursor */
+    .cursor {
+      position: fixed;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #22c55e, #38bdf8);
+      pointer-events: none;
+      z-index: 9999;
+      filter: blur(6px);
+      transform: translate(-50%, -50%);
+    }
 
-body{
-font-family:'Inter',sans-serif;
-background:#020617;
-color:white;
-overflow-x:hidden;
-}
+    /* Mouse Glow */
+    .mouse-light {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #38bdf833, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+      transform: translate(-50%, -50%);
+    }
 
-/* BACKGROUND GLOW ORBS */
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      padding: 12px 25px;
+      background: rgba(255, 255, 255, .05);
+      backdrop-filter: blur(15px);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, .1);
+      transition: .4s;
+      z-index: 100;
+    }
 
-.orb{
-position:fixed;
-width:450px;
-height:450px;
-border-radius:50%;
-filter:blur(140px);
-opacity:.45;
-z-index:-1;
-animation:float 15s infinite alternate ease-in-out;
-}
+    nav.shrink {
+      top: 5px;
+      padding: 6px 20px;
+    }
 
-.orb.green{background:#22c55e;top:-150px;left:-150px;}
-.orb.blue{background:#38bdf8;bottom:-150px;right:-150px;}
-.orb.purple{background:#8b5cf6;top:40%;left:-150px;}
+    .brand {
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #22c55e, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-@keyframes float{
-from{transform:translateY(0);}
-to{transform:translateY(140px);}
-}
+    .nav-links {
+      float: right;
+    }
 
-/* NAVBAR */
+    .nav-links a {
+      margin-left: 25px;
+      color: #cbd5f5;
+      text-decoration: none;
+      transition: .3s;
+    }
 
-nav{
-position:fixed;
-top:15px;
-left:50%;
-transform:translateX(-50%);
-width:90%;
-padding:15px 25px;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(15px);
-border-radius:20px;
-border:1px solid rgba(255,255,255,.1);
-z-index:100;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
+    .nav-links a:hover {
+      color: white;
+    }
 
-.logo{
-font-weight:800;
-font-size:1.5rem;
-background:linear-gradient(135deg,#22c55e,#38bdf8);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+    /* HERO */
+    .hero {
+      max-width: 1100px;
+      margin: 160px auto;
+      padding: 90px 60px;
+      text-align: center;
+      background: rgba(255, 255, 255, .05);
+      backdrop-filter: blur(18px);
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, .12);
+    }
 
-.nav-links a{
-margin-left:25px;
-text-decoration:none;
-color:#cbd5f5;
-transition:.3s;
-}
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #22c55e, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-.nav-links a:hover{
-color:white;
-}
+    .hero p {
+      margin-top: 20px;
+      color: #cbd5f5;
+      font-size: 1.1rem;
+    }
 
-/* HERO */
+    /* BUTTON */
+    .btn {
+      display: inline-block;
+      padding: 15px 38px;
+      margin: 15px;
+      border-radius: 40px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #22c55e, #38bdf8);
+      color: #020617;
+      transition: .4s;
+      text-decoration: none;
+    }
 
-.hero{
-max-width:1100px;
-margin:160px auto;
-padding:100px 60px;
-text-align:center;
-background:rgba(255,255,255,.05);
-backdrop-filter:blur(18px);
-border-radius:30px;
-border:1px solid rgba(255,255,255,.12);
-box-shadow:0 30px 80px rgba(0,0,0,.5);
-}
+    .btn:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px #38bdf866;
+    }
 
-.hero h1{
-font-size:clamp(2rem,5vw,3.8rem);
-font-weight:800;
-background:linear-gradient(135deg,#22c55e,#38bdf8);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+    /* FEATURES */
+    .features {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      padding: 40px;
+    }
 
-.hero p{
-margin-top:20px;
-color:#cbd5f5;
-font-size:1.1rem;
-}
+    .card {
+      padding: 40px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .12);
+      transition: .4s;
+      transform-style: preserve-3d;
+    }
 
-/* BUTTON */
+    .card:hover {
+      transform: rotateX(8deg) rotateY(-8deg) scale(1.05);
+      box-shadow: 0 30px 70px rgba(56, 189, 248, .3);
+    }
 
-.btn{
-display:inline-block;
-padding:15px 35px;
-margin:15px;
-border-radius:40px;
-font-weight:700;
-background:linear-gradient(135deg,#22c55e,#38bdf8);
-color:#020617;
-text-decoration:none;
-transition:.4s;
-}
+    /* FOOTER */
+    footer {
+      margin-top: 120px;
+      text-align: center;
+      position: relative;
+    }
 
-.btn:hover{
-transform:translateY(-6px);
-box-shadow:0 20px 60px rgba(56,189,248,.6);
-}
+    .wave {
+      position: absolute;
+      top: -100px;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: url('https://svgshare.com/i/13mR.svg');
+      background-size: cover;
+      animation: wave 6s infinite linear;
+    }
 
-/* FEATURES */
+    @keyframes wave {
+      0% {
+        background-position-x: 0;
+      }
 
-.features{
-max-width:1100px;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:30px;
-padding:40px;
-}
+      100% {
+        background-position-x: 1000px;
+      }
+    }
 
-.card{
-padding:40px;
-border-radius:20px;
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.12);
-transition:.4s;
-}
+    footer p {
+      padding: 80px 0 20px;
+      color: #cbd5f5;
+    }
 
-.card:hover{
-transform:translateY(-10px) scale(1.04);
-box-shadow:0 25px 60px rgba(56,189,248,.3);
-}
+    /* MOBILE */
+    @media(max-width:600px) {
+      .hero {
+        padding: 60px 25px;
+        margin-top: 120px;
+      }
 
-/* FOOTER */
-
-footer{
-text-align:center;
-margin-top:100px;
-padding:40px;
-color:#cbd5f5;
-}
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-.hero{
-padding:60px 25px;
-margin-top:130px;
-}
-
-.nav-links{
-display:none;
-}
-
-}
-
-</style>
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="orb green"></div>
-<div class="orb blue"></div>
-<div class="orb purple"></div>
+  <div class="cursor"></div>
+  <div class="mouse-light"></div>
 
-<nav>
-<div class="logo">SmartMedicare</div>
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <span class="brand">SmartMedicare</span>
 
-<div class="nav-links">
-<a href="/about">About</a>
-<a href="/contact">Contact</a>
-<a href="/signup">Signup</a>
-</div>
-</nav>
+    <div class="nav-links">
+      <a href="/about">About</a>
+      <a href="/appointment">Appointment</a>
+      <a href="/contact">Contact</a>
+      <a href="/signup">Sign Up</a>
+    </div>
+  </nav>
 
-<section class="hero">
-<h1>AI Powered Healthcare Platform</h1>
+  <!-- HERO -->
+  <section class="hero" data-aos="zoom-in">
+    <h1>AI Powered Healthcare Platform</h1>
+    <p>Predictive analytics, medication tracking & smart patient management</p>
 
-<p>
-Smart patient monitoring, predictive analytics, and medication tracking.
-</p>
+    <a href="/signup" class="btn">Get Started</a>
+    <a href="/login" class="btn">Login</a>
+  </section>
 
-<a href="/signup" class="btn">Get Started</a>
-<a href="/login" class="btn">Login</a>
-</section>
+  <!-- FEATURES -->
+  <section class="features" data-aos="fade-up">
 
-<section class="features">
+    <div class="card">
+      <i class="material-icons large">smart_toy</i>
+      <h3>AI Intelligence</h3>
+      <p>Predict risks & monitor health automatically.</p>
+    </div>
 
-<div class="card">
-<h3>AI Intelligence</h3>
-<p>Predict health risks automatically.</p>
-</div>
+    <div class="card">
+      <i class="material-icons large">security</i>
+      <h3>Secure Data</h3>
+      <p>Encrypted storage & hospital-grade privacy.</p>
+    </div>
 
-<div class="card">
-<h3>Secure Data</h3>
-<p>Encrypted healthcare storage.</p>
-</div>
+    <div class="card">
+      <i class="material-icons large">schedule</i>
+      <h3>Smart Reminders</h3>
+      <p>Medication and appointment automation.</p>
+    </div>
 
-<div class="card">
-<h3>Smart Reminders</h3>
-<p>Never miss medicines again.</p>
-</div>
+  </section>
 
-</section>
+  <!-- FOOTER -->
+  <footer>
+    <div class="wave"></div>
+    <p>© 2026 SmartMedicare — AI Healthcare Platform</p>
+  </footer>
 
-<footer>
-© 2026 SmartMedicare AI Healthcare Platform
-</footer>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+
+    /* Scroll animation */
+    AOS.init({ duration: 1200 });
+
+    /* Cursor Glow */
+    const cursor = document.querySelector(".cursor");
+    const light = document.querySelector(".mouse-light");
+
+    document.addEventListener("mousemove", e => {
+      cursor.style.left = e.clientX + "px";
+      cursor.style.top = e.clientY + "px";
+
+      light.style.left = e.clientX + "px";
+      light.style.top = e.clientY + "px";
+    });
+
+    /* Navbar Shrink */
+    window.addEventListener("scroll", () => {
+      const nav = document.getElementById("navbar");
+      if (window.scrollY > 50) {
+        nav.classList.add("shrink");
+      } else {
+        nav.classList.remove("shrink");
+      }
+    });
+
+  </script>
 
 </body>
+
 </html>
