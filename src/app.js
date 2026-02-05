@@ -20,13 +20,13 @@ const passport = require('passport');
 const flash = require('connect-flash');
 
 // Passport configuration (local strategy)
-require('./config/passport');
+require('../config/passport');
 
 // Mongoose models
-const User = require('./src/models/User');
-const Patient = require('./src/models/Patient');
-const Medicine = require('./src/models/Medicine');
-const Prescription = require('./src/models/Prescription');
+const User = require('./models/User');
+const Patient = require('./models/Patient');
+const Medicine = require('./models/Medicine');
+const Prescription = require('./models/Prescription');
 
 // Initialize express app
 const app = express();
