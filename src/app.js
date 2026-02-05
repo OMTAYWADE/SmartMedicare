@@ -318,7 +318,7 @@ app.post('/doctor/medicine/:id/update', isAuth, isDoctor, async (req, res) => {
 
     await med.save();
 
-    res.redirect('/doctor/patient/${req.params.id}/medicines');
+   res.redirect(`/doctor/patient/${req.params.id}/medicines`);
   }
   catch(error) {
     console.log(error);
