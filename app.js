@@ -130,7 +130,7 @@ app.get('/login', (req, res) => {
 
 // Signup page
 app.get('/signup', (req, res) => {
-  res.render('signup');
+  res.render('signUp');
 });
 
 // Login handler
