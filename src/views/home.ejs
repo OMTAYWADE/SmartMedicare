@@ -1,296 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SmartMedicare — AI Healthcare</title>
+  <title>SmartMedicare — AI Healthcare</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-<style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #020617;
+      color: white;
+      overflow-x: hidden;
+      cursor: none;
+    }
 
-body{
-font-family:'Inter',sans-serif;
-background:#020617;
-color:white;
-overflow-x:hidden;
-cursor:none;
-}
+    /* Neon Cursor */
+    .cursor {
+      position: fixed;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #22c55e, #38bdf8);
+      pointer-events: none;
+      z-index: 9999;
+      filter: blur(6px);
+      transform: translate(-50%, -50%);
+    }
 
-/* Neon Cursor */
-.cursor{
-position:fixed;
-width:22px;
-height:22px;
-border-radius:50%;
-background:linear-gradient(135deg,#22c55e,#38bdf8);
-pointer-events:none;
-z-index:9999;
-filter:blur(6px);
-transform:translate(-50%,-50%);
-}
+    /* Mouse Glow */
+    .mouse-light {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #38bdf833, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+      transform: translate(-50%, -50%);
+    }
 
-/* Mouse Glow */
-.mouse-light{
-position:fixed;
-width:600px;
-height:600px;
-border-radius:50%;
-background:radial-gradient(circle,#38bdf833,transparent 70%);
-pointer-events:none;
-z-index:-1;
-transform:translate(-50%,-50%);
-}
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      padding: 12px 25px;
+      background: rgba(255, 255, 255, .05);
+      backdrop-filter: blur(15px);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, .1);
+      transition: .4s;
+      z-index: 100;
+    }
 
-/* NAVBAR */
-nav{
-position:fixed;
-top:15px;
-left:50%;
-transform:translateX(-50%);
-width:90%;
-padding:12px 25px;
-background:rgba(255,255,255,.05);
-backdrop-filter:blur(15px);
-border-radius:18px;
-border:1px solid rgba(255,255,255,.1);
-transition:.4s;
-z-index:100;
-}
+    nav.shrink {
+      top: 5px;
+      padding: 6px 20px;
+    }
 
-nav.shrink{
-top:5px;
-padding:6px 20px;
-}
+    .brand {
+      font-weight: 800;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #22c55e, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-.brand{
-font-weight:800;
-font-size:1.5rem;
-background:linear-gradient(135deg,#22c55e,#38bdf8);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+    .nav-links {
+      float: right;
+    }
 
-.nav-links{
-float:right;
-}
+    .nav-links a {
+      margin-left: 25px;
+      color: #cbd5f5;
+      text-decoration: none;
+      transition: .3s;
+    }
 
-.nav-links a{
-margin-left:25px;
-color:#cbd5f5;
-text-decoration:none;
-transition:.3s;
-}
+    .nav-links a:hover {
+      color: white;
+    }
 
-.nav-links a:hover{
-color:white;
-}
+    /* HERO */
+    .hero {
+      max-width: 1100px;
+      margin: 160px auto;
+      padding: 90px 60px;
+      text-align: center;
+      background: rgba(255, 255, 255, .05);
+      backdrop-filter: blur(18px);
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, .12);
+    }
 
-/* HERO */
-.hero{
-max-width:1100px;
-margin:160px auto;
-padding:90px 60px;
-text-align:center;
-background:rgba(255,255,255,.05);
-backdrop-filter:blur(18px);
-border-radius:30px;
-border:1px solid rgba(255,255,255,.12);
-}
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #22c55e, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-.hero h1{
-font-size:clamp(2.2rem,5vw,4rem);
-font-weight:800;
-background:linear-gradient(135deg,#22c55e,#38bdf8);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+    .hero p {
+      margin-top: 20px;
+      color: #cbd5f5;
+      font-size: 1.1rem;
+    }
 
-.hero p{
-margin-top:20px;
-color:#cbd5f5;
-font-size:1.1rem;
-}
+    /* BUTTON */
+    .btn {
+      display: inline-block;
+      padding: 15px 38px;
+      margin: 15px;
+      border-radius: 40px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #22c55e, #38bdf8);
+      color: #020617;
+      transition: .4s;
+      text-decoration: none;
+    }
 
-/* BUTTON */
-.btn{
-display:inline-block;
-padding:15px 38px;
-margin:15px;
-border-radius:40px;
-font-weight:700;
-background:linear-gradient(135deg,#22c55e,#38bdf8);
-color:#020617;
-transition:.4s;
-text-decoration:none;
-}
+    .btn:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px #38bdf866;
+    }
 
-.btn:hover{
-transform:translateY(-6px);
-box-shadow:0 20px 60px #38bdf866;
-}
+    /* FEATURES */
+    .features {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      padding: 40px;
+    }
 
-/* FEATURES */
-.features{
-max-width:1100px;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:30px;
-padding:40px;
-}
+    .card {
+      padding: 40px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .12);
+      transition: .4s;
+      transform-style: preserve-3d;
+    }
 
-.card{
-padding:40px;
-border-radius:20px;
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.12);
-transition:.4s;
-transform-style:preserve-3d;
-}
+    .card:hover {
+      transform: rotateX(8deg) rotateY(-8deg) scale(1.05);
+      box-shadow: 0 30px 70px rgba(56, 189, 248, .3);
+    }
 
-.card:hover{
-transform:rotateX(8deg) rotateY(-8deg) scale(1.05);
-box-shadow:0 30px 70px rgba(56,189,248,.3);
-}
+    /* FOOTER */
+    footer {
+      margin-top: 120px;
+      text-align: center;
+      position: relative;
+    }
 
-/* FOOTER */
-footer{
-margin-top:120px;
-text-align:center;
-position:relative;
-}
+    .wave {
+      position: absolute;
+      top: -100px;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: url('https://svgshare.com/i/13mR.svg');
+      background-size: cover;
+      animation: wave 6s infinite linear;
+    }
 
-.wave{
-position:absolute;
-top:-100px;
-left:0;
-width:100%;
-height:100px;
-background:url('https://svgshare.com/i/13mR.svg');
-background-size:cover;
-animation:wave 6s infinite linear;
-}
+    @keyframes wave {
+      0% {
+        background-position-x: 0;
+      }
 
-@keyframes wave{
-0%{background-position-x:0;}
-100%{background-position-x:1000px;}
-}
+      100% {
+        background-position-x: 1000px;
+      }
+    }
 
-footer p{
-padding:80px 0 20px;
-color:#cbd5f5;
-}
+    footer p {
+      padding: 80px 0 20px;
+      color: #cbd5f5;
+    }
 
-/* MOBILE */
-@media(max-width:600px){
-.hero{
-padding:60px 25px;
-margin-top:120px;
-}
+    /* MOBILE */
+    @media(max-width:600px) {
+      .hero {
+        padding: 60px 25px;
+        margin-top: 120px;
+      }
 
-.nav-links{
-display:none;
-}
-}
-
-</style>
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="cursor"></div>
-<div class="mouse-light"></div>
+  <div class="cursor"></div>
+  <div class="mouse-light"></div>
 
-<!-- NAVBAR -->
-<nav id="navbar">
-<span class="brand">SmartMedicare</span>
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <span class="brand">SmartMedicare</span>
 
-<div class="nav-links">
-<a href="/about">About</a>
-<a href="/appointment">Appointment</a>
-<a href="/contact">Contact</a>
-<a href="/signup">Sign Up</a>
-</div>
-</nav>
+    <div class="nav-links">
+      <a href="/about">About</a>
+      <a href="/appointment">Appointment</a>
+      <a href="/contact">Contact</a>
+      <a href="/signup">Sign Up</a>
+    </div>
+  </nav>
 
-<!-- HERO -->
-<section class="hero" data-aos="zoom-in">
-<h1>AI Powered Healthcare Platform</h1>
-<p>Predictive analytics, medication tracking & smart patient management</p>
+  <!-- HERO -->
+  <section class="hero" data-aos="zoom-in">
+    <h1>AI Powered Healthcare Platform</h1>
+    <p>Predictive analytics, medication tracking & smart patient management</p>
 
-<a href="/signup" class="btn">Get Started</a>
-<a href="/login" class="btn">Login</a>
-</section>
+    <a href="/signup" class="btn">Get Started</a>
+    <a href="/login" class="btn">Login</a>
+  </section>
 
-<!-- FEATURES -->
-<section class="features" data-aos="fade-up">
+  <!-- FEATURES -->
+  <section class="features" data-aos="fade-up">
 
-<div class="card">
-<i class="material-icons large">smart_toy</i>
-<h3>AI Intelligence</h3>
-<p>Predict risks & monitor health automatically.</p>
-</div>
+    <div class="card">
+      <i class="material-icons large">smart_toy</i>
+      <h3>AI Intelligence</h3>
+      <p>Predict risks & monitor health automatically.</p>
+    </div>
 
-<div class="card">
-<i class="material-icons large">security</i>
-<h3>Secure Data</h3>
-<p>Encrypted storage & hospital-grade privacy.</p>
-</div>
+    <div class="card">
+      <i class="material-icons large">security</i>
+      <h3>Secure Data</h3>
+      <p>Encrypted storage & hospital-grade privacy.</p>
+    </div>
 
-<div class="card">
-<i class="material-icons large">schedule</i>
-<h3>Smart Reminders</h3>
-<p>Medication and appointment automation.</p>
-</div>
+    <div class="card">
+      <i class="material-icons large">schedule</i>
+      <h3>Smart Reminders</h3>
+      <p>Medication and appointment automation.</p>
+    </div>
 
-</section>
+  </section>
 
-<!-- FOOTER -->
-<footer>
-<div class="wave"></div>
-<p>© 2026 SmartMedicare — AI Healthcare Platform</p>
-</footer>
+  <!-- FOOTER -->
+  <footer>
+    <div class="wave"></div>
+    <p>© 2026 SmartMedicare — AI Healthcare Platform</p>
+  </footer>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-<script>
+  <script>
 
-/* Scroll animation */
-AOS.init({duration:1200});
+    /* Scroll animation */
+    AOS.init({ duration: 1200 });
 
-/* Cursor Glow */
-const cursor=document.querySelector(".cursor");
-const light=document.querySelector(".mouse-light");
+    /* Cursor Glow */
+    const cursor = document.querySelector(".cursor");
+    const light = document.querySelector(".mouse-light");
 
-document.addEventListener("mousemove",e=>{
-cursor.style.left=e.clientX+"px";
-cursor.style.top=e.clientY+"px";
+    document.addEventListener("mousemove", e => {
+      cursor.style.left = e.clientX + "px";
+      cursor.style.top = e.clientY + "px";
 
-light.style.left=e.clientX+"px";
-light.style.top=e.clientY+"px";
-});
+      light.style.left = e.clientX + "px";
+      light.style.top = e.clientY + "px";
+    });
 
-/* Navbar Shrink */
-window.addEventListener("scroll",()=>{
-const nav=document.getElementById("navbar");
-if(window.scrollY>50){
-nav.classList.add("shrink");
-}else{
-nav.classList.remove("shrink");
-}
-});
+    /* Navbar Shrink */
+    window.addEventListener("scroll", () => {
+      const nav = document.getElementById("navbar");
+      if (window.scrollY > 50) {
+        nav.classList.add("shrink");
+      } else {
+        nav.classList.remove("shrink");
+      }
+    });
 
-</script>
+  </script>
 
 </body>
+
 </html>
