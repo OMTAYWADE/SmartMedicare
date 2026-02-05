@@ -52,7 +52,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // Serve static files (CSS, JS, Images)
 // IMPORTANT: All static assets must be inside "public" folder
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Parse form data (POST requests)
 app.use(express.urlencoded({ extended: true }));
