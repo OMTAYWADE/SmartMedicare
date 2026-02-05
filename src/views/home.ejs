@@ -1,256 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartMedicare AI Healthcare</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartMedicare AI Healthcare</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-  <style>
-    /* GLOBAL */
+<style>
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+/* GLOBAL */
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #020617;
-      color: white;
-      overflow-x: hidden;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-    /* BACKGROUND GLOW ORBS */
+body{
+font-family:'Inter',sans-serif;
+background:#020617;
+color:white;
+overflow-x:hidden;
+}
 
-    .orb {
-      position: fixed;
-      width: 450px;
-      height: 450px;
-      border-radius: 50%;
-      filter: blur(140px);
-      opacity: .45;
-      z-index: -1;
-      animation: float 15s infinite alternate ease-in-out;
-    }
+/* BACKGROUND GLOW ORBS */
 
-    .orb.green {
-      background: #22c55e;
-      top: -150px;
-      left: -150px;
-    }
+.orb{
+position:fixed;
+width:450px;
+height:450px;
+border-radius:50%;
+filter:blur(140px);
+opacity:.45;
+z-index:-1;
+animation:float 15s infinite alternate ease-in-out;
+}
 
-    .orb.blue {
-      background: #38bdf8;
-      bottom: -150px;
-      right: -150px;
-    }
+.orb.green{background:#22c55e;top:-150px;left:-150px;}
+.orb.blue{background:#38bdf8;bottom:-150px;right:-150px;}
+.orb.purple{background:#8b5cf6;top:40%;left:-150px;}
 
-    .orb.purple {
-      background: #8b5cf6;
-      top: 40%;
-      left: -150px;
-    }
+@keyframes float{
+from{transform:translateY(0);}
+to{transform:translateY(140px);}
+}
 
-    @keyframes float {
-      from {
-        transform: translateY(0);
-      }
+/* NAVBAR */
 
-      to {
-        transform: translateY(140px);
-      }
-    }
+nav{
+position:fixed;
+top:15px;
+left:50%;
+transform:translateX(-50%);
+width:90%;
+padding:15px 25px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+border-radius:20px;
+border:1px solid rgba(255,255,255,.1);
+z-index:100;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
 
-    /* NAVBAR */
+.logo{
+font-weight:800;
+font-size:1.5rem;
+background:linear-gradient(135deg,#22c55e,#38bdf8);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
 
-    nav {
-      position: fixed;
-      top: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      padding: 15px 25px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(15px);
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, .1);
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.nav-links a{
+margin-left:25px;
+text-decoration:none;
+color:#cbd5f5;
+transition:.3s;
+}
 
-    .logo {
-      font-weight: 800;
-      font-size: 1.5rem;
-      background: linear-gradient(135deg, #22c55e, #38bdf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+.nav-links a:hover{
+color:white;
+}
 
-    .nav-links a {
-      margin-left: 25px;
-      text-decoration: none;
-      color: #cbd5f5;
-      transition: .3s;
-    }
+/* HERO */
 
-    .nav-links a:hover {
-      color: white;
-    }
+.hero{
+max-width:1100px;
+margin:160px auto;
+padding:100px 60px;
+text-align:center;
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(18px);
+border-radius:30px;
+border:1px solid rgba(255,255,255,.12);
+box-shadow:0 30px 80px rgba(0,0,0,.5);
+}
 
-    /* HERO */
+.hero h1{
+font-size:clamp(2rem,5vw,3.8rem);
+font-weight:800;
+background:linear-gradient(135deg,#22c55e,#38bdf8);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
 
-    .hero {
-      max-width: 1100px;
-      margin: 160px auto;
-      padding: 100px 60px;
-      text-align: center;
-      background: rgba(255, 255, 255, .05);
-      backdrop-filter: blur(18px);
-      border-radius: 30px;
-      border: 1px solid rgba(255, 255, 255, .12);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
-    }
+.hero p{
+margin-top:20px;
+color:#cbd5f5;
+font-size:1.1rem;
+}
 
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.8rem);
-      font-weight: 800;
-      background: linear-gradient(135deg, #22c55e, #38bdf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+/* BUTTON */
 
-    .hero p {
-      margin-top: 20px;
-      color: #cbd5f5;
-      font-size: 1.1rem;
-    }
+.btn{
+display:inline-block;
+padding:15px 35px;
+margin:15px;
+border-radius:40px;
+font-weight:700;
+background:linear-gradient(135deg,#22c55e,#38bdf8);
+color:#020617;
+text-decoration:none;
+transition:.4s;
+}
 
-    /* BUTTON */
+.btn:hover{
+transform:translateY(-6px);
+box-shadow:0 20px 60px rgba(56,189,248,.6);
+}
 
-    .btn {
-      display: inline-block;
-      padding: 15px 35px;
-      margin: 15px;
-      border-radius: 40px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #22c55e, #38bdf8);
-      color: #020617;
-      text-decoration: none;
-      transition: .4s;
-    }
+/* FEATURES */
 
-    .btn:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(56, 189, 248, .6);
-    }
+.features{
+max-width:1100px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:30px;
+padding:40px;
+}
 
-    /* FEATURES */
+.card{
+padding:40px;
+border-radius:20px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.12);
+transition:.4s;
+}
 
-    .features {
-      max-width: 1100px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 30px;
-      padding: 40px;
-    }
+.card:hover{
+transform:translateY(-10px) scale(1.04);
+box-shadow:0 25px 60px rgba(56,189,248,.3);
+}
 
-    .card {
-      padding: 40px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, .05);
-      border: 1px solid rgba(255, 255, 255, .12);
-      transition: .4s;
-    }
+/* FOOTER */
 
-    .card:hover {
-      transform: translateY(-10px) scale(1.04);
-      box-shadow: 0 25px 60px rgba(56, 189, 248, .3);
-    }
+footer{
+text-align:center;
+margin-top:100px;
+padding:40px;
+color:#cbd5f5;
+}
 
-    /* FOOTER */
+/* MOBILE */
 
-    footer {
-      text-align: center;
-      margin-top: 100px;
-      padding: 40px;
-      color: #cbd5f5;
-    }
+@media(max-width:600px){
 
-    /* MOBILE */
+.hero{
+padding:60px 25px;
+margin-top:130px;
+}
 
-    @media(max-width:600px) {
+.nav-links{
+display:none;
+}
 
-      .hero {
-        padding: 60px 25px;
-        margin-top: 130px;
-      }
+}
 
-      .nav-links {
-        display: none;
-      }
-
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
-  <div class="orb green"></div>
-  <div class="orb blue"></div>
-  <div class="orb purple"></div>
+<div class="orb green"></div>
+<div class="orb blue"></div>
+<div class="orb purple"></div>
 
-  <nav>
-    <div class="logo">SmartMedicare</div>
+<nav>
+<div class="logo">SmartMedicare</div>
 
-    <div class="nav-links">
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
-      <a href="/signup">Signup</a>
-    </div>
-  </nav>
+<div class="nav-links">
+<a href="/about">About</a>
+<a href="/contact">Contact</a>
+<a href="/signup">Signup</a>
+</div>
+</nav>
 
-  <section class="hero">
-    <h1>AI Powered Healthcare Platform</h1>
+<section class="hero">
+<h1>AI Powered Healthcare Platform</h1>
 
-    <p>
-      Smart patient monitoring, predictive analytics, and medication tracking.
-    </p>
+<p>
+Smart patient monitoring, predictive analytics, and medication tracking.
+</p>
 
-    <a href="/signup" class="btn">Get Started</a>
-    <a href="/login" class="btn">Login</a>
-  </section>
+<a href="/signup" class="btn">Get Started</a>
+<a href="/login" class="btn">Login</a>
+</section>
 
-  <section class="features">
+<section class="features">
 
-    <div class="card">
-      <h3>AI Intelligence</h3>
-      <p>Predict health risks automatically.</p>
-    </div>
+<div class="card">
+<h3>AI Intelligence</h3>
+<p>Predict health risks automatically.</p>
+</div>
 
-    <div class="card">
-      <h3>Secure Data</h3>
-      <p>Encrypted healthcare storage.</p>
-    </div>
+<div class="card">
+<h3>Secure Data</h3>
+<p>Encrypted healthcare storage.</p>
+</div>
 
-    <div class="card">
-      <h3>Smart Reminders</h3>
-      <p>Never miss medicines again.</p>
-    </div>
+<div class="card">
+<h3>Smart Reminders</h3>
+<p>Never miss medicines again.</p>
+</div>
 
-  </section>
+</section>
 
-  <footer>
-    © 2026 SmartMedicare AI Healthcare Platform
-  </footer>
+<footer>
+© 2026 SmartMedicare AI Healthcare Platform
+</footer>
 
 </body>
-
 </html>
