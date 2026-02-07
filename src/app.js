@@ -118,8 +118,8 @@ app.get('/', (req, res) => {
 });
 
 // dashboard
-app.get('/dashboard' , isAuth ,(req, res) => {
-  res.render("dashboard", {user: req.user});
+app.get('/dashboard', isAuth, (req, res) => {
+  res.render("dashboard", { user: req.user });
 });
 
 // Health-tips
@@ -240,12 +240,12 @@ app.get('/doctor/dashboard', isAuth, isDoctor, async (req, res) => {
     // Fetch the patient linked to this doctor
     const patientId = req.user.patient._id || req.user.patient;
     const patient = await Patient.findById(patientId);
-    
+
     if (!patient) {
       return res.status(404).send('Patient not found');
     }
     // assignedDoctor id by patient means patient ki id hogi
-     if (!patient.assignedDoctor) {
+    if (!patient.assignedDoctor) {
       patient.assignedDoctor = req.user._id;
       await patient.save();
       console.log("✅ Patient auto-assigned to doctor");
@@ -275,7 +275,7 @@ app.get('/patient/:id/medicines', isAuth, async (req, res) => {
 app.get('/doctor/patient/:id/medicines', isAuth, isDoctor, async (req, res) => {
   try {
     const patient = await Patient.findById(req.params.id);
-    const medicines = await Medicine.find({ patient: patient._id }).sort({id: -1});
+    const medicines = await Medicine.find({ patient: patient._id }).sort({ id: -1 });
 
     if (!patient) {
       return res.status(404).send('Patient not found');
@@ -311,7 +311,7 @@ app.post('/doctor/patient/:id/medicines', isAuth, isDoctor, async (req, res) => 
 app.post('/doctor/medicine/:id/update', isAuth, isDoctor, async (req, res) => {
   try {
     const med = await Medicine.findById(req.params.id);
-    
+
     med.name = req.body.name;
     med.dosesRemaining = req.body.dosesRemaining;
     med.frequency = req.body.frequency;
@@ -319,9 +319,9 @@ app.post('/doctor/medicine/:id/update', isAuth, isDoctor, async (req, res) => {
 
     await med.save();
 
-   res.redirect(`/doctor/patient/${req.params.id}/medicines`);
+    res.redirect(`/doctor/patient/${req.params.id}/medicines`);
   }
-  catch(error) {
+  catch (error) {
     console.log(error);
     res.status(500).send("Failure to update Medicine")
   }
@@ -477,8 +477,11 @@ const axios = require("axios");
 app.post("/contact", async (req, res) => {
   const { name, email, message } = req.body;
 
-const botToken = process.env.TELEGRAM_TOKEN;
-const chatId = process.env.TELEGRAM_CHAT_ID;
+  const botToken = process.env.TELEGRAM_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+
+  console.log("TOKEN:", botToken);
+  console.log("CHAT ID:", chatId);
 
   const text = `
 📩 SmartMedicare Contact
