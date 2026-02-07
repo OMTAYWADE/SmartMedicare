@@ -330,7 +330,7 @@ app.post('/doctor/medicine/:id/update', isAuth, isDoctor, async (req, res) => {
 app.post('/doctor/medicine/:id/delete', isAuth, isDoctor, async (req, res) => {
   try {
     const med = await Medicine.findByIdAndDelete(req.params.id);
-    res.redirect('/doctor/patient/${req.params.id}/medicines');
+    res.redirect(`/doctor/patient/${req.params.id}/medicines`);
   } catch (err) {
     console.log(err);
     res.status(500).send(" Failure to Delete medicines");
@@ -477,8 +477,8 @@ const axios = require("axios");
 app.post("/contact", async (req, res) => {
   const { name, email, message } = req.body;
 
-  const botToken = "8289831310:AAGb8DFflB_wp_LCu1cD3tRtjd1mq3d3YR0";
-  const chatId = "8289831310";
+const botToken = process.env.TELEGRAM_TOKEN;
+const chatId = process.env.TELEGRAM_CHAT_ID;
 
   const text = `
 📩 SmartMedicare Contact
