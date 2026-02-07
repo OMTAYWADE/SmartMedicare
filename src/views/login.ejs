@@ -1,196 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login | SmartMedicare</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | SmartMedicare</title>
 
-  <!-- Materialize CSS -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
 
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
-      margin: 0;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-    /* Overlay for readability */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(
-        rgba(0, 0, 0, 0.45),
-        rgba(0, 0, 0, 0.65)
-      );
-      z-index: -1;
-    }
+body{
+font-family:'Poppins',sans-serif;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+overflow:hidden;
+}
 
-    /* Login Card */
-    .login-card {
-      backdrop-filter: blur(14px);
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 18px;
-      box-shadow:
-        0 25px 50px rgba(0, 0, 0, 0.4),
-        inset 0 0 0.5px rgba(255, 255, 255, 0.6);
-      transform-style: preserve-3d;
-      transition: all 0.4s ease;
-    }
+/* Dark overlay */
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.75));
+z-index:-1;
+}
 
-    .login-card:hover {
-      transform: translateY(-10px) rotateX(3deg);
-      box-shadow: 0 40px 70px rgba(0, 0, 0, 0.55);
-    }
+/* Animated floating gradient */
+body::after{
+content:"";
+position:absolute;
+width:600px;
+height:600px;
+background:radial-gradient(circle,#42a5f580,transparent 70%);
+filter:blur(120px);
+animation:float 8s ease-in-out infinite alternate;
+z-index:-1;
+}
 
-    .card-title {
-      font-weight: 600;
-      letter-spacing: 1px;
-      color: #fff;
-    }
+@keyframes float{
+from{transform:translate(-150px,-150px);}
+to{transform:translate(150px,150px);}
+}
 
-    .input-field input {
-      color: #fff;
-    }
+/* Card */
+.login-card{
+backdrop-filter:blur(18px);
+background:rgba(255,255,255,.12);
+border-radius:20px;
+padding:10px;
+box-shadow:0 30px 60px rgba(0,0,0,.5);
+animation:fadeInUp 1s ease forwards;
+opacity:0;
+transform:translateY(40px);
+transition:.4s;
+}
 
-    .input-field label {
-      color: #ddd;
-    }
+.login-card:hover{
+transform:translateY(-8px);
+box-shadow:0 40px 70px rgba(0,0,0,.6);
+}
 
-    .input-field input:focus + label {
-      color: #80d8ff !important;
-    }
+@keyframes fadeInUp{
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
 
-    .input-field input:focus {
-      border-bottom: 1px solid #80d8ff !important;
-      box-shadow: 0 1px 0 0 #80d8ff !important;
-    }
+.card-title{
+color:#fff;
+font-weight:600;
+letter-spacing:1px;
+margin-bottom:20px;
+}
 
-    /* Button */
-    .login-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #42a5f5, #478ed1);
-      border-radius: 30px;
-      font-weight: 500;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 25px rgba(66, 165, 245, 0.5);
-    }
+/* Inputs */
+.input-field input{
+color:#fff;
+}
 
-    .login-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 18px 35px rgba(66, 165, 245, 0.7);
-    }
+.input-field label{
+color:#ddd;
+}
 
-    .card-action {
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-    }
+.input-field input:focus + label{
+color:#42a5f5 !important;
+}
 
-    .card-action a {
-      color: #80d8ff;
-      font-weight: 500;
-    }
+.input-field input:focus{
+border-bottom:1px solid #42a5f5 !important;
+box-shadow:0 1px 0 0 #42a5f5 !important;
+}
 
-    .red-text {
-      font-weight: 500;
-    }
+/* Button */
+.login-btn{
+width:100%;
+border-radius:30px;
+background:linear-gradient(135deg,#42a5f5,#478ed1);
+font-weight:500;
+letter-spacing:1px;
+transition:.4s;
+box-shadow:0 10px 25px rgba(66,165,245,.6);
+animation:pulse 3s infinite;
+}
 
-    @media (max-width: 600px) {
-      .login-card {
-        margin: 10px;
-      }
-    }
+.login-btn:hover{
+transform:translateY(-4px);
+box-shadow:0 20px 40px rgba(66,165,245,.8);
+}
 
-    .return{
-    color: #fff;
-    display: flex;
-    }
+@keyframes pulse{
+0%{box-shadow:0 0 0 0 rgba(66,165,245,.6);}
+70%{box-shadow:0 0 0 20px rgba(66,165,245,0);}
+100%{box-shadow:0 0 0 0 rgba(66,165,245,0);}
+}
 
-    .return:hover{
-    color: #f983fb;
-    }
-  </style>
+/* Return link */
+.return{
+color:#fff;
+text-decoration:none;
+display:inline-block;
+margin-bottom:15px;
+transition:.3s;
+}
+
+.return:hover{
+color:#42a5f5;
+transform:translateX(-5px);
+}
+
+/* Footer */
+.card-action{
+border-top:1px solid rgba(255,255,255,.2);
+}
+
+.card-action a{
+color:#42a5f5;
+font-weight:500;
+}
+
+.red-text{
+font-weight:500;
+}
+
+/* Mobile */
+@media(max-width:600px){
+.login-card{
+margin:15px;
+padding:20px 10px;
+}
+}
+
+</style>
 </head>
 
 <body>
 
 <div class="container">
-  <div class="row">
-    <div class="col s12 m6 offset-m3">
-      <div class="card login-card">
-        <div class="card-content">
-          <a class="return" href="/"> < Home</a>
-          <span class="card-title center-align">Welcome Back</span>
+<div class="row">
+<div class="col s12 m6 offset-m3">
 
-          <% if (message && message.length) { %>
-            <p class="red-text center-align"><%= message %></p>
-          <% } %>
+<div class="card login-card">
 
-          <form action="/login" method="POST">
+<div class="card-content">
 
-            <div class="input-field">
-              <input id="email" type="email" name="email" required>
-              <label for="email">Email</label>
-            </div>
+<a class="return" href="/">← Home</a>
 
-            <div class="input-field">
-              <input id="password" type="password" name="password" required>
-              <label for="password">Password</label>
-            </div>
+<span class="card-title center-align">Welcome Back</span>
 
-            <button type="submit" class="btn btn-large login-btn">
-              Login
-            </button>
+<% if (message && message.length) { %>
+<p class="red-text center-align"><%= message %></p>
+<% } %>
 
-          </form>
-        </div>
+<form action="/login" method="POST">
 
-        <div class="card-action center-align">
-          <p style="color:#eee">
-            Don’t have an account?
-            <a href="/signup">Sign Up</a>
-          </p>
-        </div>
-
-      </div>
-    </div>
-  </div>
+<div class="input-field">
+<input id="email" type="email" name="email" required>
+<label for="email">Email</label>
 </div>
 
-<!-- Materialize JS -->
+<div class="input-field">
+<input id="password" type="password" name="password" required>
+<label for="password">Password</label>
+</div>
+
+<button type="submit" class="btn btn-large login-btn">
+Login
+</button>
+
+</form>
+
+</div>
+
+<div class="card-action center-align">
+<p style="color:#eee">
+Don’t have an account?
+<a href="/signup">Sign Up</a>
+</p>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    M.updateTextFields();
+document.addEventListener('DOMContentLoaded', () => {
+M.updateTextFields();
 
-    const images = [
-      "https://m.media-amazon.com/images/I/71mgpWBEXHL.jpg",
-      "https://wallpapercave.com/wp/wp1951584.jpg",
-      "https://wallpapercave.com/wp/wp14192218.jpg",
-      "https://wallpapercave.com/uwp/uwp4960630.jpeg",
-      "https://wallpapercave.com/uwp/uwp4960448.jpeg",
-      "https://wallpapercave.com/wp/wp11155181.jpg",
-      "https://wallpapercave.com/wp/wp6057120.jpg",
-      "https://wallpapercave.com/wp/wp5574437.jpg",
-      "https://wallpapercave.com/wp/wp16029940.jpg",
-      "https://wallpapercave.com/wp/wp13182994.jpg",
-      "https://wallpapercave.com/wp/wp14940921.webp",
-      "https://wallpapercave.com/wp/wp14981590.webp"
-    ];
+const images = [
+"https://wallpapercave.com/wp/wp6057120.jpg",
+"https://wallpapercave.com/wp/wp5574437.jpg",
+"https://wallpapercave.com/wp/wp14981590.webp"
+];
 
-    const randomImage = images[Math.floor(Math.random() * images.length)];
-    document.body.style.backgroundImage = `url(${randomImage})`;
-  });
+const randomImage = images[Math.floor(Math.random() * images.length)];
+document.body.style.backgroundImage = `url(${randomImage})`;
+});
 </script>
 
 </body>

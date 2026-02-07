@@ -1,230 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard | SmartMedicare</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard | SmartMedicare</title>
 
-  <!-- Materialize CSS -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <!-- Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+body{
+font-family:'Inter',sans-serif;
+background:#020617;
+color:#e5e7eb;
+margin:0;
+overflow-x:hidden;
+}
 
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
+/* Floating Background Glow */
+body::before,
+body::after{
+content:"";
+position:fixed;
+width:600px;
+height:600px;
+border-radius:50%;
+filter:blur(150px);
+opacity:.25;
+z-index:-1;
+animation:float 14s infinite alternate ease-in-out;
+}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at top right, #020617, #020617);
-      color: #e5e7eb;
-      overflow-x: hidden;
-    }
+body::before{
+background:#22c55e;
+top:-150px;
+left:-150px;
+}
 
-    main {
-      padding: 50px 0;
-    }
+body::after{
+background:#2563eb;
+bottom:-150px;
+right:-150px;
+animation-delay:5s;
+}
 
-    /* Animated background glow */
-    body::before, body::after {
-      content: "";
-      position: fixed;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      filter: blur(140px);
-      opacity: 0.25;
-      z-index: -1;
-      animation: float 12s infinite alternate ease-in-out;
-    }
+@keyframes float{
+from{transform:translateY(0);}
+to{transform:translateY(100px);}
+}
 
-    body::before {
-      background: #22c55e;
-      top: -100px;
-      left: -100px;
-    }
+/* Navbar */
+nav{
+background:rgba(2,6,23,.85);
+backdrop-filter:blur(12px);
+position:sticky;
+top:0;
+z-index:100;
+}
 
-    body::after {
-      background: #2563eb;
-      bottom: -100px;
-      right: -100px;
-      animation-delay: 4s;
-    }
+/* Cards */
+.dash-card{
+background:rgba(255,255,255,.06);
+backdrop-filter:blur(16px);
+border-radius:18px;
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+transition:.4s;
+animation:fadeUp .7s ease forwards;
+opacity:0;
+transform:translateY(25px);
+}
 
-    @keyframes float {
-      from { transform: translateY(0px); }
-      to { transform: translateY(80px); }
-    }
+.dash-card:hover{
+transform:translateY(-10px) scale(1.02);
+box-shadow:0 35px 80px rgba(0,0,0,.6);
+}
 
-    /* Glass cards */
-    .dash-card {
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(14px);
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-      transition: all 0.45s cubic-bezier(.4,0,.2,1);
-      animation: fadeUp 0.7s ease forwards;
-    }
+@keyframes fadeUp{
+to{opacity:1;transform:translateY(0);}
+}
 
-    .dash-card:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 35px 80px rgba(0,0,0,0.6);
-    }
+h4{
+font-weight:700;
+color:#f8fafc;
+}
 
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+/* Role Badge */
+.role-badge{
+padding:6px 14px;
+border-radius:20px;
+font-size:13px;
+font-weight:600;
+margin-left:10px;
+}
 
-    h4 {
-      font-weight: 700;
-      color: #f8fafc;
-    }
+.role-badge.patient{
+background:linear-gradient(135deg,#22c55e,#16a34a);
+color:#022c22;
+}
 
-    .role-badge {
-      display: inline-block;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: #022c22;
-      margin-left: 10px;
-    }
+.role-badge.doctor{
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+}
 
-    .action-icon {
-      font-size: 56px;
-      margin-bottom: 12px;
-      transition: transform 0.3s ease;
-    }
+/* Icons */
+.action-icon{
+font-size:56px;
+margin-bottom:12px;
+transition:.3s;
+}
 
-    .dash-card.center-align:hover .action-icon {
-      transform: scale(1.25) rotate(-5deg);
-    }
+.dash-card.center-align:hover .action-icon{
+transform:scale(1.25) rotate(-5deg);
+}
 
-    .btn {
-      border-radius: 10px;
-    }
+/* Stats */
+.stats{
+display:flex;
+gap:40px;
+flex-wrap:wrap;
+margin:20px 0;
+}
 
-    footer {
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255,255,255,0.05);
-      margin-top: 40px;
-    }
-  </style>
+.stat{
+text-align:center;
+}
+
+.stat-number{
+font-size:28px;
+font-weight:700;
+color:#22c55e;
+}
+
+/* AI Status Pulse */
+.pulse{
+display:inline-block;
+width:10px;
+height:10px;
+background:#22c55e;
+border-radius:50%;
+margin-left:8px;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 0 0 rgba(34,197,94,.7);}
+70%{box-shadow:0 0 0 15px rgba(34,197,94,0);}
+100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
+}
+
+footer{
+background:rgba(0,0,0,.5);
+backdrop-filter:blur(10px);
+border-top:1px solid rgba(255,255,255,.05);
+margin-top:40px;
+padding:20px 0;
+}
+</style>
 </head>
 
 <body>
 
+<nav>
+<div class="nav-wrapper container">
+<a href="/" class="brand-logo">💊 SmartMedicare</a>
+
+<a href="#" data-target="mobile-menu" class="sidenav-trigger">
+<i class="material-icons">menu</i>
+</a>
+
+<ul class="right hide-on-med-and-down">
+<li><a href="/dashboard">Dashboard</a></li>
+<li><a href="/logout">Logout</a></li>
+</ul>
+</div>
+</nav>
+
+<ul class="sidenav" id="mobile-menu">
+<li><a href="/dashboard">Dashboard</a></li>
+<li><a href="/logout">Logout</a></li>
+</ul>
 
 <main>
-  <div class="container">
+<div class="container">
 
-    <!-- Header -->
-    <div class="row">
-      <div class="col s12">
-        <h4>
-          SmartMedicare Control Panel
-          <span class="role-badge"><%= user.role.toUpperCase() %></span>
-        </h4>
-        <p class="grey-text text-lighten-1">
-          Unified access to your medical ecosystem
-        </p>
-      </div>
-    </div>
+<!-- Header -->
+<h4>
+Welcome, <%= user.name || "User" %>
+<span class="role-badge <%= user.role %>">
+<%= user.role.toUpperCase() %>
+</span>
+</h4>
 
-    <!-- Main Actions -->
-    <div class="row">
+<p class="grey-text">Unified access to your medical ecosystem</p>
 
-      <!-- Profile -->
-      <div class="col s12 m4">
-        <div class="card dash-card center-align">
-          <div class="card-content">
-            <i class="material-icons action-icon blue-text">account_circle</i>
-            <h6>My Profile</h6>
-            <p class="grey-text text-lighten-1">Account & security settings</p>
-            <a class="btn blue">Open</a>
-          </div>
-        </div>
-      </div>
+<!-- Stats -->
+<div class="stats">
+<div class="stat">
+<div class="stat-number" id="usersCount">1</div>
+<p>Active Account</p>
+</div>
+<div class="stat">
+<div class="stat-number">94%</div>
+<p>System Confidence</p>
+</div>
+<div class="stat">
+<div class="stat-number">24/7</div>
+<p>AI Monitoring</p>
+</div>
+</div>
 
-      <!-- Patient Dashboard -->
-      <div class="col s12 m4">
-        <div class="card dash-card center-align">
-          <div class="card-content">
-            <i class="material-icons action-icon green-text">favorite</i>
-            <h6>Health Dashboard</h6>
-            <p class="grey-text text-lighten-1">Medical data & AI insights</p>
+<div class="row">
 
-            <% if (user.role === 'patient') { %>
-              <a href="/patient/<%= user.patient %>" class="btn green">Open</a>
-            <% } else { %>
-              <a href="/doctor/dashboard" class="btn green">Open</a>
-            <% } %>
+<div class="col s12 m4">
+<div class="card dash-card center-align">
+<div class="card-content">
+<i class="material-icons action-icon blue-text">account_circle</i>
+<h6>My Profile</h6>
+<a class="btn blue">Open</a>
+</div>
+</div>
+</div>
 
-          </div>
-        </div>
-      </div>
+<div class="col s12 m4">
+<div class="card dash-card center-align">
+<div class="card-content">
+<i class="material-icons action-icon green-text">favorite</i>
+<h6>Health Dashboard</h6>
 
-      <!-- AI Assistant -->
-      <div class="col s12 m4">
-        <div class="card dash-card center-align">
-          <div class="card-content">
-            <i class="material-icons action-icon purple-text">smart_toy</i>
-            <h6>AI Assistant</h6>
-            <p class="grey-text text-lighten-1">Smart health recommendations</p>
-            <a class="btn purple">Ask AI</a>
-          </div>
-        </div>
-      </div>
+<% if (user.role === 'patient') { %>
+<a href="/patient/<%= user.patient %>" class="btn green">Open</a>
+<% } else { %>
+<a href="/doctor/dashboard" class="btn green">Open</a>
+<% } %>
 
-    </div>
+</div>
+</div>
+</div>
 
-    <!-- AI Status Card -->
-    <div class="row">
-      <div class="col s12">
-        <div class="card dash-card">
-          <div class="card-content">
-            <span class="card-title">🤖 AI System Status</span>
-            <p>
-              All medical analytics systems are running normally.
-              Predictive health monitoring and medication tracking are active.
-            </p>
-            <p>
-              System Confidence Score:
-              <b class="green-text">94%</b>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="col s12 m4">
+<div class="card dash-card center-align">
+<div class="card-content">
+<i class="material-icons action-icon purple-text">smart_toy</i>
+<h6>AI Assistant</h6>
+<a class="btn purple">Ask AI</a>
+</div>
+</div>
+</div>
 
-  </div>
+</div>
+
+<div class="row">
+<div class="col s12">
+<div class="card dash-card">
+<div class="card-content">
+<span class="card-title">
+🤖 AI System Status
+<span class="pulse"></span>
+</span>
+
+<p>
+All medical analytics systems operational.
+Predictive monitoring & medication tracking active.
+</p>
+
+<p>
+Confidence Score:
+<b class="green-text">94%</b>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+</div>
 </main>
 
-<%- include('partials/footer') %>
+<footer>
+<div class="container center-align">
+<p class="grey-text">
+© <%= new Date().getFullYear() %> SmartMedicare
+</p>
+<p class="grey-text">
+Designed & Developed by <strong>Om Satish Taywade</strong>
+</p>
+</div>
+</footer>
 
-<!-- Materialize JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".dash-card").forEach((card, i) => {
-      card.style.animationDelay = (i * 0.12) + "s";
-    });
-  });
+document.addEventListener("DOMContentLoaded",()=>{
+M.Sidenav.init(document.querySelectorAll(".sidenav"));
+
+document.querySelectorAll(".dash-card").forEach((card,i)=>{
+card.style.animationDelay=(i*0.12)+"s";
+});
+});
 </script>
 
 </body>

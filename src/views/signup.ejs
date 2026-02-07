@@ -1,230 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Sign Up | SmartMedicare</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up | SmartMedicare</title>
 
-  <!-- Materialize -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
 
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: 'Inter', sans-serif;
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+*{margin:0;padding:0;box-sizing:border-box;}
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.55);
-      z-index: -1;
-    }
+body{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:'Inter',sans-serif;
+background-size:cover;
+background-position:center;
+overflow:hidden;
+}
 
-    .auth-card {
-      backdrop-filter: blur(14px);
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 14px;
-      box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.25),
-        0 2px 6px rgba(0, 0, 0, 0.08);
-      animation: slideUp 0.6s ease;
-    }
+/* Dark overlay */
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.8));
+z-index:-1;
+}
 
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+/* Floating glow */
+body::after{
+content:"";
+position:absolute;
+width:500px;
+height:500px;
+background:radial-gradient(circle,#1976d280,transparent 70%);
+filter:blur(120px);
+animation:float 10s ease-in-out infinite alternate;
+z-index:-1;
+}
 
-    .card-content {
-      padding: 30px 28px 10px;
-    }
+@keyframes float{
+from{transform:translate(-150px,-150px);}
+to{transform:translate(150px,150px);}
+}
 
-    .card-title {
-      font-weight: 600;
-      color: #ffffff;
-      margin-bottom: 6px;
-    }
+/* Card */
+.auth-card{
+backdrop-filter:blur(18px);
+background:rgba(255,255,255,.12);
+border-radius:18px;
+box-shadow:0 30px 60px rgba(0,0,0,.5);
+animation:fadeUp .8s ease forwards;
+opacity:0;
+transform:translateY(40px);
+transition:.4s;
+}
 
-    .subtitle {
-      color: #45eded;
-      font-size: 14px;
-      margin-bottom: 22px;
-    }
+.auth-card:hover{
+transform:translateY(-6px);
+}
 
-    .input-field label {
-      color: #97caf4;
-    }
+@keyframes fadeUp{
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
 
-    .input-field input:focus + label,
-    .input-field select:focus + label {
-      color: #3f4eec !important;
-    }
+.card-content{
+padding:35px 30px 15px;
+}
 
-    .input-field input:focus {
-      border-bottom: 2px solid #1976d2 !important;
-      box-shadow: none !important;
-    }
+.card-title{
+font-weight:600;
+color:#fff;
+margin-bottom:5px;
+}
 
-    .auth-btn {
-      width: 100%;
-      margin-top: 18px;
-      border-radius: 8px;
-      background: #1976d2;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      box-shadow: 0 6px 16px rgba(25, 118, 210, 0.4);
-      transition: all 0.25s ease;
-    }
+.subtitle{
+color:#90caf9;
+font-size:14px;
+margin-bottom:25px;
+}
 
-    .auth-btn:hover {
-      background: #4815c0;
-      box-shadow: 0 10px 24px rgba(25, 118, 210, 0.55);
-      transform: translateY(-2px);
-    }
+/* Inputs */
+.input-field input{
+color:#fff;
+}
 
-    .card-action {
-      padding: 15px 28px 25px;
-      border-top: none;
-    }
+.input-field label{
+color:#bbb;
+}
 
-    .card-action p {
-      margin: 0;
-      font-size: 14px;
-      color: #cc7ee9;
-    }
+.input-field input:focus + label{
+color:#42a5f5 !important;
+}
 
-    .card-action a {
-      color: #1976d2;
-      font-weight: 500;
-    }
+.input-field input:focus{
+border-bottom:2px solid #42a5f5 !important;
+box-shadow:none !important;
+}
 
-    select{
-    color: #ee4aac;
-    }
+select{
+color:#fff;
+}
 
-    .error-text {
-      color: #d32f2f;
-      font-size: 14px;
-      margin-bottom: 12px;
-    }
-  </style>
+/* Button */
+.auth-btn{
+width:100%;
+margin-top:20px;
+border-radius:30px;
+background:linear-gradient(135deg,#42a5f5,#478ed1);
+font-weight:500;
+letter-spacing:.5px;
+transition:.4s;
+box-shadow:0 10px 25px rgba(66,165,245,.6);
+animation:pulse 3s infinite;
+}
+
+.auth-btn:hover{
+transform:translateY(-3px);
+box-shadow:0 20px 40px rgba(66,165,245,.8);
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 0 0 rgba(66,165,245,.6);}
+70%{box-shadow:0 0 0 20px rgba(66,165,245,0);}
+100%{box-shadow:0 0 0 0 rgba(66,165,245,0);}
+}
+
+/* Password toggle */
+.toggle-pass{
+position:absolute;
+right:10px;
+top:12px;
+cursor:pointer;
+color:#90caf9;
+}
+
+/* Footer */
+.card-action{
+border-top:1px solid rgba(255,255,255,.15);
+padding:18px;
+}
+
+.card-action p{
+margin:0;
+color:#ddd;
+}
+
+.card-action a{
+color:#42a5f5;
+font-weight:500;
+}
+
+.error-text{
+color:#ff6b6b;
+margin-bottom:12px;
+}
+
+/* Responsive */
+@media(max-width:600px){
+.auth-card{
+margin:15px;
+}
+.card-content{
+padding:25px 20px;
+}
+}
+
+</style>
 </head>
 
 <body>
 
 <div class="container">
-  <div class="row">
-    <div class="col s12 m6 offset-m3 l4 offset-l4">
+<div class="row">
+<div class="col s12 m6 offset-m3 l4 offset-l4">
 
-      <!-- SAME CARD AS LOGIN -->
-      <div class="card auth-card">
-        <div class="card-content">
+<div class="card auth-card">
 
-          <span class="card-title center-align">Create Account</span>
-          <p class="subtitle center-align">
-            Register for SmartMedicare
-          </p>
+<div class="card-content">
 
-          <% if (message && message.length) { %>
-            <p class="error-text center-align"><%= message %></p>
-          <% } %>
+<span class="card-title center-align">Create Account</span>
+<p class="subtitle center-align">Register for SmartMedicare</p>
 
-          <form method="POST" action="/signup">
+<% if (message && message.length) { %>
+<p class="error-text center-align"><%= message %></p>
+<% } %>
 
-            <div class="input-field">
-              <input id="name" type="text" name="name" required>
-              <label for="name">Full Name</label>
-            </div>
+<form method="POST" action="/signup">
 
-            <div class="input-field">
-              <input id="email" type="email" name="email" required>
-              <label for="email">Email Address</label>
-            </div>
-
-            <div class="input-field">
-              <input id="password" type="password" name="password" required>
-              <label for="password">Password</label>
-            </div>
-
-            <div class="input-field">
-              <select name="role" id="role" style="color: rgb(241, 73, 241);">
-                <option value="" disabled selected>Select Role</option>
-                <option value="patient">Patient</option>
-                <option value="relative">Relative</option>
-                <option value="doctor">Doctor</option>
-              </select>
-              <label for="role">Account Role</label>
-            </div>
-
-            <div class="input-field">
-              <input id="patientId" type="text" name="patientId" required>
-              <label for="patientId">Patient ID</label>
-            </div>
-
-            <button type="submit" class="btn auth-btn">
-              Sign Up
-            </button>
-
-          </form>
-
-        </div>
-
-        <div class="card-action center-align">
-          <p>
-            Already have an account?
-            <a href="/login">Login</a>
-          </p>
-        </div>
-      </div>
-
-    </div>
-  </div>
+<div class="input-field">
+<input id="name" type="text" name="name" required>
+<label for="name">Full Name</label>
 </div>
 
-<!-- Materialize -->
+<div class="input-field">
+<input id="email" type="email" name="email" required>
+<label for="email">Email Address</label>
+</div>
+
+<div class="input-field" style="position:relative;">
+<input id="password" type="password" name="password" required>
+<label for="password">Password</label>
+<i class="material-icons toggle-pass" onclick="togglePassword()">visibility</i>
+</div>
+
+<div class="input-field">
+<select name="role" id="role">
+<option value="" disabled selected>Select Role</option>
+<option value="patient">Patient</option>
+<option value="relative">Relative</option>
+<option value="doctor">Doctor</option>
+</select>
+<label for="role">Account Role</label>
+</div>
+
+<div class="input-field">
+<input id="patientId" type="text" name="patientId" required>
+<label for="patientId">Patient ID</label>
+</div>
+
+<button type="submit" class="btn auth-btn">
+Sign Up
+</button>
+
+</form>
+
+</div>
+
+<div class="card-action center-align">
+<p>
+Already have an account?
+<a href="/login">Login</a>
+</p>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    M.updateTextFields();
-    M.FormSelect.init(document.querySelectorAll('select'));
+document.addEventListener('DOMContentLoaded', function () {
+M.updateTextFields();
+M.FormSelect.init(document.querySelectorAll('select'));
 
-    const backgrounds = [
-      "https://m.media-amazon.com/images/I/71mgpWBEXHL.jpg",
-      "https://wallpapercave.com/wp/wp1951584.jpg",
-      "https://wallpapercave.com/wp/wp14192218.jpg",
-      "https://wallpapercave.com/uwp/uwp4960630.jpeg",
-      "https://wallpapercave.com/uwp/uwp4960448.jpeg",
-      "https://wallpapercave.com/wp/wp11155181.jpg",
-      "https://wallpapercave.com/wp/wp6057120.jpg",
-      "https://wallpapercave.com/wp/wp5574437.jpg",
-      "https://wallpapercave.com/wp/wp16029940.jpg",
-      "https://wallpapercave.com/wp/wp13182994.jpg",
-      "https://wallpapercave.com/wp/wp14940921.webp",
-      "https://wallpapercave.com/wp/wp14981590.webp"
-    ];
+const backgrounds = [
+"https://wallpapercave.com/wp/wp6057120.jpg",
+"https://wallpapercave.com/wp/wp5574437.jpg",
+"https://wallpapercave.com/wp/wp14981590.webp"
+];
 
-    document.body.style.backgroundImage =
-      `url(${backgrounds[Math.floor(Math.random() * backgrounds.length)]})`;
-  });
+document.body.style.backgroundImage =
+`url(${backgrounds[Math.floor(Math.random()*backgrounds.length)]})`;
+});
+
+function togglePassword(){
+const pass = document.getElementById("password");
+pass.type = pass.type === "password" ? "text" : "password";
+}
 </script>
-
 
 </body>
 </html>

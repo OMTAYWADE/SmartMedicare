@@ -1,94 +1,148 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Clinical Insights</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-body {
-  margin: 0;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  font-family: 'Poppins', sans-serif;
-  color: white;
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:radial-gradient(circle at top,#0f172a,#020617);
+color:white;
+overflow-x:hidden;
 }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 40px;
+.container{
+width:95%;
+max-width:1100px;
+margin:auto;
+padding:60px 0;
 }
 
-.glass {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(14px);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 0 40px rgba(255,165,0,0.25);
-  animation: fadeIn 0.8s ease;
+.glass{
+background:rgba(255,255,255,.07);
+backdrop-filter:blur(20px);
+border-radius:25px;
+padding:50px;
+border:1px solid rgba(255,255,255,.12);
+box-shadow:0 0 50px rgba(0,0,0,.4);
+animation:fadeUp .8s ease;
 }
 
-.score {
-  font-size: 60px;
-  font-weight: bold;
-  text-align: center;
-  color: <%= score > 80 ? "#00ffcc" : score > 60 ? "orange" : "red" %>;
-  
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
 }
 
-.card {
-  background: rgba(255,255,255,0.08);
-  border-radius: 15px;
-  padding: 20px;
-  margin-top: 20px;
+h2{
+text-align:center;
+margin-bottom:10px;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+.subtitle{
+text-align:center;
+color:#94a3b8;
+margin-bottom:40px;
 }
 
-li {
-  padding: 8px 0;
+.score-box{
+text-align:center;
+font-size:60px;
+font-weight:700;
+margin-bottom:10px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+.risk{
+text-align:center;
+font-size:18px;
+font-weight:600;
+margin-bottom:40px;
 }
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
+}
+
+.card{
+background:rgba(255,255,255,.06);
+border-radius:18px;
+padding:25px;
+border:1px solid rgba(255,255,255,.1);
+transition:.4s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 0 30px rgba(139,92,246,.3);
+}
+
+ul{
+padding-left:20px;
+}
+
+li{
+margin-bottom:10px;
+}
+
+@media(max-width:600px){
+.glass{
+padding:30px 20px;
+}
+.score-box{
+font-size:45px;
+}
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="container">
-  <div class="glass">
+<div class="glass">
 
-    <h2>🧠 AI Clinical Analysis</h2>
-    <p><b>Patient:</b> <%= patient.name %></p>
+<h2>🧠 AI Clinical Analysis</h2>
+<p class="subtitle">Patient: <b><%= patient.name %></b></p>
 
-    <div class="score"><%= score %> / 100</div>
-    <p style="text-align:center;">Overall Health Score</p>
+<div class="score-box"
+style="color: <%= score > 80 ? '#00ffcc' : score > 60 ? 'orange' : 'red' %>; ">
+<%= score %> / 100
+</div>
 
-    <div class="card">
-      <h3>⚠️ Risk Factors</h3>
-      <ul>
-        <% risks.forEach(r => { %>
-          <li>• <%= r %></li>
-        <% }) %>
-      </ul>
-    </div>
+<div class="risk"
+style="color: <%= score > 80 ? '#00ffcc' : score > 60 ? 'orange' : 'red' %>; ">
+<%= score > 80 ? 'Low Risk' : score > 60 ? 'Moderate Risk' : 'High Risk' %>
+</div>
 
-    <div class="card">
-      <h3>💡 Suggestions</h3>
-      <ul>
-        <% suggestions.forEach(s => { %>
-          <li>• <%= s %></li>
-        <% }) %>
-      </ul>
-    </div>
+<div class="grid">
 
-  </div>
+<div class="card">
+<h3>⚠️ Risk Factors</h3>
+<ul>
+<% risks.forEach(function(r){ %>
+<li><%= r %></li>
+<% }) %>
+</ul>
+</div>
+
+<div class="card">
+<h3>💡 AI Suggestions</h3>
+<ul>
+<% suggestions.forEach(function(s){ %>
+<li><%= s %></li>
+<% }) %>
+</ul>
+</div>
+
+</div>
+
+</div>
 </div>
 
 </body>

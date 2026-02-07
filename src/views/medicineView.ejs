@@ -5,132 +5,181 @@
 <title>Medicine Panel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-* {
-  font-family: 'Poppins', sans-serif;
-  box-sizing: border-box;
+*{
+font-family:'Poppins',sans-serif;
+box-sizing:border-box;
+margin:0;
+padding:0;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  min-height: 100vh;
-  color: white;
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+min-height:100vh;
+color:white;
+overflow-x:hidden;
 }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 40px;
+/* Floating Glow */
+body::after{
+content:"";
+position:fixed;
+width:600px;
+height:600px;
+background:radial-gradient(circle,#00f2fe55,transparent 70%);
+filter:blur(120px);
+animation:float 10s infinite alternate ease-in-out;
+z-index:-1;
 }
 
-.glass {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(15px);
-  border-radius: 20px;
-  padding: 25px;
-  box-shadow: 0 0 40px rgba(0,255,255,0.15);
-  animation: fadeIn 1s ease;
+@keyframes float{
+from{transform:translate(-150px,-150px);}
+to{transform:translate(150px,150px);}
 }
 
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
+.container{
+max-width:1100px;
+margin:auto;
+padding:40px 20px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+.glass{
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(18px);
+border-radius:20px;
+padding:30px;
+box-shadow:0 0 50px rgba(0,255,255,.15);
+animation:fadeIn 1s ease;
 }
 
-th, td {
-  padding: 12px;
-  text-align: center;
+h2{
+text-align:center;
+margin-bottom:20px;
 }
 
-th {
-  background: rgba(0,255,255,0.15);
+/* Search */
+.search-box{
+margin:20px 0;
 }
 
-tr {
-  transition: 0.3s;
+.search-box input{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid rgba(0,255,255,.4);
+background:transparent;
+color:white;
 }
 
-tr:hover {
-  background: rgba(0,255,255,0.08);
-  transform: scale(1.01);
+/* Table */
+.table-wrapper{
+overflow-x:auto;
 }
 
-input {
-  background: transparent;
-  border: 1px solid rgba(0,255,255,0.4);
-  color: white;
-  padding: 6px;
-  border-radius: 6px;
-  text-align: center;
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+min-width:700px;
 }
 
-input:focus {
-  outline: none;
-  box-shadow: 0 0 10px cyan;
+th,td{
+padding:12px;
+text-align:center;
 }
 
-.btn {
-  padding: 6px 12px;
-  border-radius: 20px;
-  border: none;
-  cursor: pointer;
-  transition: 0.3s;
-  font-weight: bold;
+th{
+background:rgba(0,255,255,.15);
+position:sticky;
+top:0;
 }
 
-.btn-update {
-  background: linear-gradient(45deg, #00f2fe, #4facfe);
+tr{
+transition:.3s;
 }
 
-.btn-delete {
-  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+tr:hover{
+background:rgba(0,255,255,.08);
+transform:scale(1.01);
 }
 
-.btn-add {
-  background: linear-gradient(45deg, #00ffcc, #00cc99);
-  margin-top: 20px;
+/* Status Badge */
+.status{
+padding:4px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
 }
 
-.btn:hover {
-  box-shadow: 0 0 15px rgba(0,255,255,0.7);
-  transform: scale(1.05);
+.status.low{background:#ff4b2b;}
+.status.medium{background:#facc15;color:black;}
+.status.good{background:#22c55e;}
+
+/* Inputs */
+input{
+background:transparent;
+border:1px solid rgba(0,255,255,.4);
+color:white;
+padding:6px;
+border-radius:6px;
+text-align:center;
+width:100%;
 }
 
-.add-form {
-  margin-top: 30px;
-  overflow: hidden;
-  max-height: 0;
-  transition: 0.6s ease;
+input:focus{
+outline:none;
+box-shadow:0 0 10px cyan;
 }
 
-.add-form.active {
-  max-height: 500px;
+/* Buttons */
+.btn{
+padding:6px 12px;
+border-radius:20px;
+border:none;
+cursor:pointer;
+transition:.3s;
+font-weight:bold;
 }
 
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+.btn-update{background:linear-gradient(45deg,#00f2fe,#4facfe);}
+.btn-delete{background:linear-gradient(45deg,#ff416c,#ff4b2b);}
+.btn-add{background:linear-gradient(45deg,#00ffcc,#00cc99);margin-top:20px;}
+
+.btn:hover{
+box-shadow:0 0 20px rgba(0,255,255,.7);
+transform:scale(1.05);
 }
 
-.form-grid input {
-  width: 100%;
+/* Add Form */
+.add-form{
+margin-top:30px;
+overflow:hidden;
+max-height:0;
+transition:.6s ease;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+.add-form.active{
+max-height:600px;
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+/* Mobile */
+@media(max-width:768px){
+table{
+font-size:12px;
+}
 }
 </style>
 </head>
@@ -138,66 +187,93 @@ input:focus {
 <body>
 
 <div class="container">
-  <div class="glass">
+<div class="glass">
 
-    <h2>💊 Medicines for <%= patient.name %></h2>
+<h2>💊 Medicines for <%= patient.name %></h2>
 
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Remaining</th>
-        <th>Frequency</th>
-        <th>Reason</th>
-        <th>Actions</th>
-      </tr>
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Search medicine..." onkeyup="filterMedicines()">
+</div>
 
-      <% medicines.forEach(med => { %>
-      <tr>
-        <form method="POST" action="/doctor/medicine/<%= med._id %>/update">
-          <td><input name="name" value="<%= med.name %>"></td>
-          <td><input name="dosesRemaining" type="number" value="<%= med.dosesRemaining %>"></td>
-          <td><input name="frequency" value="<%= med.frequency %>"></td>
-          <td><input name="reason" value="<%= med.reason %>"></td>
-          <td>
-            <button class="btn btn-update">💾</button>
-        </form>
+<div class="table-wrapper">
+<table id="medicineTable">
+<tr>
+<th>Name</th>
+<th>Remaining</th>
+<th>Status</th>
+<th>Frequency</th>
+<th>Reason</th>
+<th>Actions</th>
+</tr>
 
-        <form method="POST" action="/doctor/medicine/<%= med._id %>/delete" style="display:inline;">
-            <button class="btn btn-delete">🗑</button>
-        </form>
-          </td>
-      </tr>
-      <% }) %>
+<% medicines.forEach(med => { 
+let statusClass = med.dosesRemaining <= 5 ? "low" :
+                  med.dosesRemaining <= 15 ? "medium" : "good";
+%>
 
-    </table>
+<tr class="medicine-row">
+<form method="POST" action="/doctor/medicine/<%= med._id %>/update">
+<td><input name="name" value="<%= med.name %>"></td>
+<td><input name="dosesRemaining" type="number" value="<%= med.dosesRemaining %>"></td>
+<td><span class="status <%= statusClass %>">
+<%= statusClass.toUpperCase() %>
+</span></td>
+<td><input name="frequency" value="<%= med.frequency %>"></td>
+<td><input name="reason" value="<%= med.reason %>"></td>
+<td>
+<button class="btn btn-update">💾</button>
+</form>
 
-    <center>
-      <button class="btn btn-add" onclick="toggleForm()">➕ Add Medicine</button>
-    </center>
+<form method="POST"
+action="/doctor/medicine/<%= med._id %>/delete"
+onsubmit="return confirm('Delete this medicine?')"
+style="display:inline;">
+<button class="btn btn-delete">🗑</button>
+</form>
+</td>
+</tr>
 
-    <div class="add-form" id="addForm">
-      <h3 style="text-align:center;">Add New Medicine</h3>
+<% }) %>
 
-      <form method="POST">
-        <div class="form-grid">
-          <input name="name" placeholder="Medicine Name" required>
-          <input name="dosesRemaining" type="number" placeholder="Remaining Doses" required>
-          <input name="frequency" placeholder="Frequency (e.g 2x a day)" required>
-          <input name="reason" placeholder="Reason" required>
-        </div>
-        <br>
-        <center>
-          <button class="btn btn-add">Save Medicine</button>
-        </center>
-      </form>
-    </div>
+</table>
+</div>
 
-  </div>
+<center>
+<button class="btn btn-add" onclick="toggleForm()">➕ Add Medicine</button>
+</center>
+
+<div class="add-form" id="addForm">
+<h3 style="text-align:center;">Add New Medicine</h3>
+
+<form method="POST">
+<div class="form-grid">
+<input name="name" placeholder="Medicine Name" required>
+<input name="dosesRemaining" type="number" placeholder="Remaining Doses" required>
+<input name="frequency" placeholder="Frequency" required>
+<input name="reason" placeholder="Reason" required>
+</div>
+<br>
+<center>
+<button class="btn btn-add">Save Medicine</button>
+</center>
+</form>
+</div>
+
+</div>
 </div>
 
 <script>
-function toggleForm() {
-  document.getElementById("addForm").classList.toggle("active");
+function toggleForm(){
+document.getElementById("addForm").classList.toggle("active");
+}
+
+function filterMedicines(){
+let input=document.getElementById("searchInput").value.toLowerCase();
+let rows=document.querySelectorAll(".medicine-row");
+rows.forEach(row=>{
+row.style.display=row.innerText.toLowerCase().includes(input)
+?"":"none";
+});
 }
 </script>
 

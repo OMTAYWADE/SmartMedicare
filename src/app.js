@@ -84,6 +84,7 @@ app.use((req, res, next) => {
 });
 
 
+
 /* --------------------------------------------------
    AUTHENTICATION MIDDLEWARE
 -------------------------------------------------- */
@@ -442,6 +443,16 @@ app.get('/doctor/patient/:id/ai-insights', isAuth, isDoctor, async (req, res) =>
   }
 });
 
+// control servo time
+app.get("/medicine-time", (req, res) => {
+  res.json({
+    morningHour: 9,
+    morningMinute: 0,
+    nightHour: 21,
+    nightMinute: 0
+  });
+});
+
 
 // Logout
 app.get('/logout', (req, res) => {
@@ -458,6 +469,36 @@ app.get('/about', (req, res) => {
 // Contact
 app.get('/contact', (req, res) => {
   res.render('contact');
+});
+
+// contact through telegram
+const axios = require("axios");
+
+app.post("/contact", async (req, res) => {
+  const { name, email, message } = req.body;
+
+  const botToken = "8289831310:AAGb8DFflB_wp_LCu1cD3tRtjd1mq3d3YR0";
+  const chatId = "8289831310";
+
+  const text = `
+📩 SmartMedicare Contact
+
+👤 Name: ${name}
+📧 Email: ${email}
+💬 Message: ${message}
+  `;
+
+  try {
+    await axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      chat_id: chatId,
+      text: text
+    });
+
+    res.redirect("/contact");
+  } catch (error) {
+    console.log(error);
+    res.send("Error sending message");
+  }
 });
 
 // Appointment

@@ -1,238 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>About | SmartMedicare</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | SmartMedicare</title>
 
-  <!-- Materialize CSS -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+body{
+margin:0;
+font-family:'Inter',sans-serif;
+background:radial-gradient(circle at top,#0f172a,#020617);
+color:#e5e7eb;
+overflow-x:hidden;
+}
 
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
+/* Animated background glow */
+body::before,
+body::after{
+content:"";
+position:fixed;
+width:500px;
+height:500px;
+border-radius:50%;
+filter:blur(120px);
+opacity:.25;
+z-index:-1;
+animation:float 12s infinite alternate ease-in-out;
+}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at top right, #020617, #020617);
-      color: #e5e7eb;
-      overflow-x: hidden;
-    }
+body::before{background:#22c55e;top:-120px;left:-120px;}
+body::after{background:#2563eb;bottom:-120px;right:-120px;animation-delay:4s;}
 
-    /* Animated background glow */
-    body::before, body::after {
-      content: "";
-      position: fixed;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      filter: blur(140px);
-      opacity: 0.25;
-      z-index: -1;
-      animation: float 12s infinite alternate ease-in-out;
-    }
+@keyframes float{
+from{transform:translateY(0);}
+to{transform:translateY(70px);}
+}
 
-    body::before {
-      background: #22c55e;
-      top: -100px;
-      left: -100px;
-    }
+/* Navbar */
+nav{
+background:rgba(2,6,23,.8);
+backdrop-filter:blur(12px);
+}
 
-    body::after {
-      background: #2563eb;
-      bottom: -100px;
-      right: -100px;
-      animation-delay: 4s;
-    }
+/* Hero */
+.hero{
+padding:120px 5% 60px;
+text-align:center;
+animation:fadeUp 0.8s ease;
+}
 
-    @keyframes float {
-      from { transform: translateY(0px); }
-      to { transform: translateY(80px); }
-    }
+.hero h3{
+font-weight:700;
+font-size:clamp(2rem,4vw,3rem);
+color:#f8fafc;
+}
 
-    /* Navbar */
-    nav {
-      background: rgba(2,6,23,0.7) !important;
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
+.hero p{
+max-width:700px;
+margin:20px auto 0;
+color:#94a3b8;
+font-size:18px;
+}
 
-    main {
-      padding: 80px 0;
-    }
+/* Cards */
+.glass-card{
+background:rgba(255,255,255,.06);
+backdrop-filter:blur(14px);
+border-radius:20px;
+border:1px solid rgba(255,255,255,.1);
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+transition:.4s;
+animation:fadeUp 0.8s ease;
+}
 
-    /* Glass cards */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(14px);
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-      transition: all 0.45s cubic-bezier(.4,0,.2,1);
-      animation: fadeUp 0.7s ease forwards;
-    }
+.glass-card:hover{
+transform:translateY(-8px);
+box-shadow:0 35px 70px rgba(0,0,0,.6);
+}
 
-    .glass-card:hover {
-      transform: translateY(-8px) scale(1.01);
-      box-shadow: 0 35px 80px rgba(0,0,0,0.6);
-    }
+.feature-icon{
+font-size:50px;
+margin-bottom:15px;
+}
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
+}
 
-    h3, h5 {
-      font-weight: 700;
-      color: #f8fafc;
-    }
+/* Footer */
+footer{
+margin-top:80px;
+padding:25px 0;
+background:rgba(0,0,0,.5);
+backdrop-filter:blur(10px);
+border-top:1px solid rgba(255,255,255,.05);
+}
 
-    .hero {
-      text-align: center;
-      margin-bottom: 60px;
-    }
+/* Mobile tweak */
+@media(max-width:600px){
+.hero{
+padding:80px 5% 40px;
+}
+}
 
-    .hero p {
-      color: #cbd5f5;
-      font-size: 18px;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .feature-icon {
-      font-size: 48px;
-      margin-bottom: 12px;
-    }
-
-    footer {
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255,255,255,0.05);
-      padding: 20px 0;
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
+<!-- NAVBAR -->
 <nav>
-  <div class="nav-wrapper container">
-    <a href="/" class="brand-logo">💊 SmartMedicare</a>
-    <ul class="right hide-on-med-and-down">
-      <li><a href="/">Home</a></li>
-      <li><a href="/login">Login</a></li>
-      <li><a href="/signup">Sign Up</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
-  </div>
+<div class="nav-wrapper" style="width:95%;margin:auto;">
+<a href="/" class="brand-logo">💊 SmartMedicare</a>
+
+<a href="#" data-target="mobile-menu" class="sidenav-trigger right">
+<i class="material-icons">menu</i>
+</a>
+
+<ul class="right hide-on-med-and-down">
+<li><a href="/">Home</a></li>
+<li><a href="/login">Login</a></li>
+<li><a href="/signup">Sign Up</a></li>
+<li><a href="/contact">Contact</a></li>
+</ul>
+</div>
 </nav>
 
-<!-- ================= MAIN ================= -->
+<!-- MOBILE MENU -->
+<ul class="sidenav" id="mobile-menu">
+<li><a href="/">Home</a></li>
+<li><a href="/login">Login</a></li>
+<li><a href="/signup">Sign Up</a></li>
+<li><a href="/contact">Contact</a></li>
+</ul>
+
+<!-- MAIN -->
 <main>
-  <div class="container">
 
-    <!-- Hero -->
-    <div class="hero">
-      <h3>About SmartMedicare</h3>
-      <p>
-        SmartMedicare is an AI-powered healthcare management platform designed to
-        securely manage patient records, automate medication tracking, and provide
-        intelligent health insights for doctors and patients.
-      </p>
-    </div>
+<div class="hero">
+<h3>About SmartMedicare</h3>
+<p>
+SmartMedicare is an AI-powered healthcare management platform designed to
+securely manage patient records, automate medication tracking, and provide
+intelligent health insights for doctors and patients.
+</p>
+</div>
 
-    <!-- Features -->
-    <div class="row">
+<div class="container">
 
-      <div class="col s12 m4">
-        <div class="card glass-card center-align">
-          <div class="card-content">
-            <i class="material-icons feature-icon blue-text">verified_user</i>
-            <h5>Secure Records</h5>
-            <p>
-              Military-grade data protection ensures patient data remains private
-              and tamper-proof.
-            </p>
-          </div>
-        </div>
-      </div>
+<div class="row">
 
-      <div class="col s12 m4">
-        <div class="card glass-card center-align">
-          <div class="card-content">
-            <i class="material-icons feature-icon green-text">smart_toy</i>
-            <h5>AI Insights</h5>
-            <p>
-              Intelligent analysis of health data helps doctors detect risks early
-              and optimize treatment plans.
-            </p>
-          </div>
-        </div>
-      </div>
+<div class="col s12 m4">
+<div class="card glass-card center-align">
+<div class="card-content">
+<i class="material-icons feature-icon blue-text">verified_user</i>
+<h5>Secure Records</h5>
+<p>Military-grade data protection ensures patient data remains private and tamper-proof.</p>
+</div>
+</div>
+</div>
 
-      <div class="col s12 m4">
-        <div class="card glass-card center-align">
-          <div class="card-content">
-            <i class="material-icons feature-icon orange-text">schedule</i>
-            <h5>Smart Reminders</h5>
-            <p>
-              Automated medicine schedules and notifications ensure better patient
-              compliance and recovery.
-            </p>
-          </div>
-        </div>
-      </div>
+<div class="col s12 m4">
+<div class="card glass-card center-align">
+<div class="card-content">
+<i class="material-icons feature-icon green-text">smart_toy</i>
+<h5>AI Insights</h5>
+<p>Intelligent analysis of health data helps doctors detect risks early and optimize treatment plans.</p>
+</div>
+</div>
+</div>
 
-    </div>
+<div class="col s12 m4">
+<div class="card glass-card center-align">
+<div class="card-content">
+<i class="material-icons feature-icon orange-text">schedule</i>
+<h5>Smart Reminders</h5>
+<p>Automated medicine schedules and notifications ensure better patient compliance.</p>
+</div>
+</div>
+</div>
 
-    <!-- Vision -->
-    <div class="row">
-      <div class="col s12">
-        <div class="card glass-card">
-          <div class="card-content">
-            <span class="card-title">🌍 Our Vision</span>
-            <p>
-              To create a digitally connected healthcare ecosystem where patients,
-              doctors, and caregivers collaborate through intelligent systems,
-              reducing medical errors and improving quality of life.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+</div>
 
-  </div>
+<div class="row">
+<div class="col s12">
+<div class="card glass-card">
+<div class="card-content">
+<span class="card-title">🌍 Our Vision</span>
+<p>
+To create a digitally connected healthcare ecosystem where patients,
+doctors, and caregivers collaborate through intelligent systems,
+reducing medical errors and improving quality of life.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
 </main>
 
-<!-- ================= FOOTER ================= -->
 <footer>
-  <div class="container center-align">
-    <p class="grey-text text-lighten-2">
-      © <%= new Date().getFullYear() %> SmartMedicare
-    </p>
-    <p class="grey-text text-lighten-1">
-      Designed & Developed by <strong>Om Satish Taywade</strong>
-    </p>
-  </div>
+<div class="container center-align">
+<p class="grey-text text-lighten-2">
+© <%= new Date().getFullYear() %> SmartMedicare
+</p>
+<p class="grey-text text-lighten-1">
+Designed & Developed by <strong>Om Satish Taywade</strong>
+</p>
+</div>
 </footer>
 
-<!-- Materialize JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".glass-card").forEach((card, i) => {
-      card.style.animationDelay = (i * 0.12) + "s";
-    });
-  });
+document.addEventListener('DOMContentLoaded',function(){
+M.Sidenav.init(document.querySelectorAll('.sidenav'));
+});
 </script>
 
 </body>

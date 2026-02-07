@@ -8,185 +8,254 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-* {
-  font-family: 'Poppins', sans-serif;
-  box-sizing: border-box;
+*{
+font-family:'Poppins',sans-serif;
+box-sizing:border-box;
+margin:0;
+padding:0;
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: white;
+body{
+min-height:100vh;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+overflow-x:hidden;
 }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 40px;
+/* Floating Glow */
+body::after{
+content:"";
+position:fixed;
+width:600px;
+height:600px;
+background:radial-gradient(circle,#00f2fe55,transparent 70%);
+filter:blur(120px);
+animation:float 10s ease-in-out infinite alternate;
+z-index:-1;
 }
 
-.glass {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(14px);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 0 40px rgba(0,255,255,0.15);
-  animation: fadeIn 0.8s ease;
+@keyframes float{
+from{transform:translate(-150px,-150px);}
+to{transform:translate(150px,150px);}
 }
 
-h2 {
-  text-align: center;
+.container{
+max-width:1100px;
+margin:auto;
+padding:40px 20px;
 }
 
-.btn {
-  border: none;
-  padding: 10px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
+.glass{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(16px);
+border-radius:20px;
+padding:35px;
+box-shadow:0 0 50px rgba(0,255,255,0.2);
+animation:fadeIn .8s ease;
 }
 
-.btn-primary {
-  background: linear-gradient(45deg, #00f2fe, #4facfe);
+h2{
+text-align:center;
+margin-bottom:20px;
 }
 
-.btn-save {
-  background: linear-gradient(45deg, #00ffcc, #00cc99);
+/* Buttons */
+.btn{
+border:none;
+padding:10px 20px;
+border-radius:30px;
+cursor:pointer;
+font-weight:600;
+transition:.3s;
 }
 
-.btn:hover {
-  box-shadow: 0 0 20px rgba(0,255,255,0.7);
-  transform: scale(1.05);
+.btn-primary{
+background:linear-gradient(45deg,#00f2fe,#4facfe);
 }
 
-.formBox {
-  overflow: hidden;
-  max-height: 0;
-  transition: 0.6s ease;
+.btn-save{
+background:linear-gradient(45deg,#00ffcc,#00cc99);
 }
 
-.formBox.active {
-  max-height: 500px;
+.btn-danger{
+background:linear-gradient(45deg,#ff416c,#ff4b2b);
 }
 
-.medRow {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  margin-bottom: 10px;
+.btn:hover{
+box-shadow:0 0 25px rgba(0,255,255,0.7);
+transform:translateY(-3px);
 }
 
-input, textarea {
-  background: transparent;
-  border: 1px solid rgba(0,255,255,0.4);
-  border-radius: 10px;
-  padding: 10px;
-  color: white;
+/* Form */
+.formBox{
+overflow:hidden;
+max-height:0;
+transition:0.6s ease;
 }
 
-input:focus, textarea:focus {
-  outline: none;
-  box-shadow: 0 0 10px cyan;
+.formBox.active{
+max-height:900px;
 }
 
-.card {
-  background: rgba(255,255,255,0.08);
-  border-radius: 15px;
-  padding: 20px;
-  margin-top: 20px;
-  box-shadow: 0 0 20px rgba(0,255,255,0.15);
-  animation: slideUp 0.6s ease;
+.medRow{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+margin-bottom:12px;
+align-items:center;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+input,textarea{
+background:transparent;
+border:1px solid rgba(0,255,255,0.4);
+border-radius:10px;
+padding:10px;
+color:white;
+width:100%;
 }
 
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+input:focus,textarea:focus{
+outline:none;
+box-shadow:0 0 10px cyan;
 }
+
+textarea{
+resize:none;
+min-height:90px;
+}
+
+/* Cards */
+.card{
+background:rgba(255,255,255,0.08);
+border-radius:15px;
+padding:20px;
+margin-top:20px;
+box-shadow:0 0 20px rgba(0,255,255,0.15);
+animation:slideUp .6s ease;
+}
+
+.card ul{
+margin-left:15px;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes slideUp{
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+/* Scrollable previous section */
+.prescription-list{
+max-height:400px;
+overflow-y:auto;
+padding-right:10px;
+}
+
+/* Mobile */
+@media(max-width:768px){
+.medRow{
+grid-template-columns:1fr;
+}
+.glass{
+padding:20px;
+}
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="container">
-  <div class="glass">
+<div class="glass">
 
-    <h2>📄 Prescriptions for <%= patient.name %></h2>
+<h2>📄 Prescriptions for <%= patient.name %></h2>
 
-    <center>
-      <button onclick="toggleForm()" class="btn btn-primary">➕ New Prescription</button>
-    </center>
+<center>
+<button onclick="toggleForm()" class="btn btn-primary">
+➕ New Prescription
+</button>
+</center>
 
-    <br>
+<br>
 
-    <!-- Add Prescription Form -->
-    <div class="formBox" id="formBox">
-      <form method="POST">
+<div class="formBox" id="formBox">
+<form method="POST">
 
-        <div id="medList">
-          <div class="medRow">
-            <input type="text" name="medicines[0][name]" placeholder="Medicine Name" required>
-            <input type="text" name="medicines[0][dosage]" placeholder="Dosage" required>
-            <input type="text" name="medicines[0][days]" placeholder="Days" required>
-          </div>
-        </div>
+<div id="medList">
+<div class="medRow">
+<input type="text" name="medicines[0][name]" placeholder="Medicine Name" required>
+<input type="text" name="medicines[0][dosage]" placeholder="Dosage" required>
+<input type="text" name="medicines[0][days]" placeholder="Days" required>
+<button type="button" onclick="removeRow(this)" class="btn btn-danger">✖</button>
+</div>
+</div>
 
-        <center>
-          <button type="button" onclick="addMedicine()" class="btn btn-primary">➕ Add Medicine</button>
-        </center>
+<center>
+<button type="button" onclick="addMedicine()" class="btn btn-primary">
+➕ Add Medicine
+</button>
+</center>
 
-        <br>
-        <textarea name="notes" placeholder="Doctor notes..."></textarea>
-        <br><br>
+<br>
 
-        <center>
-          <button class="btn btn-save">💾 Save Prescription</button>
-        </center>
+<textarea name="notes" placeholder="Doctor notes..."></textarea>
+<br><br>
 
-      </form>
-    </div>
+<center>
+<button class="btn btn-save">💾 Save Prescription</button>
+</center>
 
-    <hr style="border-color: rgba(255,255,255,0.2)">
+</form>
+</div>
 
-    <!-- Previous Prescriptions -->
-    <% prescriptions.forEach(p => { %>
-      <div class="card">
-        <h4>🗓 <%= p.date.toDateString() %></h4>
-        <ul>
-          <% p.medicines.forEach(m => { %>
-            <li>💊 <%= m.name %> — <%= m.dosage %> for <%= m.days %> days</li>
-          <% }) %>
-        </ul>
-        <p><b>Notes:</b> <%= p.notes %></p>
-      </div>
-    <% }) %>
+<hr style="border-color:rgba(255,255,255,0.2);margin:30px 0;">
 
-  </div>
+<div class="prescription-list">
+
+<% prescriptions.forEach(p => { %>
+<div class="card">
+<h4>🗓 <%= p.date.toDateString() %></h4>
+<ul>
+<% p.medicines.forEach(m => { %>
+<li>💊 <%= m.name %> — <%= m.dosage %> for <%= m.days %> days</li>
+<% }) %>
+</ul>
+<p><b>Notes:</b> <%= p.notes %></p>
+</div>
+<% }) %>
+
+</div>
+
+</div>
 </div>
 
 <script>
 let index = 1;
 
 function toggleForm(){
-  document.getElementById("formBox").classList.toggle("active");
+document.getElementById("formBox").classList.toggle("active");
 }
 
 function addMedicine(){
-  const div = document.createElement("div");
-  div.className = "medRow";
-  div.innerHTML = `
-    <input type="text" name="medicines[${index}][name]" placeholder="Medicine Name" required>
-    <input type="text" name="medicines[${index}][dosage]" placeholder="Dosage" required>
-    <input type="text" name="medicines[${index}][days]" placeholder="Days" required>
-  `;
-  document.getElementById("medList").appendChild(div);
-  index++;
+const div=document.createElement("div");
+div.className="medRow";
+div.innerHTML=`
+<input type="text" name="medicines[${index}][name]" placeholder="Medicine Name" required>
+<input type="text" name="medicines[${index}][dosage]" placeholder="Dosage" required>
+<input type="text" name="medicines[${index}][days]" placeholder="Days" required>
+<button type="button" onclick="removeRow(this)" class="btn btn-danger">✖</button>
+`;
+document.getElementById("medList").appendChild(div);
+index++;
+}
+
+function removeRow(button){
+button.parentElement.remove();
 }
 </script>
 

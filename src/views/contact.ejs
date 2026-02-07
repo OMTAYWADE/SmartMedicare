@@ -1,209 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Contact Us | SmartMedicare AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | SmartMedicare AI</title>
 
-  <!-- Materialize CSS -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-  <!-- Google Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
 
-  <!-- AOS Animation -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+body{
+margin:0;
+background:radial-gradient(circle at top,#0f172a,#020617);
+color:white;
+font-family:'Segoe UI',sans-serif;
+overflow-x:hidden;
+}
 
-  <style>
-    body {
-      margin: 0;
-      background: radial-gradient(circle at top, #0f172a, #020617);
-      color: white;
-      overflow-x: hidden;
-      font-family: 'Segoe UI', sans-serif;
-    }
+/* Animated blobs */
+.blob{
+position:absolute;
+width:500px;
+height:500px;
+filter:blur(120px);
+opacity:.4;
+z-index:-1;
+animation:float 12s infinite ease-in-out alternate;
+}
+.blob.blue{background:#3b82f6;top:-100px;left:-100px;}
+.blob.purple{background:#8b5cf6;bottom:-100px;right:-100px;}
 
-    /* Animated Blobs */
-    .blob {
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      filter: blur(100px);
-      opacity: 0.5;
-      animation: float 12s infinite ease-in-out;
-      z-index: 0;
-    }
+@keyframes float{
+from{transform:translateY(0);}
+to{transform:translateY(80px);}
+}
 
-    .blob.blue { background: #3b82f6; top: 10%; left: 10%; }
-    .blob.purple { background: #8b5cf6; bottom: 10%; right: 10%; animation-delay: 4s; }
+/* Navbar */
+nav{
+background:rgba(15,23,42,.85);
+backdrop-filter:blur(12px);
+}
 
-    @keyframes float {
-      0%, 100% { transform: translate(0,0); }
-      50% { transform: translate(40px,-40px); }
-    }
+/* Hero */
+.hero{
+padding:100px 5% 60px;
+text-align:center;
+}
 
-    /* Navbar */
-    nav {
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+.hero h3{
+font-size:clamp(2rem,4vw,3.5rem);
+font-weight:800;
+background:linear-gradient(90deg,#60a5fa,#a78bfa);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
 
-    .brand-logo {
-      font-weight: bold;
-    }
+/* Glass Contact Section */
+.contact-section{
+width:95%;
+max-width:1200px;
+margin:auto;
+}
 
-    /* Hero */
-    .hero {
-      min-height: 50vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
+.glass{
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(20px);
+border-radius:25px;
+padding:50px;
+border:1px solid rgba(255,255,255,.15);
+box-shadow:0 0 60px rgba(0,0,0,.4);
+transition:.4s;
+}
 
-    .hero h3 {
-      font-weight: 800;
-      font-size: 3rem;
-      background: linear-gradient(90deg, #60a5fa, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+.glass:hover{
+transform:translateY(-8px);
+box-shadow:0 0 100px rgba(139,92,246,.4);
+}
 
-    /* Glass Card */
-    .glass-card {
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.15);
-      box-shadow: 0 0 40px rgba(0,0,0,0.4);
-      transition: all 0.4s ease;
-    }
+.input-field input,
+.input-field textarea{
+color:white;
+}
 
-    .glass-card:hover {
-      transform: translateY(-10px) scale(1.01);
-      box-shadow: 0 0 80px rgba(99,102,241,0.4);
-    }
+.input-field label{
+color:#aaa;
+}
 
-    /* AI Button */
-    .ai-btn {
-      border-radius: 50px;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      transition: 0.4s ease;
-    }
+.btn-ai{
+background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+border-radius:40px;
+padding:0 40px;
+font-weight:600;
+transition:.4s;
+}
 
-    .ai-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px rgba(139,92,246,0.7);
-    }
+.btn-ai:hover{
+transform:scale(1.05);
+box-shadow:0 0 30px rgba(139,92,246,.7);
+}
 
-    /* Inputs */
-    .input-field input, .input-field textarea {
-      color: white;
-    }
+/* Footer */
+footer{
+margin-top:100px;
+padding:40px;
+background:rgba(15,23,42,.8);
+text-align:center;
+}
 
-    .input-field label {
-      color: #aaa;
-    }
+/* Mobile */
+@media(max-width:600px){
+.glass{
+padding:30px 20px;
+}
+.hero{
+padding:80px 5% 40px;
+}
+}
 
-    /* Footer */
-    footer {
-      margin-top: 120px;
-      padding: 40px 0;
-      background: rgba(15, 23, 42, 0.8);
-      text-align: center;
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
-  <!-- Animated Background -->
-  <div class="blob blue"></div>
-  <div class="blob purple"></div>
+<div class="blob blue"></div>
+<div class="blob purple"></div>
 
-  <!-- NAVBAR -->
-  <nav>
-    <div class="nav-wrapper container">
-      <a href="/" class="brand-logo">SmartMedicare AI</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="/">Home</a></li>
-        <li><a href="/dashboard">Dashboard</a></li>
-        <li class="active"><a href="/contact">Contact</a></li>
-        <li><a href="/logout">Logout</a></li>
-      </ul>
-    </div>
-  </nav>
+<!-- NAVBAR -->
+<nav>
+<div class="nav-wrapper" style="width:95%;margin:auto;">
+<a href="/" class="brand-logo">SmartMedicare AI</a>
 
-  <!-- HERO -->
-  <div class="hero" data-aos="fade-up">
-    <h3>AI Powered Support</h3>
-    <p>Talk to SmartMedicare intelligent healthcare system</p>
-  </div>
+<a href="#" data-target="mobile-menu" class="sidenav-trigger right">
+<i class="material-icons">menu</i>
+</a>
 
-  <!-- CONTACT CARD -->
-  <div class="container">
-    <div class="row">
-      <div class="col s12 m8 offset-m2">
+<ul class="right hide-on-med-and-down">
+<li><a href="/">Home</a></li>
+<li><a href="/dashboard">Dashboard</a></li>
+<li class="active"><a href="/contact">Contact</a></li>
+<li><a href="/logout">Logout</a></li>
+</ul>
+</div>
+</nav>
 
-        <div class="glass-card card" data-aos="zoom-in">
-          <div class="card-content">
+<ul class="sidenav" id="mobile-menu">
+<li><a href="/">Home</a></li>
+<li><a href="/dashboard">Dashboard</a></li>
+<li><a href="/contact">Contact</a></li>
+<li><a href="/logout">Logout</a></li>
+</ul>
 
-            <h5 class="center">Contact Our AI Assistant</h5>
-            <p class="center grey-text">Fast. Smart. Intelligent. 🚀</p>
+<!-- HERO -->
+<section class="hero" data-aos="fade-up">
+<h3>AI Powered Support</h3>
+<p>Talk to our intelligent healthcare system</p>
+</section>
 
-            <br>
+<!-- CONTACT -->
+<section class="contact-section">
+<div class="glass" data-aos="zoom-in">
 
-            <form>
-              <div class="input-field">
-                <input type="text" id="name" required>
-                <label for="name">Your Name</label>
-              </div>
+<h5 class="center">Send Message to AI Assistant 🤖</h5>
+<p class="center grey-text">Fast. Smart. Free.</p>
 
-              <div class="input-field">
-                <input type="email" id="email" required>
-                <label for="email">Your Email</label>
-              </div>
+<form action="/send-message" method="POST">
 
-              <div class="input-field">
-                <textarea id="message" class="materialize-textarea" required></textarea>
-                <label for="message">Your Message</label>
-              </div>
+<div class="row">
+<div class="input-field col s12 m6">
+<input name="name" type="text" required>
+<label>Your Name</label>
+</div>
 
-              <div class="center">
-                <button class="btn ai-btn waves-effect waves-light">
-                  Send to AI
-                  <i class="material-icons right">smart_toy</i>
-                </button>
-              </div>
-            </form>
+<div class="input-field col s12 m6">
+<input name="email" type="email" required>
+<label>Your Email</label>
+</div>
+</div>
 
-          </div>
-        </div>
+<div class="row">
+<div class="input-field col s12">
+<textarea name="message" class="materialize-textarea" required></textarea>
+<label>Your Message</label>
+</div>
+</div>
 
-      </div>
-    </div>
-  </div>
+<div class="center">
+<button class="btn btn-ai waves-effect waves-light">
+Send Message
+<i class="material-icons right">send</i>
+</button>
+</div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 SmartMedicare AI. All Rights Reserved.</p>
-  </footer>
+</form>
 
-  <!-- JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</div>
+</section>
 
-  <script>
-    AOS.init({
-      duration: 1200,
-      once: true
-    });
-  </script>
+<footer>
+© 2026 SmartMedicare AI. All Rights Reserved.
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+M.Sidenav.init(document.querySelectorAll('.sidenav'));
+AOS.init({duration:1000,once:true});
+});
+</script>
 
 </body>
 </html>

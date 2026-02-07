@@ -1,226 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Book Appointment | SmartMedicare AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Appointment | SmartMedicare AI</title>
 
-  <!-- Materialize CSS -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-  <!-- Google Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
 
-  <!-- AOS Animation -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+body{
+margin:0;
+background:radial-gradient(circle at top,#0f172a,#020617);
+color:white;
+font-family:'Segoe UI',sans-serif;
+overflow-x:hidden;
+}
 
-  <style>
-    body {
-      margin: 0;
-      background: radial-gradient(circle at top, #0f172a, #020617);
-      color: white;
-      overflow-x: hidden;
-      font-family: 'Segoe UI', sans-serif;
-    }
+/* Animated blobs */
+.blob{
+position:absolute;
+width:500px;
+height:500px;
+filter:blur(120px);
+opacity:.4;
+z-index:-1;
+animation:float 12s infinite alternate ease-in-out;
+}
+.blob.blue{background:#3b82f6;top:-100px;left:-100px;}
+.blob.purple{background:#8b5cf6;bottom:-100px;right:-100px;}
 
-    /* Animated Background Blobs */
-    .blob {
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      filter: blur(100px);
-      opacity: 0.5;
-      animation: float 12s infinite ease-in-out;
-      z-index: 0;
-    }
-    .blob.blue { background: #3b82f6; top: 10%; left: 10%; }
-    .blob.purple { background: #8b5cf6; bottom: 10%; right: 10%; animation-delay: 4s; }
+@keyframes float{
+from{transform:translateY(0);}
+to{transform:translateY(80px);}
+}
 
-    @keyframes float {
-      0%, 100% { transform: translate(0,0); }
-      50% { transform: translate(40px,-40px); }
-    }
+/* Navbar */
+nav{
+background:rgba(15,23,42,.85);
+backdrop-filter:blur(12px);
+}
 
-    /* Navbar */
-    nav {
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+/* Hero */
+.hero{
+padding:110px 5% 60px;
+text-align:center;
+}
 
-    .brand-logo {
-      font-weight: bold;
-    }
+.hero h3{
+font-size:clamp(2rem,4vw,3.5rem);
+font-weight:800;
+background:linear-gradient(90deg,#60a5fa,#a78bfa);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
 
-    /* Hero */
-    .hero {
-      min-height: 45vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
+/* Section */
+.section-wrap{
+width:95%;
+max-width:1200px;
+margin:auto;
+}
 
-    .hero h3 {
-      font-weight: 800;
-      font-size: 3rem;
-      background: linear-gradient(90deg, #60a5fa, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+/* Glass Card */
+.glass{
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(20px);
+border-radius:25px;
+padding:60px;
+border:1px solid rgba(255,255,255,.15);
+box-shadow:0 0 60px rgba(0,0,0,.4);
+transition:.4s;
+}
 
-    /* Glass Card */
-    .glass-card {
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.15);
-      box-shadow: 0 0 40px rgba(0,0,0,0.4);
-      transition: all 0.4s ease;
-    }
+.glass:hover{
+transform:translateY(-8px);
+box-shadow:0 0 100px rgba(139,92,246,.4);
+}
 
-    .glass-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 0 80px rgba(99,102,241,0.4);
-    }
+.input-field input,
+.input-field select{
+color:white;
+}
 
-    /* Inputs */
-    .input-field input, .input-field select {
-      color: white;
-    }
-    .input-field label {
-      color: #aaa;
-    }
+.input-field label{
+color:#aaa;
+}
 
-    /* AI Button */
-    .ai-btn {
-      border-radius: 50px;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      transition: 0.4s ease;
-    }
-    .ai-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px rgba(139,92,246,0.7);
-    }
+/* Button */
+.btn-ai{
+background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+border-radius:40px;
+padding:0 45px;
+font-weight:600;
+transition:.4s;
+}
 
-    /* Footer */
-    footer {
-      margin-top: 120px;
-      padding: 40px 0;
-      background: rgba(15, 23, 42, 0.8);
-      text-align: center;
-    }
-  </style>
+.btn-ai:hover{
+transform:scale(1.05);
+box-shadow:0 0 30px rgba(139,92,246,.7);
+}
+
+/* Footer */
+footer{
+margin-top:100px;
+padding:40px;
+background:rgba(15,23,42,.8);
+text-align:center;
+}
+
+/* Mobile */
+@media(max-width:600px){
+.glass{
+padding:35px 20px;
+}
+.hero{
+padding:80px 5% 40px;
+}
+}
+
+</style>
 </head>
 
 <body>
 
-  <!-- Animated Background -->
-  <div class="blob blue"></div>
-  <div class="blob purple"></div>
+<div class="blob blue"></div>
+<div class="blob purple"></div>
 
-  <!-- NAVBAR -->
-  <nav>
-    <div class="nav-wrapper container">
-      <a href="/" class="brand-logo">SmartMedicare AI</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="/">Home</a></li>
-        <li><a href="/dashboard">Dashboard</a></li>
-        <li class="active"><a href="/appointment">Appointment</a></li>
-        <li><a href="/logout">Logout</a></li>
-      </ul>
-    </div>
-  </nav>
+<!-- NAVBAR -->
+<nav>
+<div class="nav-wrapper" style="width:95%;margin:auto;">
+<a href="/" class="brand-logo">SmartMedicare AI</a>
 
-  <!-- HERO -->
-  <div class="hero" data-aos="fade-up">
-    <h3>Book Smart Appointment</h3>
-    <p>AI will help you choose the best slot 🚀</p>
-  </div>
+<a href="#" data-target="mobile-menu" class="sidenav-trigger right">
+<i class="material-icons">menu</i>
+</a>
 
-  <!-- FORM -->
-  <div class="container">
-    <div class="row">
-      <div class="col s12 m8 offset-m2">
+<ul class="right hide-on-med-and-down">
+<li><a href="/">Home</a></li>
+<li><a href="/dashboard">Dashboard</a></li>
+<li class="active"><a href="/appointment">Appointment</a></li>
+<li><a href="/logout">Logout</a></li>
+</ul>
+</div>
+</nav>
 
-        <div class="glass-card card" data-aos="zoom-in">
-          <div class="card-content">
+<ul class="sidenav" id="mobile-menu">
+<li><a href="/">Home</a></li>
+<li><a href="/dashboard">Dashboard</a></li>
+<li><a href="/appointment">Appointment</a></li>
+<li><a href="/logout">Logout</a></li>
+</ul>
 
-            <h5 class="center">AI Appointment Scheduler</h5>
-            <p class="center grey-text">Smart. Fast. Optimized.</p>
+<!-- HERO -->
+<section class="hero" data-aos="fade-up">
+<h3>Book Smart Appointment</h3>
+<p>AI will help you choose the best slot 🚀</p>
+</section>
 
-            <br>
+<!-- FORM -->
+<section class="section-wrap">
+<div class="glass" data-aos="zoom-in">
 
-            <form method="POST" action="/appointment">
+<h5 class="center">AI Appointment Scheduler 🤖</h5>
+<p class="center grey-text">Smart. Fast. Optimized.</p>
 
-              <!-- Doctor -->
-              <div class="input-field">
-                <select required>
-                  <option value="" disabled selected>Choose Doctor</option>
-                  <option>Dr. Sharma (Cardiology)</option>
-                  <option>Dr. Patil (General)</option>
-                  <option>Dr. Mehta (Neurology)</option>
-                </select>
-                <label>Select Doctor</label>
-              </div>
+<form method="POST" action="/appointment">
 
-              <!-- Date -->
-              <div class="input-field">
-                <input type="date" name="date" required>
-                <label class="active">Select Date</label>
-              </div>
+<div class="row">
+<div class="input-field col s12 m6">
+<select name="doctor" required>
+<option value="" disabled selected>Choose Doctor</option>
+<option value="Dr Sharma - Cardiology">Dr. Sharma (Cardiology)</option>
+<option value="Dr Patil - General">Dr. Patil (General)</option>
+<option value="Dr Mehta - Neurology">Dr. Mehta (Neurology)</option>
+</select>
+<label>Select Doctor</label>
+</div>
 
-              <!-- Time -->
-              <div class="input-field">
-                <select required>
-                  <option value="" disabled selected>Select Time Slot</option>
-                  <option>10:00 AM</option>
-                  <option>11:00 AM</option>
-                  <option>12:00 PM</option>
-                  <option>4:00 PM</option>
-                  <option>5:00 PM</option>
-                </select>
-                <label>Time Slot</label>
-              </div>
+<div class="input-field col s12 m6">
+<input type="date" name="date" required>
+<label class="active">Select Date</label>
+</div>
+</div>
 
-              <!-- AI Button -->
-              <div class="center">
-                <button class="btn ai-btn waves-effect waves-light">
-                  Book with AI
-                  <i class="material-icons right">smart_toy</i>
-                </button>
-              </div>
+<div class="row">
+<div class="input-field col s12">
+<select name="time" required>
+<option value="" disabled selected>Select Time Slot</option>
+<option value="10:00 AM">10:00 AM</option>
+<option value="11:00 AM">11:00 AM</option>
+<option value="12:00 PM">12:00 PM</option>
+<option value="4:00 PM">4:00 PM</option>
+<option value="5:00 PM">5:00 PM</option>
+</select>
+<label>Time Slot</label>
+</div>
+</div>
 
-            </form>
+<div class="center">
+<button class="btn btn-ai waves-effect waves-light">
+Book with AI
+<i class="material-icons right">smart_toy</i>
+</button>
+</div>
 
-          </div>
-        </div>
+</form>
 
-      </div>
-    </div>
-  </div>
+</div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 SmartMedicare AI. All Rights Reserved.</p>
-  </footer>
+<footer>
+© 2026 SmartMedicare AI. All Rights Reserved.
+</footer>
 
-  <!-- JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-  <script>
-    AOS.init({ duration: 1200, once: true });
-
-    document.addEventListener('DOMContentLoaded', function() {
-      var elems = document.querySelectorAll('select');
-      M.FormSelect.init(elems);
-    });
-  </script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+M.Sidenav.init(document.querySelectorAll('.sidenav'));
+M.FormSelect.init(document.querySelectorAll('select'));
+AOS.init({duration:1000,once:true});
+});
+</script>
 
 </body>
 </html>
