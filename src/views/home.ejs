@@ -3,11 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartMedicare — AI Healthcare</title>
+<title>SmartMedicare — AI Healthcare Platform</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <style>
+
+/* ================= BASE ================= */
+:root{
+--bg:#020617;
+--card:rgba(255,255,255,.05);
+--border:rgba(255,255,255,.08);
+--primary:#38bdf8;
+--secondary:#22c55e;
+--text:#e2e8f0;
+--muted:#94a3b8;
+}
 
 *{
 margin:0;
@@ -17,228 +29,277 @@ box-sizing:border-box;
 
 body{
 font-family:'Inter',sans-serif;
-background:#0b1220;
-color:#e6edf3;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
 line-height:1.6;
 }
 
-/* Container */
-.container{
-width:92%;
-max-width:1100px;
-margin:auto;
-}
-
-/* Navbar */
+/* ================= NAVBAR ================= */
 nav{
-padding:18px 0;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+background:rgba(2,6,23,.85);
+backdrop-filter:blur(10px);
+border-bottom:1px solid var(--border);
+padding:14px 20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+z-index:1000;
 }
 
 .brand{
 font-weight:800;
 font-size:1.2rem;
-color:#4ade80;
+background:linear-gradient(135deg,var(--secondary),var(--primary));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
-.nav-btn{
-padding:8px 16px;
-border-radius:8px;
-font-size:14px;
-background:#1e293b;
-color:#e6edf3;
-text-decoration:none;
-}
-
-/* Hero */
-.hero{
-padding:70px 0 50px;
-text-align:center;
-}
-
-.hero h1{
-font-size:clamp(1.8rem,5vw,2.8rem);
-font-weight:800;
-margin-bottom:20px;
-}
-
-.hero p{
-color:#94a3b8;
-font-size:1rem;
-max-width:500px;
-margin:0 auto 30px;
-}
-
-.hero-buttons{
+.nav-links{
 display:flex;
-flex-direction:column;
-gap:15px;
-align-items:center;
-}
-
-.btn-primary{
-background:#4ade80;
-color:#0b1220;
-padding:14px 28px;
-border-radius:10px;
-font-weight:600;
-text-decoration:none;
-width:200px;
-text-align:center;
-}
-
-.btn-secondary{
-border:1px solid #334155;
-padding:14px 28px;
-border-radius:10px;
-font-weight:500;
-color:#e6edf3;
-text-decoration:none;
-width:200px;
-text-align:center;
-}
-
-/* Stats */
-.stats{
-margin-top:60px;
-display:grid;
-grid-template-columns:1fr;
 gap:20px;
 }
 
-.stat-card{
-background:#111827;
-padding:25px;
-border-radius:12px;
+.nav-links a{
+color:var(--muted);
+text-decoration:none;
+font-size:.95rem;
+transition:.3s;
+}
+
+.nav-links a:hover{
+color:white;
+}
+
+/* Hamburger */
+.hamburger{
+display:none;
+flex-direction:column;
+gap:4px;
+cursor:pointer;
+}
+
+.hamburger span{
+width:22px;
+height:3px;
+background:white;
+border-radius:2px;
+}
+
+/* ================= HERO ================= */
+.hero{
+padding:110px 20px 60px;
 text-align:center;
+max-width:1100px;
+margin:auto;
 }
 
-.stat-card h3{
-font-size:28px;
-color:#4ade80;
-margin-bottom:8px;
+.hero h1{
+font-size:clamp(1.8rem,6vw,3.5rem);
+font-weight:800;
+background:linear-gradient(135deg,var(--secondary),var(--primary));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
-.stat-card p{
-color:#94a3b8;
-font-size:14px;
+.hero p{
+margin-top:18px;
+color:var(--muted);
+font-size:clamp(.95rem,2.5vw,1.1rem);
+max-width:650px;
+margin-left:auto;
+margin-right:auto;
 }
 
-/* Features */
-.features{
-margin-top:70px;
-display:grid;
-grid-template-columns:1fr;
-gap:25px;
-}
-
-.feature-card{
-background:#111827;
-padding:30px;
-border-radius:14px;
-}
-
-.feature-card h4{
-margin-bottom:10px;
-font-size:18px;
-}
-
-.feature-card p{
-color:#94a3b8;
-font-size:14px;
-}
-
-/* Footer */
-footer{
-margin-top:80px;
-padding:30px 0;
-text-align:center;
-font-size:14px;
-color:#64748b;
-}
-
-/* Tablet */
-@media(min-width:600px){
-
-.hero-buttons{
-flex-direction:row;
+.buttons{
+margin-top:30px;
+display:flex;
+flex-wrap:wrap;
 justify-content:center;
+gap:15px;
 }
 
-.stats{
-grid-template-columns:repeat(3,1fr);
+.btn{
+padding:13px 30px;
+border-radius:40px;
+font-weight:600;
+background:linear-gradient(135deg,var(--secondary),var(--primary));
+color:#020617;
+text-decoration:none;
+transition:.3s ease;
+min-width:140px;
+text-align:center;
 }
 
+.btn:hover{
+transform:translateY(-4px);
+box-shadow:0 15px 40px rgba(56,189,248,.4);
+}
+
+/* ================= FEATURES ================= */
 .features{
-grid-template-columns:repeat(3,1fr);
+padding:40px 20px 80px;
+max-width:1200px;
+margin:auto;
+display:grid;
+gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 }
 
+.card{
+background:var(--card);
+border:1px solid var(--border);
+border-radius:18px;
+padding:30px 25px;
+text-align:center;
+transition:.3s ease;
+}
+
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 15px 40px rgba(0,0,0,.4);
+}
+
+.card i{
+font-size:42px;
+margin-bottom:15px;
+color:var(--primary);
+}
+
+.card h3{
+margin-bottom:10px;
+font-size:1.1rem;
+}
+
+.card p{
+color:var(--muted);
+font-size:.95rem;
+}
+
+/* ================= FOOTER ================= */
+footer{
+background:rgba(255,255,255,.02);
+padding:40px 20px;
+text-align:center;
+border-top:1px solid var(--border);
+}
+
+footer p{
+color:var(--muted);
+font-size:.85rem;
+}
+
+/* ================= MOBILE NAV ================= */
+@media(max-width:768px){
+
+.nav-links{
+position:fixed;
+top:60px;
+right:-100%;
+height:calc(100vh - 60px);
+width:240px;
+background:#020617;
+flex-direction:column;
+align-items:center;
+padding-top:50px;
+gap:30px;
+transition:.3s ease;
+border-left:1px solid var(--border);
+}
+
+.nav-links.active{
+right:0;
+}
+
+.hamburger{
+display:flex;
+}
+
+}
+
+/* ================= SMALL PHONES ================= */
+@media(max-width:380px){
+.hero{
+padding-top:100px;
+}
+.btn{
+width:100%;
+}
 }
 
 </style>
 </head>
-<body>
 
-<div class="container">
+<body>
 
 <nav>
 <div class="brand">SmartMedicare</div>
-<a href="/login" class="nav-btn">Login</a>
+
+<div class="nav-links" id="navLinks">
+<a href="/about">About</a>
+<a href="/appointment">Appointment</a>
+<a href="/contact">Contact</a>
+<a href="/signup">Sign Up</a>
+</div>
+
+<div class="hamburger" id="hamburger">
+<span></span>
+<span></span>
+<span></span>
+</div>
 </nav>
 
 <section class="hero">
-<h1>Intelligent Healthcare Management Platform</h1>
+<h1>AI Powered Healthcare Platform</h1>
 <p>
-AI-powered patient management, smart medication tracking, and predictive health analytics for modern clinics.
+Predictive analytics, medication tracking, intelligent monitoring 
+and secure patient management — all in one professional ecosystem.
 </p>
 
-<div class="hero-buttons">
-<a href="/signup" class="btn-primary">Get Started</a>
-<a href="/login" class="btn-secondary">Login</a>
-</div>
-</section>
-
-<section class="stats">
-<div class="stat-card">
-<h3>1200+</h3>
-<p>Patients Managed</p>
-</div>
-
-<div class="stat-card">
-<h3>98%</h3>
-<p>Medication Accuracy</p>
-</div>
-
-<div class="stat-card">
-<h3>24/7</h3>
-<p>AI Monitoring</p>
+<div class="buttons">
+<a href="/signup" class="btn">Get Started</a>
+<a href="/login" class="btn">Login</a>
 </div>
 </section>
 
 <section class="features">
-<div class="feature-card">
-<h4>AI Intelligence</h4>
-<p>Predictive analytics to detect health risks early and improve treatment decisions.</p>
+
+<div class="card">
+<i class="material-icons">smart_toy</i>
+<h3>AI Intelligence</h3>
+<p>Advanced predictive analytics and health monitoring.</p>
 </div>
 
-<div class="feature-card">
-<h4>Secure Medical Data</h4>
-<p>End-to-end encryption with hospital-grade privacy protection.</p>
+<div class="card">
+<i class="material-icons">security</i>
+<h3>Secure Data</h3>
+<p>Hospital-grade encryption and secure cloud storage.</p>
 </div>
 
-<div class="feature-card">
-<h4>Smart Reminders</h4>
-<p>Automated medication and appointment alerts to improve patient compliance.</p>
+<div class="card">
+<i class="material-icons">schedule</i>
+<h3>Smart Automation</h3>
+<p>Automated reminders and appointment scheduling.</p>
 </div>
+
 </section>
 
 <footer>
-© 2026 SmartMedicare — AI Driven Healthcare Platform
+<p>© 2026 SmartMedicare — Professional AI Healthcare System</p>
 </footer>
 
-</div>
+<script>
+const hamburger=document.getElementById("hamburger");
+const navLinks=document.getElementById("navLinks");
+
+hamburger.addEventListener("click",()=>{
+navLinks.classList.toggle("active");
+});
+</script>
 
 </body>
 </html>
