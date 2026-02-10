@@ -443,18 +443,17 @@ app.get('/doctor/patient/:id/ai-insights', isAuth, isDoctor, async (req, res) =>
   }
 });
 
-
+let timers = [];
 app.get("/servo", (req, res) => {
-    res.render("servo", { timers: timers });
+    res.render("servo", { timers });
 });
 
 app.post("/set-servo", (req, res) => {
     const { medicine, time } = req.body;
-
     timers.push({ medicine, time });
-
     res.redirect("/servo");
 });
+
 
 
 // Logout
