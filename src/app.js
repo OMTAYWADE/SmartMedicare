@@ -443,14 +443,17 @@ app.get('/doctor/patient/:id/ai-insights', isAuth, isDoctor, async (req, res) =>
   }
 });
 
-// control servo time
-app.get("/medicine-time", (req, res) => {
-  res.json({
-    morningHour: 9,
-    morningMinute: 0,
-    nightHour: 21,
-    nightMinute: 0
-  });
+
+app.get("/servo", (req, res) => {
+    res.render("servo", { timers: timers });
+});
+
+app.post("/set-servo", (req, res) => {
+    const { medicine, time } = req.body;
+
+    timers.push({ medicine, time });
+
+    res.redirect("/servo");
 });
 
 

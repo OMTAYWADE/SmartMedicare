@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartMedicare - Servo Timer</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #4e73df, #1cc88a);
+    padding: 20px;
+}
+
+.container {
+    max-width: 500px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2 {
+    text-align: center;
+    color: #4e73df;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #4e73df;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.timer-card {
+    background: #f8f9fc;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.time {
+    color: #1cc88a;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>💊 Servo Timer Setup</h2>
+
+    <form action="/set-servo" method="POST">
+        <input type="text" name="medicine" placeholder="Medicine Name" required>
+        <input type="time" name="time" required>
+        <button type="submit">Set Timer</button>
+    </form>
+
+    <h3>📅 Scheduled Timers</h3>
+
+    <% if (timers.length === 0) { %>
+        <p>No timers set yet.</p>
+    <% } %>
+
+    <% timers.forEach(function(timer) { %>
+        <div class="timer-card">
+            <span><%= timer.medicine %></span>
+            <span class="time"><%= timer.time %></span>
+        </div>
+    <% }) %>
+
+</div>
+
+</body>
+</html>
