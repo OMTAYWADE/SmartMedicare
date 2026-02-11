@@ -1,306 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Health AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health AI Dashboard</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+<style>
+:root{
+--primary:#2563eb;
+--bg:#f4f8fc;
+--card:#ffffff;
+--text:#1e293b;
+--muted:#64748b;
+--border:#e2e8f0;
+--success:#16a34a;
+--warning:#f59e0b;
+--danger:#dc2626;
+}
 
-        body {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #4f46e5, #9333ea);
-            overflow: hidden;
-            color: white;
-        }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
 
-        /* ---------- COMMON CARD ---------- */
+body{
+background:var(--bg);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:var(--text);
+}
 
-        .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            padding: 30px;
-            border-radius: 20px;
-            width: 380px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            transition: 0.4s ease;
-        }
+/* ---------- CONTAINER ---------- */
 
-        /* ---------- SCAN SCREEN ---------- */
+.container{
+width:900px;
+background:var(--card);
+border-radius:16px;
+box-shadow:0 20px 60px rgba(0,0,0,0.08);
+overflow:hidden;
+display:flex;
+}
 
-        #scanScreen {
-            text-align: center;
-        }
+/* ---------- LEFT PANEL (SCAN) ---------- */
 
-        .scan-box {
-            width: 220px;
-            height: 220px;
-            margin: 25px auto;
-            position: relative;
-        }
+.left{
+width:40%;
+padding:40px;
+border-right:1px solid var(--border);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
 
-        .corner {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border: 3px solid #fff;
-        }
+.scan-frame{
+width:220px;
+height:220px;
+border:2px solid var(--primary);
+border-radius:12px;
+position:relative;
+overflow:hidden;
+margin-top:20px;
+}
 
-        .top-left {
-            top: 0;
-            left: 0;
-            border-right: none;
-            border-bottom: none;
-        }
+.scan-line{
+position:absolute;
+width:100%;
+height:3px;
+background:var(--primary);
+animation:scan 2s linear infinite;
+}
 
-        .top-right {
-            top: 0;
-            right: 0;
-            border-left: none;
-            border-bottom: none;
-        }
+@keyframes scan{
+0%{top:0;}
+100%{top:100%;}
+}
 
-        .bottom-left {
-            bottom: 0;
-            left: 0;
-            border-right: none;
-            border-top: none;
-        }
+.progress{
+margin-top:20px;
+font-weight:600;
+color:var(--primary);
+}
 
-        .bottom-right {
-            bottom: 0;
-            right: 0;
-            border-left: none;
-            border-top: none;
-        }
+/* ---------- RIGHT PANEL (DASHBOARD) ---------- */
 
-        .scan-line {
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background: white;
-            animation: scanMove 2s linear infinite;
-        }
+.right{
+width:60%;
+padding:40px;
+}
 
-        @keyframes scanMove {
-            0% {
-                top: 0;
-            }
+.header{
+display:flex;
+justify-content:space-between;
+margin-bottom:30px;
+}
 
-            100% {
-                top: 100%;
-            }
-        }
+.metrics{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
 
-        .progress {
-            margin-top: 15px;
-            font-weight: 600;
-        }
+.card{
+border:1px solid var(--border);
+border-radius:12px;
+padding:20px;
+transition:0.3s ease;
+}
 
-        /* ---------- DASHBOARD ---------- */
+.card:hover{
+box-shadow:0 10px 30px rgba(0,0,0,0.05);
+transform:translateY(-2px);
+}
 
-        #dashboard {
-            display: none;
-        }
+.card h4{
+font-size:14px;
+color:var(--muted);
+margin-bottom:8px;
+}
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
+.value{
+font-size:22px;
+font-weight:600;
+}
 
-        .cards {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
+.tip{
+margin-top:30px;
+padding:20px;
+background:#f1f5f9;
+border-radius:12px;
+font-size:14px;
+color:var(--text);
+}
 
-        .metric {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
-            border-radius: 15px;
-            text-align: center;
-            transition: 0.3s ease;
-        }
+.badge{
+display:inline-block;
+padding:4px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:500;
+margin-top:6px;
+}
 
-        .metric:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .circle {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            margin: 0 auto 8px;
-            background: conic-gradient(#fff 0deg, rgba(255, 255, 255, 0.2) 0deg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .tip {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            font-size: 14px;
-            text-align: center;
-            animation: fadeTip 1s ease;
-        }
-
-        @keyframes fadeTip {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+.good{background:#dcfce7;color:var(--success);}
+.medium{background:#fef3c7;color:var(--warning);}
+.high{background:#fee2e2;color:var(--danger);}
+</style>
 </head>
 
 <body>
 
-    <!-- SCAN SCREEN -->
-    <div id="scanScreen" class="glass">
-        <h2>AI Facial Health Scan</h2>
+<div class="container">
 
-        <div class="scan-box">
-            <div class="corner top-left"></div>
-            <div class="corner top-right"></div>
-            <div class="corner bottom-left"></div>
-            <div class="corner bottom-right"></div>
-            <div class="scan-line"></div>
-        </div>
+<div class="left">
+<h2>AI Health Scan</h2>
+<div class="scan-frame">
+<div class="scan-line"></div>
+</div>
+<div class="progress" id="progressText">Analyzing... 0%</div>
+</div>
 
-        <div class="progress" id="progressText">Analyzing... 0%</div>
-        <p style="font-size:13px;opacity:0.8;margin-top:8px;">
-            Please stay still during scan
-        </p>
-    </div>
+<div class="right">
 
-    <!-- DASHBOARD -->
-    <div id="dashboard" class="glass">
+<div class="header">
+<h2>Patient Overview</h2>
+<small id="clock"></small>
+</div>
 
-        <div class="header">
-            <h3>Health Overview</h3>
-            <small id="clock"></small>
-        </div>
+<div class="metrics">
 
-        <div class="cards">
+<div class="card">
+<h4>Heart Rate</h4>
+<div class="value" id="heartRate"></div>
+<span class="badge" id="heartStatus"></span>
+</div>
 
-            <div class="metric">
-                <div class="circle" id="heartCircle">0%</div>
-                <div>❤️ Heart</div>
-            </div>
+<div class="card">
+<h4>Hydration</h4>
+<div class="value" id="hydration"></div>
+<span class="badge" id="hydrationStatus"></span>
+</div>
 
-            <div class="metric">
-                <div class="circle" id="waterCircle">0%</div>
-                <div>💧 Hydration</div>
-            </div>
+<div class="card">
+<h4>Sleep Quality</h4>
+<div class="value" id="sleep"></div>
+<span class="badge" id="sleepStatus"></span>
+</div>
 
-            <div class="metric">
-                <div class="circle" id="sleepCircle">0%</div>
-                <div>😴 Sleep</div>
-            </div>
+<div class="card">
+<h4>Stress Level</h4>
+<div class="value" id="stress"></div>
+<span class="badge" id="stressStatus"></span>
+</div>
 
-            <div class="metric">
-                <div class="circle" id="stressCircle">0%</div>
-                <div>🧠 Stress</div>
-            </div>
+</div>
 
-        </div>
+<div class="tip" id="healthTip"></div>
 
-        <div class="tip" id="healthTip"></div>
+</div>
 
-    </div>
+</div>
 
-    <script>
+<script>
 
-        // ---------- SCAN ANIMATION ----------
-        let progress = 0;
-        let interval = setInterval(() => {
-            progress++;
-            document.getElementById("progressText").innerText = "Analyzing... " + progress + "%";
+let progress=0;
 
-            if (progress >= 100) {
-                clearInterval(interval);
-                document.getElementById("scanScreen").style.display = "none";
-                document.getElementById("dashboard").style.display = "block";
-                loadDashboard();
-            }
-        }, 25);
+let scanInterval=setInterval(()=>{
+progress++;
+document.getElementById("progressText").innerText="Analyzing... "+progress+"%";
 
-        // ---------- DASHBOARD ----------
-        function setCircle(id, value) {
-            let circle = document.getElementById(id);
-            let degree = value * 3.6;
-            circle.style.background = `conic-gradient(#fff ${degree}deg, rgba(255,255,255,0.2) ${degree}deg)`;
-            circle.innerText = value + "%";
-        }
+if(progress>=100){
+clearInterval(scanInterval);
+loadDashboard();
+}
+},25);
 
-        function loadDashboard() {
+function loadDashboard(){
 
-            let heart = 70 + Math.floor(Math.random() * 20);
-            let hydration = 40 + Math.floor(Math.random() * 50);
-            let sleep = 60 + Math.floor(Math.random() * 30);
-            let stress = 20 + Math.floor(Math.random() * 60);
+let heart=65+Math.floor(Math.random()*25);
+let hydration=40+Math.floor(Math.random()*50);
+let sleep=60+Math.floor(Math.random()*35);
+let stress=20+Math.floor(Math.random()*60);
 
-            setCircle("heartCircle", heart);
-            setCircle("waterCircle", hydration);
-            setCircle("sleepCircle", sleep);
-            setCircle("stressCircle", stress);
+document.getElementById("heartRate").innerText=heart+" BPM";
+document.getElementById("hydration").innerText=hydration+"%";
+document.getElementById("sleep").innerText=sleep+"%";
+document.getElementById("stress").innerText=stress+"%";
 
-            updateTip(hydration, stress, sleep);
+setStatus("heartStatus",heart,60,90);
+setStatus("hydrationStatus",hydration,60,80);
+setStatus("sleepStatus",sleep,70,85);
+setStatus("stressStatus",stress,40,70);
 
-            setInterval(() => {
-                document.getElementById("clock").innerText = new Date().toLocaleTimeString();
-            }, 1000);
+generateTip(hydration,stress,sleep);
 
-            setInterval(() => {
-                updateTip(hydration, stress, sleep);
-            }, 8000);
-        }
+setInterval(()=>{
+document.getElementById("clock").innerText=new Date().toLocaleString();
+},1000);
+}
 
-        function updateTip(h, s, sl) {
+function setStatus(id,value,low,high){
+let el=document.getElementById(id);
 
-            let tip = "";
-            if (h < 60) {
-                tip = "💧 Your hydration is slightly low. Drink water now.";
-            }
-            else if (s > 65) {
-                tip = "🧘 High stress detected. Take a short breathing break.";
-            }
-            else if (sl < 70) {
-                tip = "🌙 Improve sleep quality by reducing screen time.";
-            }
-            else {
-                tip = "✅ All health indicators are stable. Keep maintaining!";
-            }
+if(value<low){
+el.innerText="Low";
+el.className="badge medium";
+}
+else if(value>high){
+el.innerText="High";
+el.className="badge high";
+}
+else{
+el.innerText="Normal";
+el.className="badge good";
+}
+}
 
-            document.getElementById("healthTip").innerText = tip;
-        }
+function generateTip(h,s,sl){
+let tip="";
 
-    </script>
+if(h<60){
+tip="Hydration level is slightly low. Encourage water intake within the next hour.";
+}
+else if(s>65){
+tip="Stress indicators elevated. Recommend short breathing exercise or relaxation.";
+}
+else if(sl<70){
+tip="Sleep quality below optimal. Suggest improved bedtime routine.";
+}
+else{
+tip="All vital indicators are within normal range. Maintain current lifestyle habits.";
+}
+
+document.getElementById("healthTip").innerText=tip;
+}
+
+</script>
 
 </body>
-
 </html>
