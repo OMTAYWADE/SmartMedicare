@@ -1,252 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Health Tips | SmartMedicare AI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tips | SmartMedicare AI</title>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-<style>
-body{
-margin:0;
-background:radial-gradient(circle at top,#0f172a,#020617);
-color:white;
-font-family:'Segoe UI',sans-serif;
-overflow-x:hidden;
-}
+    <style>
+        /* ================= FACE SCANNER OVERLAY ================= */
 
-/* Animated blobs */
-.blob{
-position:absolute;
-width:400px;
-height:400px;
-filter:blur(120px);
-opacity:.5;
-animation:float 12s infinite ease-in-out;
-z-index:0;
-}
-.blob.blue{background:#3b82f6;top:10%;left:10%;}
-.blob.purple{background:#8b5cf6;bottom:10%;right:10%;animation-delay:4s;}
+        #faceOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #0f172a, #020617);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease;
+        }
 
-@keyframes float{
-0%,100%{transform:translate(0,0);}
-50%{transform:translate(50px,-50px);}
-}
+        .scan-circle {
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            border: 4px solid #34d399;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 40px #34d399;
+        }
 
-/* Navbar */
-nav{
-background:rgba(15,23,42,.8);
-backdrop-filter:blur(12px);
-}
-.brand-logo{font-weight:600;}
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: #60a5fa;
+            animation: scan 3s linear infinite;
+        }
 
-/* Hero */
-.hero{
-min-height:40vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-position:relative;
-z-index:2;
-}
+        @keyframes scan {
+            0% {
+                top: 0;
+            }
 
-.hero h3{
-font-weight:800;
-font-size:2.8rem;
-background:linear-gradient(90deg,#34d399,#60a5fa);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+            100% {
+                top: 100%;
+            }
+        }
 
-/* Stats Section */
-.stats{
-display:flex;
-justify-content:center;
-gap:40px;
-margin-top:20px;
-flex-wrap:wrap;
-}
-.stat-box{
-text-align:center;
-}
-.stat-number{
-font-size:28px;
-font-weight:700;
-color:#34d399;
-}
+        #scanText {
+            margin-top: 20px;
+            font-size: 18px;
+            letter-spacing: 1px;
+            color: #34d399;
+        }
 
-/* Search */
-.search-box{
-margin:30px 0;
-}
+        #identityName {
+            font-size: 22px;
+            margin-top: 10px;
+            color: #60a5fa;
+            opacity: 0;
+            transition: opacity .8s ease;
+        }
 
-/* Glass Card */
-.glass-card{
-background:rgba(255,255,255,.08);
-backdrop-filter:blur(18px);
-border-radius:20px;
-border:1px solid rgba(255,255,255,.15);
-transition:.4s ease;
-}
+        body {
+            margin: 0;
+            background: radial-gradient(circle at top, #0f172a, #020617);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
 
-.tip-card:hover{
-transform:translateY(-8px) scale(1.03);
-box-shadow:0 0 60px rgba(52,211,153,.4);
-}
+        /* Animated blobs */
+        .blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            filter: blur(120px);
+            opacity: .5;
+            animation: float 12s infinite ease-in-out;
+            z-index: 0;
+        }
 
-/* Favorite Button */
-.favorite{
-cursor:pointer;
-transition:.3s;
-}
-.favorite.active{
-color:#facc15;
-}
+        .blob.blue {
+            background: #3b82f6;
+            top: 10%;
+            left: 10%;
+        }
 
-/* Footer */
-footer{
-margin-top:120px;
-padding:40px 0;
-background:rgba(15,23,42,.8);
-text-align:center;
-}
-</style>
+        .blob.purple {
+            background: #8b5cf6;
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(50px, -50px);
+            }
+        }
+
+        /* Navbar */
+        nav {
+            background: rgba(15, 23, 42, .8);
+            backdrop-filter: blur(12px);
+        }
+
+        .brand-logo {
+            font-weight: 600;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h3 {
+            font-weight: 800;
+            font-size: 2.8rem;
+            background: linear-gradient(90deg, #34d399, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #34d399;
+        }
+
+        /* Search */
+        .search-box {
+            margin: 30px 0;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, .08);
+            backdrop-filter: blur(18px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, .15);
+            transition: .4s ease;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 0 60px rgba(52, 211, 153, .4);
+        }
+
+        /* Favorite Button */
+        .favorite {
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .favorite.active {
+            color: #facc15;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 120px;
+            padding: 40px 0;
+            background: rgba(15, 23, 42, .8);
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="blob blue"></div>
-<div class="blob purple"></div>
+    <div id="faceOverlay">
+        <h4>AI Facial Recognition</h4>
 
-<!-- NAVBAR -->
-<nav>
-<div class="nav-wrapper container">
-<a href="/" class="brand-logo">SmartMedicare AI</a>
+        <div class="scan-circle">
+            <div class="scan-line"></div>
+        </div>
 
-<a href="#" data-target="mobile-menu" class="sidenav-trigger">
-<i class="material-icons">menu</i>
-</a>
+        <div id="scanText">Scanning face...</div>
+        <div id="identityName"></div>
+    </div>
 
-<ul class="right hide-on-med-and-down">
-<li><a href="/">Home</a></li>
-<li><a href="/dashboard">Dashboard</a></li>
-<li><a href="/appointment">Appointment</a></li>
-<li class="active"><a href="/healthtips">Health Tips</a></li>
-<li><a href="/logout">Logout</a></li>
-</ul>
-</div>
-</nav>
+    <div class="blob blue"></div>
+    <div class="blob purple"></div>
 
-<ul class="sidenav" id="mobile-menu">
-<li><a href="/">Home</a></li>
-<li><a href="/dashboard">Dashboard</a></li>
-<li><a href="/appointment">Appointment</a></li>
-<li><a href="/healthtips">Health Tips</a></li>
-<li><a href="/logout">Logout</a></li>
-</ul>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="/" class="brand-logo">SmartMedicare AI</a>
 
-<!-- HERO -->
-<div class="hero" data-aos="fade-up">
-<h3>AI Health Assistant</h3>
-<p>Daily smart tips for a healthier life 💚</p>
+            <a href="#" data-target="mobile-menu" class="sidenav-trigger">
+                <i class="material-icons">menu</i>
+            </a>
 
-<div class="stats">
-<div class="stat-box">
-<div class="stat-number" id="tipsCount">6</div>
-<p>Total Tips</p>
-</div>
-<div class="stat-box">
-<div class="stat-number">82%</div>
-<p>AI Accuracy</p>
-</div>
-<div class="stat-box">
-<div class="stat-number">24/7</div>
-<p>AI Support</p>
-</div>
-</div>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/appointment">Appointment</a></li>
+                <li class="active"><a href="/healthtips">Health Tips</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
 
-</div>
+    <ul class="sidenav" id="mobile-menu">
+        <li><a href="/">Home</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/appointment">Appointment</a></li>
+        <li><a href="/healthtips">Health Tips</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
 
-<div class="container">
+    <!-- HERO -->
+    <div class="hero" data-aos="fade-up">
+        <h3>AI Health Assistant</h3>
+        <p>Daily smart tips for a healthier life 💚</p>
 
-<!-- Search -->
-<div class="search-box">
-<input type="text" id="searchInput" placeholder="Search health tips..." onkeyup="filterTips()" style="color:white;">
-</div>
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number" id="tipsCount">6</div>
+                <p>Total Tips</p>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">82%</div>
+                <p>AI Accuracy</p>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">24/7</div>
+                <p>AI Support</p>
+            </div>
+        </div>
 
-<div class="row" id="tipsContainer">
+    </div>
 
-<!-- Tip Card Template -->
-<div class="col s12 m4 tip-item" data-aos="zoom-in">
-<div class="glass-card card tip-card">
-<div class="card-content center">
-<i class="material-icons large green-text">water_drop</i>
-<h5>Stay Hydrated</h5>
-<p>Drink at least 3-4 liters of water daily.</p>
-<i class="material-icons favorite" onclick="toggleFavorite(this)">star_border</i>
-</div>
-</div>
-</div>
+    <div class="container">
 
-<div class="col s12 m4 tip-item" data-aos="zoom-in">
-<div class="glass-card card tip-card">
-<div class="card-content center">
-<i class="material-icons large blue-text">fitness_center</i>
-<h5>Exercise Daily</h5>
-<p>30 minutes of physical activity keeps you fit.</p>
-<i class="material-icons favorite" onclick="toggleFavorite(this)">star_border</i>
-</div>
-</div>
-</div>
+        <!-- Search -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search health tips..." onkeyup="filterTips()"
+                style="color:white;">
+        </div>
 
-<div class="col s12 m4 tip-item" data-aos="zoom-in">
-<div class="glass-card card tip-card">
-<div class="card-content center">
-<i class="material-icons large purple-text">bedtime</i>
-<h5>Quality Sleep</h5>
-<p>Sleep 7-8 hours for recovery.</p>
-<i class="material-icons favorite" onclick="toggleFavorite(this)">star_border</i>
-</div>
-</div>
-</div>
+        <div class="row" id="tipsContainer">
 
-</div>
-</div>
+            <!-- Tip Card Template -->
+            <div class="col s12 m4 tip-item" data-aos="zoom-in">
+                <div class="glass-card card tip-card">
+                    <div class="card-content center">
+                        <i class="material-icons large green-text">water_drop</i>
+                        <h5>Stay Hydrated</h5>
+                        <p>Drink at least 3-4 liters of water daily.</p>
+                        <i class="material-icons favorite" onclick="toggleFavorite(this)">star_border</i>
+                    </div>
+                </div>
+            </div>
 
-<footer>
-<p>© 2026 SmartMedicare AI. All Rights Reserved.</p>
-</footer>
+            <div class="col s12 m4 tip-item" data-aos="zoom-in">
+                <div class="glass-card card tip-card">
+                    <div class="card-content center">
+                        <i class="material-icons large blue-text">fitness_center</i>
+                        <h5>Exercise Daily</h5>
+                        <p>30 minutes of physical activity keeps you fit.</p>
+                        <i class="material-icons favorite" onclick="toggleFavorite(this)">star_border</i>
+                    </div>
+                </div>
+            </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+            <div class="col s12 m4 tip-item" data-aos="zoom-in">
+                <div class="glass-card card tip-card">
+                    <div class="card-content center">
+                        <i class="material-icons large purple-text">bedtime</i>
+                        <h5>Quality Sleep</h5>
+                        <p>Sleep 7-8 hours for recovery.</p>
+                        <i class="material-icons favorite" onclick="toggleFavorite(this)">star_border</i>
+                    </div>
+                </div>
+            </div>
 
-<script>
-document.addEventListener("DOMContentLoaded",()=>{
-M.Sidenav.init(document.querySelectorAll(".sidenav"));
-AOS.init({duration:1000,once:true});
-});
+        </div>
+    </div>
 
-/* Search Filter */
-function filterTips(){
-let input=document.getElementById("searchInput").value.toLowerCase();
-let tips=document.querySelectorAll(".tip-item");
-tips.forEach(tip=>{
-let text=tip.innerText.toLowerCase();
-tip.style.display=text.includes(input)?"block":"none";
-});
-}
+    <footer>
+        <p>© 2026 SmartMedicare AI. All Rights Reserved.</p>
+    </footer>
 
-/* Favorite Toggle */
-function toggleFavorite(icon){
-icon.classList.toggle("active");
-icon.innerText=icon.classList.contains("active")?"star":"star_border";
-}
-</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            M.Sidenav.init(document.querySelectorAll(".sidenav"));
+            AOS.init({ duration: 1000, once: true });
+        });
+
+        /* Search Filter */
+        function filterTips() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let tips = document.querySelectorAll(".tip-item");
+            tips.forEach(tip => {
+                let text = tip.innerText.toLowerCase();
+                tip.style.display = text.includes(input) ? "block" : "none";
+            });
+        }
+
+        /* Favorite Toggle */
+        function toggleFavorite(icon) {
+            icon.classList.toggle("active");
+            icon.innerText = icon.classList.contains("active") ? "star" : "star_border";
+        }
+
+        let scanDuration = 12; // change 10–20 seconds
+
+        setTimeout(() => {
+            document.getElementById("scanText").innerText = "Identity Verified";
+            document.getElementById("identityName").innerText = "Welcome Bhavika Taywade";
+            document.getElementById("identityName").style.opacity = "1";
+        }, scanDuration * 500);
+
+        setTimeout(() => {
+            document.getElementById("faceOverlay").style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById("faceOverlay").style.display = "none";
+            }, 1000);
+        }, scanDuration * 1000);
+
+    </script>
 
 </body>
+
 </html>
