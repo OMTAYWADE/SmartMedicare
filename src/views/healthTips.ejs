@@ -1,225 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Health AI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Health AI</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-body {
-  background: linear-gradient(135deg, #eaf4ff, #f7fbff);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #1e293b;
-}
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #4f46e5, #9333ea);
+            overflow: hidden;
+            color: white;
+        }
 
-/* ---------- SCAN SCREEN ---------- */
+        /* ---------- COMMON CARD ---------- */
 
-#scanScreen {
-  width: 350px;
-  text-align: center;
-}
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 20px;
+            width: 380px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: 0.4s ease;
+        }
 
-.scan-card {
-  background: white;
-  padding: 30px;
-  border-radius: 18px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-}
+        /* ---------- SCAN SCREEN ---------- */
 
-.scan-box {
-  margin: 25px auto;
-  width: 220px;
-  height: 220px;
-  border: 2px solid #3b82f6;
-  border-radius: 16px;
-  position: relative;
-  overflow: hidden;
-}
+        #scanScreen {
+            text-align: center;
+        }
 
-.scan-line {
-  width: 100%;
-  height: 3px;
-  background: #3b82f6;
-  position: absolute;
-  top: 0;
-  animation: scanMove 2s linear infinite;
-}
+        .scan-box {
+            width: 220px;
+            height: 220px;
+            margin: 25px auto;
+            position: relative;
+        }
 
-@keyframes scanMove {
-  0% { top: 0; }
-  100% { top: 100%; }
-}
+        .corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #fff;
+        }
 
-.progress {
-  margin-top: 10px;
-  font-weight: 600;
-  color: #3b82f6;
-}
+        .top-left {
+            top: 0;
+            left: 0;
+            border-right: none;
+            border-bottom: none;
+        }
 
-/* ---------- DASHBOARD ---------- */
+        .top-right {
+            top: 0;
+            right: 0;
+            border-left: none;
+            border-bottom: none;
+        }
 
-#dashboard {
-  display: none;
-  width: 400px;
-}
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+            border-right: none;
+            border-top: none;
+        }
 
-.dashboard-card {
-  background: white;
-  padding: 25px;
-  border-radius: 18px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-}
+        .bottom-right {
+            bottom: 0;
+            right: 0;
+            border-left: none;
+            border-top: none;
+        }
 
-.header {
-  margin-bottom: 20px;
-}
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: white;
+            animation: scanMove 2s linear infinite;
+        }
 
-.cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
+        @keyframes scanMove {
+            0% {
+                top: 0;
+            }
 
-.metric {
-  padding: 15px;
-  border-radius: 14px;
-  background: #f1f7ff;
-  transition: 0.3s ease;
-}
+            100% {
+                top: 100%;
+            }
+        }
 
-.metric:hover {
-  transform: translateY(-3px);
-}
+        .progress {
+            margin-top: 15px;
+            font-weight: 600;
+        }
 
-.metric h4 {
-  font-size: 14px;
-  margin-bottom: 5px;
-}
+        /* ---------- DASHBOARD ---------- */
 
-.metric p {
-  font-size: 18px;
-  font-weight: 600;
-}
+        #dashboard {
+            display: none;
+        }
 
-.tip {
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 14px;
-  background: #e0f2fe;
-  font-size: 14px;
-}
-</style>
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .metric {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            transition: 0.3s ease;
+        }
+
+        .metric:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+            background: conic-gradient(#fff 0deg, rgba(255, 255, 255, 0.2) 0deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .tip {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            font-size: 14px;
+            text-align: center;
+            animation: fadeTip 1s ease;
+        }
+
+        @keyframes fadeTip {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- SCAN SCREEN -->
-<div id="scanScreen">
-  <div class="scan-card">
-    <h2>AI Health Scan</h2>
-    <div class="scan-box">
-      <div class="scan-line"></div>
-    </div>
-    <div class="progress" id="progressText">Scanning... 0%</div>
-    <p style="font-size:13px;color:#64748b;margin-top:8px;">
-      Please keep your face inside the frame
-    </p>
-  </div>
-</div>
+    <!-- SCAN SCREEN -->
+    <div id="scanScreen" class="glass">
+        <h2>AI Facial Health Scan</h2>
 
-<!-- DASHBOARD -->
-<div id="dashboard">
-  <div class="dashboard-card">
-    <div class="header">
-      <h2>Health Dashboard</h2>
-      <small id="currentTime"></small>
+        <div class="scan-box">
+            <div class="corner top-left"></div>
+            <div class="corner top-right"></div>
+            <div class="corner bottom-left"></div>
+            <div class="corner bottom-right"></div>
+            <div class="scan-line"></div>
+        </div>
+
+        <div class="progress" id="progressText">Analyzing... 0%</div>
+        <p style="font-size:13px;opacity:0.8;margin-top:8px;">
+            Please stay still during scan
+        </p>
     </div>
 
-    <div class="cards">
-      <div class="metric">
-        <h4>❤️ Heart Rate</h4>
-        <p id="heartRate"></p>
-      </div>
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="glass">
 
-      <div class="metric">
-        <h4>💧 Hydration</h4>
-        <p id="hydration"></p>
-      </div>
+        <div class="header">
+            <h3>Health Overview</h3>
+            <small id="clock"></small>
+        </div>
 
-      <div class="metric">
-        <h4>😴 Sleep Quality</h4>
-        <p id="sleep"></p>
-      </div>
+        <div class="cards">
 
-      <div class="metric">
-        <h4>🧠 Stress Level</h4>
-        <p id="stress"></p>
-      </div>
+            <div class="metric">
+                <div class="circle" id="heartCircle">0%</div>
+                <div>❤️ Heart</div>
+            </div>
+
+            <div class="metric">
+                <div class="circle" id="waterCircle">0%</div>
+                <div>💧 Hydration</div>
+            </div>
+
+            <div class="metric">
+                <div class="circle" id="sleepCircle">0%</div>
+                <div>😴 Sleep</div>
+            </div>
+
+            <div class="metric">
+                <div class="circle" id="stressCircle">0%</div>
+                <div>🧠 Stress</div>
+            </div>
+
+        </div>
+
+        <div class="tip" id="healthTip"></div>
+
     </div>
 
-    <div class="tip" id="healthTip"></div>
-  </div>
-</div>
+    <script>
 
-<script>
-let progress = 0;
-let progressText = document.getElementById("progressText");
+        // ---------- SCAN ANIMATION ----------
+        let progress = 0;
+        let interval = setInterval(() => {
+            progress++;
+            document.getElementById("progressText").innerText = "Analyzing... " + progress + "%";
 
-let scanInterval = setInterval(() => {
-  progress++;
-  progressText.innerText = "Scanning... " + progress + "%";
+            if (progress >= 100) {
+                clearInterval(interval);
+                document.getElementById("scanScreen").style.display = "none";
+                document.getElementById("dashboard").style.display = "block";
+                loadDashboard();
+            }
+        }, 25);
 
-  if (progress >= 100) {
-    clearInterval(scanInterval);
-    document.getElementById("scanScreen").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
-    loadDashboard();
-  }
-}, 30);
+        // ---------- DASHBOARD ----------
+        function setCircle(id, value) {
+            let circle = document.getElementById(id);
+            let degree = value * 3.6;
+            circle.style.background = `conic-gradient(#fff ${degree}deg, rgba(255,255,255,0.2) ${degree}deg)`;
+            circle.innerText = value + "%";
+        }
 
-// DASHBOARD DATA
-function loadDashboard() {
+        function loadDashboard() {
 
-  let heartRate = 72 + Math.floor(Math.random() * 10);
-  let hydration = 40 + Math.floor(Math.random() * 50);
-  let sleep = 60 + Math.floor(Math.random() * 30);
-  let stress = 20 + Math.floor(Math.random() * 60);
+            let heart = 70 + Math.floor(Math.random() * 20);
+            let hydration = 40 + Math.floor(Math.random() * 50);
+            let sleep = 60 + Math.floor(Math.random() * 30);
+            let stress = 20 + Math.floor(Math.random() * 60);
 
-  document.getElementById("heartRate").innerText = heartRate + " BPM";
-  document.getElementById("hydration").innerText = hydration + "%";
-  document.getElementById("sleep").innerText = sleep + "%";
-  document.getElementById("stress").innerText = stress + "%";
+            setCircle("heartCircle", heart);
+            setCircle("waterCircle", hydration);
+            setCircle("sleepCircle", sleep);
+            setCircle("stressCircle", stress);
 
-  document.getElementById("currentTime").innerText =
-    new Date().toLocaleString();
+            updateTip(hydration, stress, sleep);
 
-  let tip = "";
+            setInterval(() => {
+                document.getElementById("clock").innerText = new Date().toLocaleTimeString();
+            }, 1000);
 
-  if (hydration < 60) {
-    tip = "💧 Drink 1-2 glasses of water within the next hour.";
-  } else if (stress > 65) {
-    tip = "🧘 Take a 5 minute breathing break to reduce stress.";
-  } else if (sleep < 70) {
-    tip = "🌙 Avoid screens 1 hour before bedtime for better sleep.";
-  } else {
-    tip = "✅ Your health indicators look stable today. Keep it up!";
-  }
+            setInterval(() => {
+                updateTip(hydration, stress, sleep);
+            }, 8000);
+        }
 
-  document.getElementById("healthTip").innerText = tip;
-}
-</script>
+        function updateTip(h, s, sl) {
+
+            let tip = "";
+            if (h < 60) {
+                tip = "💧 Your hydration is slightly low. Drink water now.";
+            }
+            else if (s > 65) {
+                tip = "🧘 High stress detected. Take a short breathing break.";
+            }
+            else if (sl < 70) {
+                tip = "🌙 Improve sleep quality by reducing screen time.";
+            }
+            else {
+                tip = "✅ All health indicators are stable. Keep maintaining!";
+            }
+
+            document.getElementById("healthTip").innerText = tip;
+        }
+
+    </script>
 
 </body>
+
 </html>
