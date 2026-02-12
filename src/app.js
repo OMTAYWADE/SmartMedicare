@@ -443,11 +443,70 @@ app.get('/doctor/patient/:id/ai-insights', isAuth, isDoctor, async (req, res) =>
   }
 });
 
+app.get("/faceRecognition", isAuth, async (req, res) => {
+  try {
+    // Only patients allowed
+    if (req.user.role !== "patient") {
+      return res.status(403).send("Patients only");
+    }
 
-app.get("/faceRecognition", (req, res) => {
-    res.render("face-api");
+    const patient = await Patient.findById(req.user.patient);
+
+    if (!patient) {
+      return res.status(404).send("Patient not found");
+    }
+
+    res.render("face-api", { patient });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
 });
 
+app.post("/generateReport", isAuth, async (req, res) => {
+  try {
+    if (req.user.role !== "patient") {
+      return res.status(403).send("Patients only");
+    }
+
+    const patient = await Patient.findById(req.user.patient);
+    if (!patient) return res.status(404).send("Patient not found");
+
+    // 🔥 Generate Random Health Data
+    const heart = 60 + Math.floor(Math.random() * 30);
+    const stress = 20 + Math.floor(Math.random() * 60);
+    const hydration = 50 + Math.floor(Math.random() * 40);
+    const sleep = 65 + Math.floor(Math.random() * 30);
+
+    // 🧠 Professional Tips Logic
+    let tip = "All vitals are stable. Maintain your current routine.";
+
+    if (stress > 70) {
+      tip = "Stress level elevated. Consider relaxation exercises.";
+    } else if (hydration < 60) {
+      tip = "Hydration is low. Increase water intake today.";
+    } else if (sleep < 70) {
+      tip = "Sleep quality needs improvement. Maintain regular bedtime.";
+    }
+
+    const motivation = `Your health journey matters, ${patient.name}. Consistency builds long-term strength.`;
+
+    res.render("healthReport", {
+      patient,
+      heart,
+      stress,
+      hydration,
+      sleep,
+      tip,
+      motivation
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Report generation failed");
+  }
+});
 
 // Logout
 app.get('/logout', (req, res) => {
