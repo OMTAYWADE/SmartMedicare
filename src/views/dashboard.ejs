@@ -7,9 +7,9 @@
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 body{
 font-family:'Inter',sans-serif;
@@ -19,7 +19,8 @@ margin:0;
 overflow-x:hidden;
 }
 
-/* Floating Background Glow */
+/* ===== Floating Glow Background ===== */
+
 body::before,
 body::after{
 content:"";
@@ -51,7 +52,8 @@ from{transform:translateY(0);}
 to{transform:translateY(100px);}
 }
 
-/* Navbar */
+/* ===== Navbar ===== */
+
 nav{
 background:rgba(2,6,23,.85);
 backdrop-filter:blur(12px);
@@ -60,34 +62,23 @@ top:0;
 z-index:100;
 }
 
-/* Cards */
-.dash-card{
-background:rgba(255,255,255,.06);
-backdrop-filter:blur(16px);
-border-radius:18px;
-border:1px solid rgba(255,255,255,.08);
-box-shadow:0 20px 50px rgba(0,0,0,.4);
-transition:.4s;
-animation:fadeUp .7s ease forwards;
+/* ===== Welcome Animation ===== */
+
+.welcome-animate{
 opacity:0;
-transform:translateY(25px);
+transform:translateY(20px);
+animation:fadeWelcome .8s ease forwards;
 }
 
-.dash-card:hover{
-transform:translateY(-10px) scale(1.02);
-box-shadow:0 35px 80px rgba(0,0,0,.6);
+@keyframes fadeWelcome{
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
-@keyframes fadeUp{
-to{opacity:1;transform:translateY(0);}
-}
+/* ===== Role Badge ===== */
 
-h4{
-font-weight:700;
-color:#f8fafc;
-}
-
-/* Role Badge */
 .role-badge{
 padding:6px 14px;
 border-radius:20px;
@@ -106,7 +97,30 @@ background:linear-gradient(135deg,#2563eb,#1d4ed8);
 color:white;
 }
 
-/* Icons */
+/* ===== Cards ===== */
+
+.dash-card{
+background:rgba(255,255,255,.06);
+backdrop-filter:blur(16px);
+border-radius:18px;
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+transition:.4s;
+animation:fadeUp .7s ease forwards;
+opacity:0;
+transform:translateY(25px);
+}
+
+.dash-card:hover{
+transform:translateY(-10px) scale(1.03);
+box-shadow:0 35px 80px rgba(0,0,0,.6);
+border:1px solid rgba(34,197,94,.4);
+}
+
+@keyframes fadeUp{
+to{opacity:1;transform:translateY(0);}
+}
+
 .action-icon{
 font-size:56px;
 margin-bottom:12px;
@@ -114,10 +128,11 @@ transition:.3s;
 }
 
 .dash-card.center-align:hover .action-icon{
-transform:scale(1.25) rotate(-5deg);
+transform:scale(1.2) rotate(-5deg);
 }
 
-/* Stats */
+/* ===== Stats Section ===== */
+
 .stats{
 display:flex;
 gap:40px;
@@ -135,7 +150,8 @@ font-weight:700;
 color:#22c55e;
 }
 
-/* AI Status Pulse */
+/* ===== AI Pulse ===== */
+
 .pulse{
 display:inline-block;
 width:10px;
@@ -152,6 +168,8 @@ animation:pulse 1.5s infinite;
 100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
 }
 
+/* ===== Footer ===== */
+
 footer{
 background:rgba(0,0,0,.5);
 backdrop-filter:blur(10px);
@@ -159,6 +177,22 @@ border-top:1px solid rgba(255,255,255,.05);
 margin-top:40px;
 padding:20px 0;
 }
+
+/* ===== Responsive Fix ===== */
+
+@media(max-width:600px){
+.stats{
+flex-direction:column;
+gap:20px;
+}
+.stat-number{
+font-size:24px;
+}
+h4{
+font-size:20px;
+}
+}
+
 </style>
 </head>
 
@@ -166,52 +200,56 @@ padding:20px 0;
 
 <nav>
 <div class="nav-wrapper container">
-<a href="/" class="brand-logo">💊 SmartMedicare</a>
+<a class="brand-logo">💊 SmartMedicare</a>
 
 <a href="#" data-target="mobile-menu" class="sidenav-trigger">
 <i class="material-icons">menu</i>
 </a>
 
 <ul class="right hide-on-med-and-down">
-<li><a href="/dashboard">Dashboard</a></li>
-<li><a href="/logout">Logout</a></li>
+<li><a href="#">Dashboard</a></li>
+<li><a href="#" onclick="logout()">Logout</a></li>
 </ul>
 </div>
 </nav>
 
 <ul class="sidenav" id="mobile-menu">
-<li><a href="/dashboard">Dashboard</a></li>
-<li><a href="/logout">Logout</a></li>
+<li><a href="#">Dashboard</a></li>
+<li><a href="#" onclick="logout()">Logout</a></li>
 </ul>
 
 <main>
 <div class="container">
 
-<!-- Header -->
-<h4>
-Welcome, <%= user.name || "User" %>
-<span class="role-badge <%= user.role %>">
-<%= user.role.toUpperCase() %>
-</span>
+<!-- ===== Dynamic Welcome ===== -->
+
+<h4 id="welcomeText" class="welcome-animate">
+Loading...
+<span class="role-badge" id="roleBadge"></span>
 </h4>
 
 <p class="grey-text">Unified access to your medical ecosystem</p>
 
-<!-- Stats -->
+<!-- ===== Stats ===== -->
+
 <div class="stats">
 <div class="stat">
-<div class="stat-number" id="usersCount">1</div>
+<div class="stat-number">1</div>
 <p>Active Account</p>
 </div>
+
 <div class="stat">
 <div class="stat-number">94%</div>
 <p>System Confidence</p>
 </div>
+
 <div class="stat">
 <div class="stat-number">24/7</div>
 <p>AI Monitoring</p>
 </div>
 </div>
+
+<!-- ===== Cards ===== -->
 
 <div class="row">
 
@@ -230,13 +268,7 @@ Welcome, <%= user.name || "User" %>
 <div class="card-content">
 <i class="material-icons action-icon green-text">favorite</i>
 <h6>Health Dashboard</h6>
-
-<% if (user.role === 'patient') { %>
-<a href="/patient/<%= user.patient %>" class="btn green">Open</a>
-<% } else { %>
-<a href="/doctor/dashboard" class="btn green">Open</a>
-<% } %>
-
+<a class="btn green">Open</a>
 </div>
 </div>
 </div>
@@ -252,6 +284,8 @@ Welcome, <%= user.name || "User" %>
 </div>
 
 </div>
+
+<!-- ===== AI Status ===== -->
 
 <div class="row">
 <div class="col s12">
@@ -282,7 +316,7 @@ Confidence Score:
 <footer>
 <div class="container center-align">
 <p class="grey-text">
-© <%= new Date().getFullYear() %> SmartMedicare
+© 2026 SmartMedicare
 </p>
 <p class="grey-text">
 Designed & Developed by <strong>Om Satish Taywade</strong>
@@ -293,13 +327,43 @@ Designed & Developed by <strong>Om Satish Taywade</strong>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <script>
+
+/* ===== INIT ===== */
+
 document.addEventListener("DOMContentLoaded",()=>{
+
 M.Sidenav.init(document.querySelectorAll(".sidenav"));
 
 document.querySelectorAll(".dash-card").forEach((card,i)=>{
 card.style.animationDelay=(i*0.12)+"s";
 });
+
+/* ===== LOAD USER ===== */
+
+let user = JSON.parse(localStorage.getItem("smartUser"));
+
+let welcomeText = document.getElementById("welcomeText");
+let roleBadge = document.getElementById("roleBadge");
+
+if(!user){
+welcomeText.innerText="Welcome, Guest";
+roleBadge.style.display="none";
+return;
+}
+
+welcomeText.innerHTML = `Welcome, ${user.name}`;
+roleBadge.innerText = user.role.toUpperCase();
+roleBadge.classList.add(user.role);
+
 });
+
+/* ===== LOGOUT ===== */
+
+function logout(){
+localStorage.removeItem("smartUser");
+window.location.href="face-scan.html";
+}
+
 </script>
 
 </body>
