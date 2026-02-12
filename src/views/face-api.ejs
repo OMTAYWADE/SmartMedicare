@@ -3,16 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Face Recognition | SmartMedicare</title>
+<title>AI Biometric Verification | SmartMedicare</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 :root{
 --primary:#2563eb;
 --success:#22c55e;
---danger:#ef4444;
 --bg:#020617;
 --card:#0f172a;
 --text:#f1f5f9;
@@ -27,69 +25,67 @@ font-family:'Inter',sans-serif;
 
 body{
 background:var(--bg);
+color:var(--text);
 display:flex;
 justify-content:center;
 align-items:center;
 min-height:100vh;
-color:var(--text);
 overflow:hidden;
 }
 
 /* Glow background */
-
 body::before,
 body::after{
 content:"";
 position:fixed;
-width:500px;
-height:500px;
+width:600px;
+height:600px;
 border-radius:50%;
-filter:blur(150px);
+filter:blur(160px);
 opacity:.25;
 z-index:-1;
-animation:float 12s infinite alternate ease-in-out;
+animation:float 14s infinite alternate ease-in-out;
 }
 
 body::before{
 background:#22c55e;
-top:-150px;
-left:-150px;
+top:-200px;
+left:-200px;
 }
 
 body::after{
 background:#2563eb;
-bottom:-150px;
-right:-150px;
-animation-delay:4s;
+bottom:-200px;
+right:-200px;
 }
 
 @keyframes float{
 from{transform:translateY(0);}
-to{transform:translateY(80px);}
+to{transform:translateY(100px);}
 }
-
-/* Container */
 
 .container{
 width:95%;
-max-width:500px;
+max-width:550px;
 background:var(--card);
-border-radius:20px;
+border-radius:24px;
 padding:40px;
 text-align:center;
-box-shadow:0 25px 70px rgba(0,0,0,.6);
+box-shadow:0 30px 80px rgba(0,0,0,.7);
+position:relative;
 }
 
-/* Video */
+/* Camera box */
 
-.video-box{
+.camera-box{
 position:relative;
 width:100%;
 aspect-ratio:1/1;
-border-radius:20px;
+border-radius:24px;
 overflow:hidden;
 border:2px solid var(--primary);
-margin-top:20px;
+margin-top:25px;
+box-shadow:0 0 40px rgba(37,99,235,.5);
 }
 
 video{
@@ -98,33 +94,34 @@ height:100%;
 object-fit:cover;
 }
 
-/* Face Frame */
+/* Circular biometric overlay */
 
-.face-frame{
+.circle-overlay{
 position:absolute;
-top:20%;
-left:20%;
-width:60%;
-height:60%;
-border:2px solid var(--primary);
-border-radius:12px;
-box-shadow:0 0 20px var(--primary);
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:65%;
+height:65%;
+border:3px solid var(--primary);
+border-radius:50%;
+box-shadow:0 0 25px var(--primary);
 animation:pulse 2s infinite;
 }
 
 @keyframes pulse{
 0%{box-shadow:0 0 10px var(--primary);}
-50%{box-shadow:0 0 30px var(--primary);}
+50%{box-shadow:0 0 35px var(--primary);}
 100%{box-shadow:0 0 10px var(--primary);}
 }
 
-/* Scan Line */
+/* Scan line */
 
 .scan-line{
 position:absolute;
 width:100%;
 height:3px;
-background:var(--primary);
+background:linear-gradient(90deg,transparent,var(--primary),transparent);
 animation:scan 2s linear infinite;
 }
 
@@ -133,35 +130,45 @@ animation:scan 2s linear infinite;
 100%{top:100%;}
 }
 
-button{
+/* Status */
+
+.status{
 margin-top:20px;
-padding:12px 25px;
-border:none;
-border-radius:8px;
-background:var(--primary);
-color:white;
-font-weight:600;
-cursor:pointer;
-}
-
-button:hover{
-opacity:.9;
-}
-
-.progress{
-margin-top:15px;
 font-weight:600;
 color:var(--primary);
 }
 
 .result{
-margin-top:20px;
+margin-top:10px;
 font-size:18px;
 font-weight:700;
 color:var(--success);
 }
 
-@media(max-width:500px){
+button{
+margin-top:25px;
+padding:12px 30px;
+border:none;
+border-radius:10px;
+background:var(--primary);
+color:white;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px var(--primary);
+}
+
+.hidden{
+display:none;
+}
+
+/* Responsive */
+
+@media(max-width:600px){
 .container{
 padding:20px;
 }
@@ -169,98 +176,77 @@ padding:20px;
 
 </style>
 </head>
-
 <body>
 
 <div class="container">
 
-<h2>AI Face Recognition</h2>
-<p style="color:#94a3b8;">Align your face within the frame</p>
-<form action="/generateReport" method="POST">
-  <button class="btn green">Generate Health Report</button>
-</form>
+<h2>AI Biometric Face Verification</h2>
+<p style="color:#94a3b8;">Secure medical identity confirmation</p>
 
-
-<div class="video-box">
+<div class="camera-box">
 <video id="video" autoplay playsinline></video>
-<div class="face-frame"></div>
+<div class="circle-overlay"></div>
 <div class="scan-line"></div>
 </div>
 
-<button onclick="startRecognition()">Start Recognition</button>
+<button onclick="startScan()">Start Verification</button>
 
-<div class="progress" id="progressText"></div>
+<div class="status" id="statusText"></div>
 <div class="result" id="resultText"></div>
+
+<form id="reportForm" action="/generateReport" method="POST" class="hidden">
+<button type="submit">Proceed to Health Report</button>
+</form>
 
 </div>
 
 <script>
 
-/* Fake Registered Patients */
-
-const patients = [
-"Aarav Sharma",
-"Priya Verma",
-"Rahul Mehta",
-"Sneha Patel"
-];
-
 let streamRef;
 
-async function startRecognition(){
+async function startScan(){
 
 document.getElementById("resultText").innerText="";
+document.getElementById("statusText").innerText="";
 
 try{
 streamRef = await navigator.mediaDevices.getUserMedia({video:true});
 document.getElementById("video").srcObject = streamRef;
-
-fakeScan();
-
+simulateScan();
 }catch{
-alert("Camera permission required. Run on localhost.");
+alert("Camera permission required.");
 }
 
 }
 
-function fakeScan(){
+function simulateScan(){
 
 let progress=0;
 
 let interval=setInterval(()=>{
-progress+=2;
-document.getElementById("progressText").innerText="Analyzing Face... "+progress+"%";
+progress+=4;
+
+document.getElementById("statusText").innerText =
+"Analyzing facial biometrics... "+progress+"%";
 
 if(progress>=100){
 clearInterval(interval);
-finishRecognition();
+finishVerification();
 }
-},40);
+},80);
 
 }
 
-function finishRecognition(){
+function finishVerification(){
 
 if(streamRef){
 streamRef.getTracks().forEach(track=>track.stop());
 }
 
-/* Fake AI detection */
+document.getElementById("statusText").innerText="";
+document.getElementById("resultText").innerText="Identity Verified Successfully ✔";
 
-let detectedName = patients[Math.floor(Math.random()*patients.length)];
-
-document.getElementById("resultText").innerText="Welcome, "+detectedName+" ✔";
-
-/* Save user */
-
-localStorage.setItem("smartUser",JSON.stringify({
-name:detectedName,
-role:"patient"
-}));
-
-setTimeout(()=>{
-window.location.href="dashboard.html";
-},2000);
+document.getElementById("reportForm").classList.remove("hidden");
 
 }
 

@@ -445,9 +445,10 @@ app.get('/doctor/patient/:id/ai-insights', isAuth, isDoctor, async (req, res) =>
 
 app.get("/faceRecognition", isAuth, async (req, res) => {
   try {
-    // Only patients allowed
+
+    // Only patients can access face verification
     if (req.user.role !== "patient") {
-      return res.status(403).send("Patients only");
+      return res.status(403).send("Access Denied: Patients only");
     }
 
     const patient = await Patient.findById(req.user.patient);
@@ -459,54 +460,107 @@ app.get("/faceRecognition", isAuth, async (req, res) => {
     res.render("face-api", { patient });
 
   } catch (err) {
-    console.error(err);
+    console.error("Face Recognition Error:", err);
     res.status(500).send("Server Error");
   }
 });
 
 app.post("/generateReport", isAuth, async (req, res) => {
   try {
+
     if (req.user.role !== "patient") {
       return res.status(403).send("Patients only");
     }
 
     const patient = await Patient.findById(req.user.patient);
-    if (!patient) return res.status(404).send("Patient not found");
 
-    // 🔥 Generate Random Health Data
-    const heart = 60 + Math.floor(Math.random() * 30);
-    const stress = 20 + Math.floor(Math.random() * 60);
-    const hydration = 50 + Math.floor(Math.random() * 40);
-    const sleep = 65 + Math.floor(Math.random() * 30);
-
-    // 🧠 Professional Tips Logic
-    let tip = "All vitals are stable. Maintain your current routine.";
-
-    if (stress > 70) {
-      tip = "Stress level elevated. Consider relaxation exercises.";
-    } else if (hydration < 60) {
-      tip = "Hydration is low. Increase water intake today.";
-    } else if (sleep < 70) {
-      tip = "Sleep quality needs improvement. Maintain regular bedtime.";
+    if (!patient) {
+      return res.status(404).send("Patient not found");
     }
 
-    const motivation = `Your health journey matters, ${patient.name}. Consistency builds long-term strength.`;
+    // 🔥 Generate 25 Random Medical Test Values
+    const rand = (min, max) =>
+      Math.floor(Math.random() * (max - min + 1)) + min;
+
+    const reportData = {
+      heartRate: rand(55, 110),
+      systolic: rand(100, 160),
+      diastolic: rand(65, 100),
+      bloodSugar: rand(70, 190),
+      oxygen: rand(90, 100),
+      cholesterol: rand(140, 280),
+      triglycerides: rand(100, 300),
+      temperature: (36 + Math.random() * 2).toFixed(1),
+      respiratory: rand(12, 24),
+      stress: rand(20, 95),
+      sleep: rand(55, 100),
+      bmi: (18 + Math.random() * 12).toFixed(1),
+      vitaminD: rand(15, 60),
+      hemoglobin: rand(10, 17),
+      platelets: rand(150000, 450000),
+      wbc: rand(4000, 11000),
+      liverALT: rand(10, 80),
+      creatinine: (0.6 + Math.random() * 1.8).toFixed(2),
+      uricAcid: rand(3, 9),
+      sodium: rand(130, 150),
+      potassium: rand(3, 6),
+      calcium: rand(8, 11),
+      magnesium: rand(1, 3),
+      ldl: rand(70, 190),
+      hdl: rand(30, 70)
+    };
+
+    /* Intelligent Analysis */
+
+    let risks = [];
+    let tip = "All health parameters are within acceptable range.";
+
+    if (reportData.bloodSugar > 140) {
+      risks.push("High Blood Sugar");
+      tip = "Reduce sugar intake and increase physical activity.";
+    }
+
+    if (reportData.stress > 80) {
+      risks.push("High Stress");
+      tip = "Practice meditation and stress management techniques.";
+    }
+
+    if (reportData.sleep < 65) {
+      risks.push("Poor Sleep Quality");
+      tip = "Maintain regular sleep schedule and reduce screen exposure.";
+    }
+
+    if (reportData.cholesterol > 240) {
+      risks.push("High Cholesterol");
+      tip = "Adopt low-fat diet and regular cardiovascular exercise.";
+    }
+
+    const motivations = [
+      "Health is the foundation of productivity and happiness.",
+      "Consistency in small habits leads to lifelong wellness.",
+      "Prevention today ensures strength tomorrow.",
+      "Your body responds to discipline and care.",
+      "Strong habits build strong immunity.",
+      "Invest in health before illness demands it."
+    ];
+
+    const motivation =
+      motivations[Math.floor(Math.random() * motivations.length)];
 
     res.render("healthReport", {
       patient,
-      heart,
-      stress,
-      hydration,
-      sleep,
+      reportData,
+      risks,
       tip,
       motivation
     });
 
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Report generation failed");
+    console.error("Report Generation Error:", err);
+    res.status(500).send("Failed to generate report");
   }
 });
+
 
 // Logout
 app.get('/logout', (req, res) => {
