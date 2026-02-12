@@ -604,7 +604,7 @@ app.post("/generateReport", isAuth, async (req, res) => {
     const motivation =
       motivations[Math.floor(Math.random() * motivations.length)];
 
-    res.render("healthReport", {
+    res.render("healthTips", {
       patient,
       reportData,
       risks,
