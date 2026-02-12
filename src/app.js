@@ -465,6 +465,63 @@ app.get("/faceRecognition", isAuth, async (req, res) => {
   }
 });
 
+// general report
+
+app.get("/generalReport", isAuth, async (req, res) => {
+  try {
+
+    if (req.user.role !== "patient") {
+      return res.status(403).send("Access Denied: Patients only");
+    }
+
+    const patient = await Patient.findById(req.user.patient);
+
+    if (!patient) {
+      return res.status(404).send("Patient not found");
+    }
+
+    const rand = (min, max) =>
+      Math.floor(Math.random() * (max - min + 1)) + min;
+
+    const reportData = {
+      heartRate: rand(55, 110),
+      systolic: rand(100, 160),
+      diastolic: rand(65, 100),
+      bloodSugar: rand(70, 190),
+      oxygen: rand(90, 100),
+      cholesterol: rand(140, 280),
+      triglycerides: rand(100, 300),
+      temperature: (36 + Math.random() * 2).toFixed(1),
+      respiratory: rand(12, 24),
+      stress: rand(20, 95),
+      sleep: rand(55, 100),
+      bmi: (18 + Math.random() * 12).toFixed(1),
+      vitaminD: rand(15, 60),
+      hemoglobin: rand(10, 17),
+      platelets: rand(150000, 450000),
+      wbc: rand(4000, 11000),
+      liverALT: rand(10, 80),
+      creatinine: (0.6 + Math.random() * 1.8).toFixed(2),
+      uricAcid: rand(3, 9),
+      sodium: rand(130, 150),
+      potassium: rand(3, 6),
+      calcium: rand(8, 11),
+      magnesium: rand(1, 3),
+      ldl: rand(70, 190),
+      hdl: rand(30, 70)
+    };
+
+    res.render("generalReport", {
+      patient,
+      reportData
+    });
+
+  } catch (err) {
+    console.error("General Report Error:", err);
+    res.status(500).send("Server Error");
+  }
+});
+
 app.post("/generateReport", isAuth, async (req, res) => {
   try {
 
